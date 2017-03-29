@@ -13,7 +13,7 @@ passport.use('local-join', new localStrategy({
     passwordField: 'password',
     passReqToCallback: true
   }, function(req, email, password, done){
-    console.log('hi');
+    console.log('Callback function works!');
   }
 ));
 
@@ -22,7 +22,5 @@ router.post('/', passport.authenticate('local-join', {
   failureRedirect: '/join',  // done = false
   failureFlash: true,
 }))
-
-
 
 module.exports = router;
