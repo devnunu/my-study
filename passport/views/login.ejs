@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>login</title>
+  </head>
+  <body>
+    <form action="index.html" method="post">
+      email:<input type="text" name="email"><br>
+      password:<input type="password" name="password"><br>
+    </form>
+    <button class="ajaxsend">login</button>
+    <div class="result"></div>
+
+    <script type="text/javascript">
+      document.querySelector('.ajaxsend').addEventListener('click', function(){
+        var email =  document.getElementsByName('email')[0].value;
+        var password =  document.getElementsByName('password')[0].value;
+        sendAjax('http://localhost:3000/login',{'email': email, 'password':password});
+      })
+
+      function sendAjax(url,data){
+        data = JSON.stringify(data);
+
+        var oReq = new XMLHttpRequest();
+        oReq.open('POST', url);
+        oReq.setRequestHeader('Content-Type', 'application/json')
+        oReq.send(data);
+
+        oReq.addEventListener('load', function(){
+          var result = JSON.parse(oReq.responseText);
+          var resultDiv = document.querySelector('.result');
+
+          if(result.email) {
+            resultDiv.innerHTML = 'welcome '+ result.email +'!!'
+            window.location.href = '/main'
+          }
+          else if(oReq.status === 400){
+            resultDiv.innerHTML = result + "<div class='sign up'><a href='/join'>Sign up</a></div>"
+          }
+          else resultDiv.innerHTML =  result;
+        });
+      }
+    </script>
+  </body>
+</html>
