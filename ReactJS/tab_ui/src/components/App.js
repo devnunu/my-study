@@ -1,10 +1,10 @@
 import React from 'react';
-import Contact from './Contact';
+import Tabs from './Tabs'
 
 class App extends React.Component {
     render(){
         return (
-            <Contact/>
+          <div><Tabs/></div>
         );
     }
 }
