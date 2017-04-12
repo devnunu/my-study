@@ -4,8 +4,8 @@ import React from 'react';
 export default class TabButton extends React.Component{
   render(){
     return(
-      <div onClick={this.props.onClick} style={styles.tab}>
-          <p style={styles.text}>{this.props.name.title}</p>
+      <div style={styles.tab}>
+          <p  onClick={this.props.onClick} style={styles.text}>{this.props.name.title}</p>
       </div>
     );
   }
