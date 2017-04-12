@@ -1,6 +1,7 @@
 import React from 'react';
 import ContactInfo from './Contactinfo';
 import ContactDetails from './ContactDetails';
+import update from 'react-addons-update';
 
 export default class Contact extends React.Component{
 
@@ -68,7 +69,7 @@ export default class Contact extends React.Component{
             onChange = {this.handleChange}
           />
           <div>{mapToComponents(this.state.contactData)}</div>
-          <ContactDetails 
+          <ContactDetails
             isSelected={this.state.selectedKey != -1}
             contact={this.state.contactData[this.state.selectedKey]}
           />
