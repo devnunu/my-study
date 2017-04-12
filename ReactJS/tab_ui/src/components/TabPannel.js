@@ -20,7 +20,9 @@ const styles = {
   pannel :{
     position:"relative",
     textAlign:"center",
+    marginTop:"50px",
     bottom:0,
+
   }
 }
 

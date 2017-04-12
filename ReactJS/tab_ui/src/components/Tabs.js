@@ -43,9 +43,11 @@ export default class Tabs extends React.Component{
     return (
       <div style={styles.tabs}>
           {mapToComponent(this.state.head)}
-          <TabPannel
-            isSelected={this.state.selectedKey != -1}
-            head={this.state.head[this.state.selectedKey]}/>
+          <div>
+            <TabPannel
+              isSelected={this.state.selectedKey != -1}
+              head={this.state.head[this.state.selectedKey]}/>
+          </div>
       </div>
     )
   }
@@ -53,6 +55,8 @@ export default class Tabs extends React.Component{
 
 const styles = {
   tabs :{
+    width :"70%",
+    margin:"0 auto",
     position:"absolute",
     border:"solid 1px grey"
   }
