@@ -18,11 +18,11 @@ export default class TabPannel extends React.Component{
 
 const styles = {
   pannel :{
-    position:"relative",
     textAlign:"center",
     marginTop:"50px",
     bottom:0,
-
+    border:"1px solid gray",
+    boxSizing:"border-box"
   }
 }
 

@@ -13,13 +13,14 @@ export default class TabButton extends React.Component{
 
 const styles = {
   tab : {
-    width: "32%",
+    width: "60px",
     margin:"0 auto",
     position:"relative",
     backgroundColor : "lightgreen",
     textAlign : "center",
     border:"solid 1px grey",
-    float:"left"
+    float:"left",
+    boxSizing:"border-box"
   },
   text:{
     fontWeight:"bold"
