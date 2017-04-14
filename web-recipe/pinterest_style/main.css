@@ -1,0 +1,24 @@
+#columns{
+    column-width: 300px;
+    column-gap:15px;
+}
+
+#columns figure{
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin:0px;
+    column-gap: 0;
+    margin-bottom: 15px;
+    padding:10px;
+    box-shadow: 10px 10px 5px rgba(0,0,0,0.2);
+}
+
+#columns figure img{
+    width:100%;
+}
+
+#columns figure figcaption{
+    border-top: 1px solid rgba(0,0,0,0.2);
+    padding: 10px;
+    margin-top: 10px;
+}
