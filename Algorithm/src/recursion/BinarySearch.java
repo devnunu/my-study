@@ -23,5 +23,4 @@ public class BinarySearch {
                 return  binarySearch(items, target, middle+1, end);
         }
     }
-
 }
