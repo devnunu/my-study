@@ -2,6 +2,7 @@
 <html>
     <head>
        <link rel="stylesheet" href="reset.css">
+       <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300" rel="stylesheet">
         <style>
             body{
                 margin: 0px;
@@ -9,14 +10,18 @@
             .scene{
                 height: 100vh;
                 overflow: hidden;
+                background-attachment: fixed;
+                background-size: cover;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-weight: 200;
             }
-            .scene .one{
+            .scene.one{
                 background-image: url(images/heic0910e.jpg);
             }
-            .scene .two{
+            .scene.two{
                 background-image: url(images/heic1501a.jpg);
             }
-            .scene .three{
+            .scene.three{
                 background-image: url(images/heic1608a.jpg);
             }
             .scene header{
@@ -28,10 +33,19 @@
                 transform: translateX(-50%) translateY(-50%);
                 font-size:1.5rem;
                 text-align: center;
+                
             }
             .scene header h1{
                 font-size: 2rem;
                 margin-bottom: 1rem;
+                font-weight: 300;
+            }
+            .scene header h1:after{
+                content:'';
+                border-bottom: 1px solid white;
+                width: 8rem;
+                display: block;
+                margin: 1rem auto;
             }
             
         </style>
