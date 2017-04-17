@@ -1,0 +1,146 @@
+<html>
+<head>
+   <link rel="stylesheet" href="reset.css">
+   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400" rel="stylesheet">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        
+        
+        .nav{
+            position: fixed;
+            width: 100%;
+            z-index:999;
+            padding-top: 1rem;
+            background-color: white;
+            
+        }
+        .wrapper{
+            border-bottom: 1.5px solid rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            background-color: #f4f4f4;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        .title>ul{
+            display: flex;
+            width: 100%;
+            padding: 0 23%;
+        }
+        
+        .title>ul>li{
+            margin-right: 1rem;
+            font-weight: 200;
+            font-size: 1.3rem;
+        }
+        
+        .title>ul>li:first-child{
+            margin-right: auto;
+            font-weight: 400;
+        }
+        
+        .title ul li a{
+            text-decoration: none;
+            color: #a3a3a3;
+        }
+        
+        .title ul li a:hover{
+            color: black;
+        }
+        
+        header{
+            position: relative;
+            top:5rem;
+        }
+        .content.img1{
+            background-image: url(images/img1.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+        .content.img2{
+            background-image: url(images/img2.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+        .content.img3{
+            background-image: url(images/img3.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+        .content{
+            width: 100%;
+            min-height: 20rem;
+            overflow: hidden;
+        }
+        .content>.txt{
+            margin-top: 12rem;
+            width: 50%;
+            color : white;
+            padding: 2rem;
+            border: 0.2rem solid white;
+            position: relative;
+            left:50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 1.2rem;
+            text-align: center;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 200;
+        }
+        .content>.txt>h1{
+            font-weight: 400;
+        }
+        .content>.txt>h1:after{
+            content: '';
+            display: block;
+            width : 50%;
+            margin: 2rem auto;
+            border-bottom: 1px solid white;
+            
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+        <div class="nav">
+           <div class="wrapper">
+                <div class="title">
+                    <ul>
+                        <li><a href="">NuNuCloth</a></li>
+                        <li><a href="#">woman</a></li>
+                        <li><a href="#">man</a></li>
+                        <li><a href="#">kids</a></li>
+                        <li><a href="#">baby</a></li>
+                        <li><a href="#">login</a></li>
+                    </ul>
+                </div>   
+           </div>
+        </div>
+        <header>
+            <div class="content img1">
+                <div class="txt">
+                    <h1>Lorem ipsum dolor sit </h1> 
+                    consectetur adipisicing elit. Aliquam architecto asperiores animi, sint at consectetur.
+                </div>
+            </div>
+        </header>
+        <header>
+            <div class="content img2">
+                <div class="txt">
+                    <h1>Lorem ipsum dolor sit </h1> 
+                    consectetur adipisicing elit. Aliquam architecto asperiores animi, sint at consectetur.
+                </div>
+            </div>
+        </header>
+        <header>
+            <div class="content img3">
+                <div class="txt">
+                    <h1>Lorem ipsum dolor sit </h1> 
+                    consectetur adipisicing elit. Aliquam architecto asperiores animi, sint at consectetur.
+                </div>
+            </div>
+        </header>
+    </div>
+</body>
+</html>
