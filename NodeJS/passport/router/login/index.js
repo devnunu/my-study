@@ -5,12 +5,20 @@ var mysql = require("mysql")
 var passport = require("passport")
 var localStrategy = require("passport-local").Strategy;
 
-// DATABASE SETTING
+var options = require('../option');
+
+var loginData = {
+        host: options.storageConfig.HOST,
+        user: options.storageConfig.user,
+        password: options.storageConfig.password
+};
+
 var connection = mysql.createConnection({
-  host : "localhost",
-  user : "root",
-  password : "14858",
-  database : "jsman"
+  host: loginData.host,
+  port:3306,
+  user:loginData.user,
+  password:loginData.password,
+  database:'jsman'
 })
 connection.connect();
 
