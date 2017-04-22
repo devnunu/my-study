@@ -21,7 +21,7 @@
             margin: 15% auto; /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 50%; /* Could be more or less, depending on screen size */
         }
 
         /* The Close Button */
@@ -38,22 +38,129 @@
             text-decoration: none;
             cursor: pointer;
         }
+        
+        
+        /*Modal Content*/
+        .modal-content .modal-haeder{
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #535353;
+        }
+        
+        .modal-content *, 
+        .modal-content *:after, 
+        .modal-content *:before {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            font-family: arial;
+        }
+        
+        .modal-content .form-row {
+            margin-bottom: 20px;
+            padding: 4px 0;
+            position: relative;
+        }
+        
+        .modal-content .form-block {
+            border: 1px solid #cccccc;
+            margin-bottom: 8px;
+            padding: 8px 12px; 
+        }
+
+        .modal-content .input-text {
+            background-color: white;
+            -webkit-appearance: none;
+            border: 1px solid #cccccc;
+            font-family: Arial;
+            margin-bottom: 8px;
+            padding: 8px 4px;
+            position: relative;
+            width: 100%;
+            z-index: 3; 
+            border: 0px solid white;
+            border-bottom: 1px solid gray;
+         
+        }
+        
+        .modal-content .input-text:focus {
+            border-bottom: 2px solid #fd4c88;
+            outline: none;
+            
+        }
+        
+        .modal-content .input-text:focus::-webkit-input-placeholder { 
+            transition: opacity 0.2s 0.2s ease; 
+            opacity: 0;
+        }
+
+        
+        .modal-content .label-helper {
+            position: absolute;
+            opacity: 0;
+            transition: .5s bottom, .5s opacity;
+            bottom: 0;
+            left: 0;    
+            z-index: 1;
+            color: #fd4c88;
+        }
+
+        .modal-content .input-text:focus + .label-helper,
+        .modal-content .input-text:invalid + .label-helper {
+            bottom: 95%;
+            font-family: arial;
+            font-size: 14px;
+            line-height: 1;
+            opacity: 1;
+            padding: 4px; 
+            outline: none;
+            color: #fd4c88;
+        }
+        
+        .modal-content .input-text:invalid {
+            border-left: 10px solid #f00; 
+        }
+        
+        .modal-content .input-text:invalid + .label-helper::after {
+            color: #f00;
+            content: "X";
+            font-family: arial;
+            font-size: 14px;
+            line-height: 1;
+            padding-left: 12px; 
+        }
     </style>
 </head>
 <body>
     <!-- Trigger/Open The Modal -->
     <button id="myBtn">Open Modal</button>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
 
       <!-- Modal content -->
       <div class="modal-content">
         <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+        <p class="modal-haeder">Change Password</p>
+            <form class="content">
+              <div class="form-row">
+                <input type="text" class="input-text" id="Memail" placeholder="Email" />
+                <label class="label-helper" for="Memail">Email</label>
+              </div>
+
+              <div class="form-row" >
+                <input type="email" class="input-text" id="Mpw" placeholder="Password" />
+                <label class="label-helper" for="Mpw">Password</label>
+              </div>
+
+              <div class="form-row" >
+                <input type="password" class="input-text" id="Mrepw" placeholder="Password Confirm" />
+                <label class="label-helper" for="Mrepw">Password  Confirm</label>
+              </div>
+          </form> <!-- end .content -->
       </div>
 
-    </div>
+      </div>
     <script>
         // Get the modal
         var modal = document.getElementById('myModal');
