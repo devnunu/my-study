@@ -235,6 +235,8 @@ console.log(jisoo.getType());  // 인간
 ---
 ### es6에서 본인이 생각할때 지난번대비 개선된 점은 무엇이고, 왜 그렇게 생각하는지?
 ### event delegation의 원리는 무엇인지? 적용한 경험이 있다면 어떤기능이였는지?
+
+---
 ### 좋은 코드를 만들기 위해서 노력한 경험들은 무엇인지?
 ### 전역변수를 없앨 수 있는 방법들은 무엇인가?
 가장 효과적인 것은 namespace 패턴을 이용하여 파일을 모듈화 하면, 해당 함수나 변수를 사용하기 위해서
@@ -280,6 +282,21 @@ extra
 ### javascript 코드를 여러개 html에 추가하는 것과, 하나로 머지하여 배포하는 것의 장단점은 무엇인가?
 ### html을 내려받으면서 브라우저가 화면에 모든것을 표현하기까지의 전체 렌더링 과정을 설명해보자.
 ### ecmascript란 무엇인가?
+ 자바스크립트와 ecmascript는 다르다. 자바스크립트(Javascript)가 넷스케이프(Netscape) 브라우져만이 아니라 다른 웹 브라우져들의 지원까지 받기 시작하면서 다양한 웹 브라우져에서 자바스크립트(Javascript)가 공통되게 잘 작동하기 위해서 표준 규격이 필요해졌는데, 이 때문에, ECMA 국제 기구에서 "ECMAScript Standard"라 불리는 스크립트 표준이 만들어지게 된다. 자바스크립트와 비슷한 뜻으로 많이 들어보았을텐데, Javascript는 ECMAScript와 BOM(Browser Object Model) 와 DOM(Document Object Model)이라는 1개의 코어와, 2개의 모델로 이루어져 있다. 즉, 흔히 우리가 자바스크립트(Javascript)라 부르는 것은 정확히 말하면 3가지가 합쳐서 만들어진것인데 그것들은 바로 ECMAScript 와 DOM(Document Object Model) 와 BOM(Browser Object Model) 이다
+
+ ECMAScript는 자바 스크립트를 이루는 코어(Core) 스크립트 언어로, 웹 환경에서만 호스트 되는 언어가 아니다. 웹 환경은 ECMA 스크립트가 호스트되는 환경들 중 하나일 뿐이다. EMCA 스크립트 호스트 환경은 ECMA 스크립트 실행 환경이 구현되있고, 각각 그 환경에 알맞는 확장성을 가지고 있다. 예를들어 웹 브라우져 환경에서는 BOM(Browser Object Model)과 DOM(Document Object Model)이 그 확장성이 되겠다. 이러한 확장성들은 EMCA 스크립트의 문법과 기능에 맞춰 기능의 확장을 가능게 한다. 자바스크립트의 document 객체가 좋은 예이다. 다른 호스트 환경으로는 node.js, Adobe Flash, MongoDB, CouchDB  등이 있다
+
+ ECMA 스크립트는 기본적으로 언어의
+- 문법(Syntax)
+- 데이터 타입(Type)
+- 구문(조건문, 반복문 등)(Statement)
+- 키워드(Keyword)
+- 예정 키워드(Reserved Word)
+- 연산자(Operator)
+- 객체(Object)
+등을 규정짓는다. 이는 어떤 ECMA 스크립트 호스트 환경에서든 동일하다.
+
+---
 ### 코드리뷰를 했던 사례를 말해보라. 어떤점을 느꼈는가?
 ### DOM Tree란 무엇인가?
 ### innerHTML을 직접 구현하면 어떻게 구현해야 할까?
@@ -321,7 +338,6 @@ base와 compare중 적절한 코드로 적용해준다.
 이때는 병합하려는 base 원격 브랜치를 pull을 이용해 로컬로 가져 온 뒤 충돌을 로컬에서 해결해주고,
 다시 pull request를 보내서 원격 레파지토리에서 merge를 요청한다.
 
-
 ---
 ### REST API는 무엇인가?
 ### post와 get의 차이점을 설명하세요.
@@ -332,6 +348,10 @@ base와 compare중 적절한 코드로 적용해준다.
 ### react, vue, angular라이브러리 중 하나를 골라야할때 어떤식으로 고를 예정인가요?
 ### 개발시 어려움이 많거나 풀리지 않을경우 어떤 해결방법을 사용하는가?
 ### 배워나가는 기술을 공유하거나 기록하는 것들이 있는지?
+네이버와 티스토리 블로그 운영 중,
+git에 개인 스터디 레파지토리를 만들어 자료 저장 중
+
+---
 ### 본인이 생각하는 가장 적절한 커밋단위는 ?
 가능한 세세하게 나누어 자주 커밋하는것이 좋다고 생각한다.
 예를 들면 기능(feature) 단위로 나누는 것도 방법이 될수 있고, function 구현이 완료되면
