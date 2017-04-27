@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+   <link rel="stylesheet" href="reset.css">
+   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        *{
+            outline: 1px solid green;
+        }
+        body{
+            font-size: 16px;
+            font-family: 'Lato', sans-serif;
+        }
+        header{
+            display: block;
+            position: absolute;
+            top:0;
+            left:0;
+            right:0;
+            z-index: 10;
+            text-align: center;
+            opacity: 1;
+        }
+        header ul{
+            display: inline-block;
+            padding: 10px;
+            border : 1px solid red;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            background-color: white;
+        }
+        header ul li{
+            display: inline-block;
+        }
+        header ul li a{
+            display: block;
+            color: #3498db;
+            padding: 10px;
+            text-decoration: none;
+        }
+        
+        section.section1{
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            max-height: 1080px;
+            background-image: url(images/img1.jpg);
+            background-size: cover;
+            padding: 15px;
+            overflow: hidden;
+        }
+        section.section1 #lead-content{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index : 10;
+        }
+        section.section1 #lead-content h1{
+            color: white;
+            font-weight: 900;
+            font-size: 5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+        }
+        section.section1 #lead-content h2{
+            color: #a0cfee;
+            font-weight: 500;
+            font-size: 2.25em;
+            margin-bottom: 15px;
+        }
+        
+        section.section1 #lead-content a{
+            display: inline-block;
+            color:white;
+            padding: 15px 25px;
+            border: 3px solid white;
+            border-radius: 30px;
+        }
+        
+        section.section1 #section1-cover{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            left:0;
+            bottom: 0;
+            background-color: rgba(33,125,187,0.7);
+            z-index: 1;
+        }
+        section.section1 #lead-down{
+            position: absolute;
+            left:0;
+            right:0;
+            bottom:15px;
+            width: 100%;
+            text-align: center;
+            z-index: 10px;
+            color: white;
+        }
+        section.section1 #lead-down span{
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid #a0cfee;
+            text-align: center;
+        }
+        section.section1 #lead-down span i{
+            animation: pulsate 1.5s ease;
+            animation-iteration-count: infinite;
+            padding-top: 5px;
+        }
+        .fa {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+        }
+        
+        
+    </style>
+    <title>NEW portfolio</title>
+</head>
+<body>
+    <header>
+            <ul>
+                <li><a href="">About</a></li>
+                <li><a href="">Experience</a></li>
+                <li><a href="">Education</a></li>
+                <li><a href="">Projects</a></li>
+                <li><a href="">Skills</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+    </header>
+    <section class="section1">
+        <div id="lead-content">
+            <h1>Nam Eun Woo</h1>
+            <h2>SoftWare Engineer</h2>
+            <a href="" class="button-rounded-white">Download Resume</a>
+        </div>
+        <div id="section1-cover"></div>
+        <div id="lead-down">
+            <span>
+                <i class="fa fa-chevron-down"></i>
+            </span>
+        </div>
+    </section>
+    <section class="section2"></section>
+    <section class="section3"></section>
+    <section class="section4"></section>
+    <section class="section5"></section>
+    <footer></footer>
+</body>
+</html>
