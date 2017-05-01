@@ -1,0 +1,53 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
+    <style>
+        .img{
+            position: relative;
+            background-image: url(./img/img1.jpg);
+            height: 100vh;
+            min-height: 500px;
+            max-height: 1080px;
+            background-size: cover;
+        }
+        .img-cover{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index:1;
+        }
+        .img .content{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            font-size:5rem;
+            color: white;
+            z-index: 2;
+            text-align: center;
+            font-family: 'Archivo Black', sans-serif;
+            padding: 30px;
+            border: 5px solid white;
+        }
+        .img .content h2:after{
+            display: block;
+            content:'';
+            width: 40%;
+            margin: 10px auto;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div class="img">
+        <div class="content">
+            <h1>Hello!</h1>
+            <h2>Welcome</h2>
+        </div>
+        
+        <div class="img-cover"></div>
+    </div>
+</body>
+</html>
