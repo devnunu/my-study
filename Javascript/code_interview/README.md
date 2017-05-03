@@ -195,6 +195,21 @@ const는 타 언어에서 상수로 사용되는 변수 타입이다. 실제로 
 
 ---
 ### DOM 조작과정에서 성능에 좋지 않은 방식과 좋은 사례는 어떤 것들이 있는지?
+DOM은 javascritp core와 다르게 별도의 언어로 보아야한다. 따라서 독립적 API라고 볼수있는데, 이 때문에 DOM 객체에 접근을 위해서는 상당히 비싼 사용료를 내야한다. 따라서 루프문 안에서 DOM API를 조작하는 것은 나쁘며, 더 좋지 않은 것이 그 API를 이용하여 HTML 컬렉션을 조작하는 것이다. 따라서 DOM API 조작을 미루고 필요할 때 한번 DOM에 접근하는 것이 좋다.
+
+- 리플로우 - DOM의 기하학적 위치를 새로 계산
+- 리페인팅 - 리플로우 등으로 영향을 받은 부위를 새로 그림
+
+리플로우와 리페인팅이 잦아질수록 느려지므로 랜더트리의 변경사항을 모아두었다가 한번에 처리하는 것이 유리하다.
+
+```
+var console = document.getElementById("console");
+var lis = document.getElementsByTagName("il");
+var len = lis.length;
+for(var i = 0; i < len; i++) {
+    console.innerHTML += li[i].innerHTML + "<br />";
+}
+```
 
 ---
 ### 배열에서 제공하는 메서드 중에 filter와 map의 활용경험은?
