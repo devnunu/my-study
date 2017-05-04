@@ -5,23 +5,15 @@ package sort;
  */
 import java.util.Random;
 
-public class Selection {
+public class Bubble {
 
-    public static void selectionSort(int[] array) {
-        int last = array.length;
-
-        while (last > 0) {
-            int max = array[0];
-            int index = 0;
-
-            for (int i = 0; i < last; i++) {
-                if(array[i]>max){
-                    max = array[i];
-                    index = i;
+    public static void bubbleSort(int[] array) {
+        while(!isSorted(array)){
+            for(int i = 0; i < array.length-1; i++){
+                if(array[i]>array[i+1]){
+                    swap(array,i,i+1);
                 }
             }
-            swap(array, index, last-1);
-            last--;
         }
     }
 
@@ -82,7 +74,7 @@ public class Selection {
             int[] arr = generateIntArray(20);
             printArray(arr);
 
-            selectionSort(arr);
+            bubbleSort(arr);
 
             //result
             if (isSorted(arr)) {
