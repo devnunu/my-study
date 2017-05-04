@@ -331,13 +331,93 @@ var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[
 
 ---
 ### 요즘 관심있게 지켜보는 라이브러리나 오픈소스가 있다면 무엇인지? 어떤점이 마음에 드는지?
+페이스북에서 개발중인 리액트JS에 대해서 관심이 많다. 현재 웹 트랜드가 SPA(single page web application)으로 변화하면서 전통적으로 서버에서 처리하던 랜더링을(server side rendering) 클라이언트 사이드에서 처리해주는 방식으로 변화했다. 왜냐하면 싱글 페이지의 경우 페이지가 로딩될때마다 서버에서 렌더링을 한다면 트래픽이 과다하게 초과되기 때문에 비효율적이기 때문이다. 그러나 서버에서 JSON 으로 파일만 보내준다면 클라이언트 사이드에서 렌더링을 진행하게 된다. 이러한 트렌드에 맞추어 등장한것이 angular, backbone, react 등이다. react는 angular와 backbone과 다르게 프레임 워크가 아닌 라이브러리이다. react는 virtual dom을 이용해서 클라이언트 사이드 렌더링을 진행하게되는데, 바뀐 내용이있을 때 마다 자동으로 실행되므로 편리하다는 장점이 있다. 또한 es6의 문법을 이용하기 때문에 최신화되었고 컴포넌트 단위로 관리 하므로 재사용성이 높다는것이 마음에 든다.
+
+---
 ### 서비스 성능개선을 했던 사례를 말해보자.
+
+---
 ### this 에 대해서 설명하기.
+this는 문맥(context)을 가리킨다. 현재 영역이 어디인가, 호출자가 누구인가 등을 가리키며, 조건과 스코프에 따라서 변경된다.
+따라서, this는 유동적이며 가변적이라고 할 수 있는데 조건은 아래와 같다.
+
+- 기본적으로 this는 global 객체이다. 
+- function 영역에서의 this는 부모 객체이다. 단, 그 부모의 자식으로서 불렸을 때에만. 
+- new 연산자로 생성된 function 영역의 this는 새로 생성된 객체 그 자신이다. 
+- call 혹은 apply로 호출 된 함수의 경우 call, apply의 첫번째 인자로 명시 된 객체이다. 
+
+---
 ### this를 변경시킬 수 있는 방법을 코드로 예시로 보여주기.
+this는 call과 apply, bind로 변경할 수 있다. 3가지 메소드의 차이점은 다음과 같다.
+
+- call : context를 변경, 인자를 인수로 전달
+- apply : context를 변경, 인자를 배열로 전달
+- bind : context를 변경
+
+call과 apply는 prototype으로 정의된 함수를 빌려와서 사용하는데 컨텍스트를 묶어주는데 사용할수 있기때문에 유사배열인 arguments에 배열의 메소드를 적용할때 사용된다. bind는 함수를 호출하지 않고 현재의 컨텍스트를 전달할때 사용된다.
+
+##### [예제 1]
+```
+var obj = {
+  string: 'zero',
+  yell: function() {
+    alert(this.string);
+  }
+};
+var obj2 = {
+  string: 'what?'
+};
+obj.yell(); // 'zero';
+obj.yell.call(obj2); // 'what?'
+```
+
+##### [예제 2]
+```
+var obj = {
+  string: 'zero',
+  yell: function() {
+    alert(this.string);
+  }
+};
+var obj2 = {
+  string: 'what?'
+};
+var yell2 = obj.yell.bind(obj2);
+yell2(); // 'what?'
+```
+---
 ### bind 메서드의 내부 코드는 어떻게 됐을까?
 ### IE9 지원이 필요하지만, ie9 에서 제공하지 않는 최신 javascript API를 사용하고 싶을때, 어떻게 대처할 것인가?
 ### 팀장님이 내가 전혀 모르는 기능에 대한 개발을 부탁하면 어떻게 대응할 것인가?
 ### 모듈패턴은 어떻게 구현할수 있는지? 모듈패턴의 어떤 장점이 있는지?
+자바스크립트에서는 public이나 private에 대한 별도의 키워드를 제공하지 않는다. 따라서 객체 생성시 모든 변수에 접근할 수 있게 되는데
+이때 클로저를 이용해서 객체를 생성하게 된다면 내부 변수에 대한 접근이 리턴된 함수에 대해서만 접근할수 있게 된다. 자연스럽게 이를 위해 setter, getter를 만들어야한다. 모듈패턴을 사용하게 되면 public과 private의 특성을 자바스크립트에서 사용하게 되며 이에 따른 장점도 따라오게 된다.
+
+```
+var testModule = (function () {
+  var counter = 0;
+
+ return {
+       incrementCounter : function() {
+             return ++counter;
+       },
+
+       resetCounter : function() {
+            console.log("counter value prior to reset: " + counter);
+            counter = 0;
+       }
+ };
+})();
+
+testModule.incrementCounter(); // 1
+testModule.incrementCounter(); // 2
+testModule.incrementCounter(); // 3
+testModule.incrementCounter(); // 4
+testModule.incrementCounter(); // 5
+testModule.incrementCounter(); // 6
+testModule.resetCounter(); //"counter value prior to reset: 6"
+```
+---
 ### javascript 코드를 html하단에 주로 배치하는 이유는 ?
  javascript는 주로 dom 조작을 하기 위해서 사용된다. html은 코드 상단에서 부터 랜더링 되며,
  때문에 javascript 코드가 html 상단에 위치해있다면 랜더링이 완료되기도 전에 dom content를 호출하게된다.
@@ -345,6 +425,8 @@ var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[
 
 ---
 ### javascript 코드를 여러개 html에 추가하는 것과, 하나로 머지하여 배포하는 것의 장단점은 무엇인가?
+
+---
 ### html을 내려받으면서 브라우저가 화면에 모든것을 표현하기까지의 전체 렌더링 과정을 설명해보자.
 브라우저의 주요 기능은 사용자가 선택한 자원을 서버에 요청하고 브라우저에 표시하는 것이다. 이를 위해서 각 브라우저마다 고유의 랜더링 엔진을 사용하게 된다.
 
@@ -382,9 +464,22 @@ HTML canvas를 이용해서 테트리스 게임을 만드는 작업을 협업을
 
 ---
 ### innerHTML을 직접 구현하면 어떻게 구현해야 할까?
+
+---
 ### 유니크한 데이터를 집합으로 가지는 set을 array 로 구현하면 어떻게 구현할 수 있을까?
+indexOf 함수로 해당 데이터를 검색한 후 배열 내부에 데이터가 존재하면 바꾸어주는 방식으로 구현이 가능하다.
+
+---
+
 ### touch 이벤트와 mouse이벤트의 차이점은 무엇인가?
+
+---
 ### preventDefault는 언제 쓸 수 있는 것인지?
+현재 이벤트의 기본동작을 중지한다. 상세하게 이야기하면 이벤트외의 별도의 브라우저 행동을 막기 위해 사용된다.
+예를 들어, a태그를 사용하게 되면 2가지의 기능이 실행되는데 1. 클릭 이벤트를 실행하고, 2. href에 표시된 곳으로 이동한다.
+따라서 클릭 이벤트만 실행하기 위해 preventDefault를 사용할 수 있다. 글을 작성할 때나 회원가입 버튼을 클릭 했을때 페이지가 위로 쭉 올라가는것을 방지할 수있다.
+
+---
 ### 버블링과 캡처링을 설명하세요.
 - 버블링 : 자식 노드에서 발생한 이벤트가 부모 노드로 전달된다.
 - 캡쳐링 : 부모 노드에서 발생한 이벤트가 자식 노드로 전달된다.
