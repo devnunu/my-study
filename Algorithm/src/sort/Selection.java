@@ -1,22 +1,29 @@
 package sort;
 
 /**
- * Created by homr on 2017. 4. 12..
+ * Created by homr on 2017. 5. 4..
  */
 import java.util.Random;
 
-public class Insertion {
+public class Selection {
 
-    public static void insertionSort(int[] array) {
-        for(int i = 1; i<array.length; i++){
-            int temp = array[i];
-            int comp = i-1;
-            while(comp>=0 && array[comp]>temp){
-                array[comp+1] = array[comp];
-                comp--;
+    public static void selectionSort(int[] array) {
+        int last = array.length;
+
+        while (last > 0) {
+            int max = array[0];
+            int index = 0;
+
+            for (int i = 0; i < last; i++) {
+                if(array[i]>max){
+                    max = array[i];
+                    index = i;
+                }
             }
-            array[comp+1] = temp;
+            swap(array, index, last-1);
+            last--;
         }
+
     }
 
     // 여기서 부터는 테스트 코드 입니다
@@ -76,13 +83,14 @@ public class Insertion {
             int[] arr = generateIntArray(20);
             printArray(arr);
 
-            insertionSort(arr);
+            selectionSort(arr);
 
             //result
             if (isSorted(arr)) {
                 printArray(arr);
                 System.out.println("Sorted Well");
             } else {
+                printArray(arr);
                 System.out.println("Something Wrong");
             }
         }
