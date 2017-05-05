@@ -6,19 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../reset.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400" rel="stylesheet">
     <style>
         *{
             box-sizing: none;
         }
         #about{
-            background-color: gray;
             padding: 50px 20px;
+            border-bottom: 1px solid black;
         }
         .container{
-            color:white;    
+            color:black;    
             overflow: hidden;
-            font-family: 'Source Sans Pro', sans-serif;
         }
         .title{
             width: 30%;
@@ -28,12 +27,13 @@
         .title h2{
             text-align:center;
             font-size: 2.2rem;
+            font-family: 'Source Sans Pro', sans-serif;
         }
         .title h2:after{
             display: block;
-            width: 30%;
+            width: 15%;
             content: '';
-            border-bottom: 1px solid white;
+            border-bottom: 1px solid #3498db;
             margin: 15px auto;
         }
         .content{
@@ -41,8 +41,10 @@
             float:right;
             
         }
-        .content .p{
-            font-size: 1.2rem;
+        .content p{
+            line-height: 1.4rem;
+            font-family: 'Source Sans Pro', sans-serif;
+            color:gray;
         }
     </style>
 </head>
