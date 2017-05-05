@@ -8,10 +8,10 @@ import java.util.Random;
 public class Bubble {
 
     public static void bubbleSort(int[] array) {
-        while(!isSorted(array)){
-            for(int i = 0; i < array.length-1; i++){
-                if(array[i]>array[i+1]){
-                    swap(array,i,i+1);
+        for(int i = 0; i<array.length; i++){
+            for(int j=1; j<array.length; j++){
+                if(array[j-1]>array[j]){
+                    swap(array, j-1, j);
                 }
             }
         }
