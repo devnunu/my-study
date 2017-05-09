@@ -15,7 +15,9 @@ app.listen('3000', function () {
 });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
@@ -29,7 +31,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/getContactList', function (req, res) {
-    let responseText ="";
+    let responseText = "";
 
     dummy.forEach(function (val) {
         let name = val.name;
@@ -57,7 +59,7 @@ app.get('/getUser/:name', function (req, res) {
         let name = val.name;
         let number = val.number;
 
-        if(compareName === name){
+        if (compareName === name) {
             let template = `<div class="row list">
                                 <div class="col-md-4 name">${name}</div>
                                 <div class="col-md-8 number">${number}</div>
@@ -72,48 +74,79 @@ app.get('/getUser/:name', function (req, res) {
     res.json(responseText);
 });
 
-app.post('/addUser', function(req, res){
-    let data = {name:req.body.name, number:req.body.number};
-    let result = { data : undefined };
+app.post('/addUser', function (req, res) {
+    let data = {
+        name: req.body.name,
+        number: req.body.number
+    };
+    let result = {
+        data: undefined
+    };
 
     dummy.push(data);
-    result.data = dummy;
-    result = JSON.stringify(result);
+    write(dummy);
+});
 
-    fs.writeFile('contact.json', result, 'utf8', function(err) {
-        if(err!==null){
-            console.log("에러입니다");
+app.put('/updateUser', function (req, res) {
+    let name = req.body.name,
+        number = req.body.number,
+        changeName = req.body.changeName,
+        changeNumber = req.body.changeNumber;
+    
+    let result = {
+        data: undefined
+    };
+
+    dummy.forEach(function(val){
+        if((val.name===name)&&(val.number===number)){
+            val.name = changeName;
+            val.number = changeNumber;
+            console.log(dummy);
             return;
         }
     });
+
+    write(dummy);
+
 });
 
-app.delete('/deleteUser/:name', function(req, res){
+app.delete('/deleteUser/:name', function (req, res) {
     let name = req.params.name,
         number = req.body.number,
-        result = { data : undefined },
-        responseText = {msg: ERR_MSG};
+        result = {
+            data: undefined
+        },
+        responseText = {
+            msg: ERR_MSG
+        };
 
-    for(let i = 0; i<dummy.length; i++){
+    for (let i = 0; i < dummy.length; i++) {
         let dataName = dummy[i].name;
         let dataNumber = dummy[i].number;
 
-        if((dataName===name)&&(dataNumber===number)){
-            dummy.splice(i,1);
+        if ((dataName === name) && (dataNumber === number)) {
+            dummy.splice(i, 1);
             responseText.msg = CONFIRM_MSG;
             break;
         }
     }
 
-    result.data = dummy;
+    write(dummy);
+});
+
+function write(file){
+    let result = {
+            data: undefined
+        }
+    result.data = file;
     result = JSON.stringify(result);
 
-    fs.writeFile('contact.json', result, 'utf8', function(err) {
-        if(err!==null){
+    fs.writeFile('contact.json', result, 'utf8', function (err) {
+        if (err !== null) {
             console.log("에러입니다");
             return;
         }
         JSON.stringify(responseText);
         res.json(responseText);
     });
-});
+}
