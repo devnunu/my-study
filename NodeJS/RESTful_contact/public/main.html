@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>contact</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <style>
+        .container-wrap{
+            margin-top: 10%;
+        }
+
+        .content-wrap {
+            text-align: center;
+            border: 1px solid green;
+            border-radius: 1rem;
+            padding: 0 40px;
+            height:500px;
+            overflow: scroll;
+        }
+
+        .search {
+            margin: 20px 0;
+        }
+        .icon{
+            padding:3px
+        }
+        .list{
+            padding:10px;
+            border: 1px solid green;
+            border-radius: 1rem;
+            margin-bottom: 10px;
+        }
+        .list img{
+            border-radius: 50%;
+        }
+        .list .name{
+            border-right: 1px solid green;
+        }
+        .list .number{
+            border-right: 1px solid green;   
+        }
+        .error{
+            color:red;
+            font-style: bold;
+        }
+        .add-contact{
+            margin-bottom:20px;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row container-wrap">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 content-wrap">
+            <h1>Contact</h1>
+            <div class="row search">
+                <span class="col-md-1 glyphicon glyphicon-search icon" aria-hidden="true"></span>
+                <input id="name-input" class="col-md-7 name-input" type="text" placeholder="insert name" />
+                <button id="search-btn" class="col-md-4" type="submit">Search</button>
+            </div>
+            <div class="row add-contact">
+                <input id="add-name" class="col-md-4" type="text" placeholder="name">
+                <input id="add-number" class="col-md-4" type="text" placeholder="number">
+                <button id="add-btn" class="col-md-4" type="sumbit">add</button>
+            </div>
+            <div class="row list-wrap">
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <script type="template">
+        <div class="add">
+            <h2>Add : </h2>
+            <input type="text" name="name" placeholder="insert name" />
+            <button class="add" type="submit">Add</button>
+        </div>
+        <div class="edit">
+            <h2>Edit : </h2>
+            <input type="text" name="edit-name" placeholder="insert edit name" />
+            <button class="edit" type="submit">edit</button>
+        </div>
+    </script>
+    <script src="main.js"></script>
+</body>
+
+
+</html>
