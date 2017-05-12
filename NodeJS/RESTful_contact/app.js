@@ -92,7 +92,7 @@ app.put('/updateUser', function (req, res) {
         number = req.body.number,
         changeName = req.body.changeName,
         changeNumber = req.body.changeNumber;
-    
+
     let result = {
         data: undefined
     };
@@ -121,8 +121,8 @@ app.delete('/deleteUser/:name', function (req, res) {
         };
 
     for (let i = 0; i < dummy.length; i++) {
-        let dataName = dummy[i].name;
-        let dataNumber = dummy[i].number;
+        let dataName = dummy[i].name,
+            dataNumber = dummy[i].number;
 
         if ((dataName === name) && (dataNumber === number)) {
             dummy.splice(i, 1);
