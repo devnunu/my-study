@@ -1,4 +1,4 @@
-package data_structure;
+package data_structure.stack;
 
 /**
  * Created by homr on 2017. 5. 22..

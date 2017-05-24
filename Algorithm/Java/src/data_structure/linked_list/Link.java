@@ -1,4 +1,4 @@
-package data_structure;
+package data_structure.linked_list;
 
 /**
  * Created by homr on 2017. 5. 22..
