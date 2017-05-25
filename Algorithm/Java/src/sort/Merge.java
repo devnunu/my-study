@@ -62,7 +62,7 @@ public class Merge {
         int helperRight = middle + 1;
         int current = left;
 
-        while(helperLeft <=middle && helperRight <= right){
+        while(helperLeft <= middle && helperRight <= right){
             if(helper[helperLeft] <= helper[helperRight]) {
                 arr[current] = helper[helperLeft];
                 helperLeft++;
