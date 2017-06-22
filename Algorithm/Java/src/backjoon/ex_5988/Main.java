@@ -11,7 +11,15 @@ public class Main {
         int T = sc.nextInt();
 
         while(T!=0){
-            
+            String[] str = sc.next().split("");
+            int num = Integer.parseInt(str[str.length-1]);
+
+            if(num%2==0){
+                System.out.println("even");
+            }else{
+                System.out.println("odd");
+            }
+            T--;
         }
     }
 }
