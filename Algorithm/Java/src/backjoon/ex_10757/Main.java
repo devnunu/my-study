@@ -2,6 +2,10 @@ package backjoon.ex_10757;
 
 import java.util.Scanner;
 
+
+// 19 16 11 7 2
+
+// 19 14 11 6 2
 /**
  * Created by homr on 2017. 6. 26..
  */
@@ -35,12 +39,26 @@ public class Main {
         }
 
         for(int i=minSize; i<maxSize; i++){
+
             if(arr1.length>arr2.length){
-                result[i]=arr1[i]+C;
-                C = 0;
+                int sum = arr1[i]+C;
+                if(sum>=10){
+                    result[i]=sum%10;
+                    C = 1;
+                }else{
+                    result[i]=sum;
+                    C = 0;
+                }
+
             }else{
-                result[i]=arr2[i]+C;
-                C = 0;
+                int sum = arr2[i]+C;
+                if(sum>=10){
+                    result[i]=sum%10;
+                    C = 1;
+                }else{
+                    result[i]=sum;
+                    C = 0;
+                }
             }
         }
 
