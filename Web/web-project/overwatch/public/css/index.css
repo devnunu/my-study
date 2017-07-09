@@ -49,3 +49,91 @@
     background-color: orange;
     cursor: pointer;
 }
+
+.yoga-introduction{
+    padding : 5%;
+}
+
+.yoga-intro-title{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: bold;
+    text-align: center;
+    font-size: 3rem;
+    color: orange;
+    padding: 10px;
+    margin-top: 70px;
+}
+
+.yoga-explaination{
+    font-weight: 300;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding:30px;
+    line-height: 140%;
+}
+
+.yoga-step{
+    text-align: center;
+    margin-top: 60px;
+    background-color: orange;
+    height: 40vh;
+    padding:30px;
+    position: relative;
+}
+
+.yoga-step-title{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 3rem;
+    color: white;
+    padding-bottom: 50px;
+}
+
+.element{
+    display: inline-block;
+}
+
+.step{
+    padding: 5px;
+    font-size: 14pt;
+    font-weight: bold;
+    color: white;
+    
+}
+
+.step-title{
+    background-color: transparent;
+    font-size: 12pt;
+    color: white;
+}
+
+.dot{
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 105px;
+}
+
+#line{
+    position: absolute;
+    width: 880px;
+    border-bottom: 1px solid white;
+    top: 175px;
+    left:-10px;
+}
+
+.yoga-nation-title{
+    text-align: center;
+    font-size: 3rem;
+    margin-top:80px;
+    margin-bottom:50px;
+    color: orange;
+}
+
+.yoga-nation-list{
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+    line-height: 200%;
+    color: gray;
+}
