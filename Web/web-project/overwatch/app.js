@@ -6,7 +6,12 @@ app.listen(3000, function(){
 })
 
 app.use(express.static('public'));   
+app.set('view engine', 'ejs'); 
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + "/public/html/index.html");
+    res.render('index');
+})
+
+app.get('/about', function(req, res){
+    res.render('about');
 })

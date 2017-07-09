@@ -11,25 +11,14 @@
         <link href="../css/reset.css" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">LimiYoga</a>
-                </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-        </nav>
+        <% include ./base_nav %>
 
         <div class="row content-container">
             <div class="row intro-text">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <span class="orange-bracket">{</span>
-                    <span class="be-beautiful">Be Beautiful?</span>
+                    <span class="be-beautiful">Wanna Be Beautiful?</span>
                     <span class="orange-bracket">}</span>
                 </div>
                 <div class="col-md-1"></div>
@@ -143,37 +132,8 @@
                 </div>
             </div>
         </div>
-        <footer class="row yoga-footer">
-            <div class="col-md-2"></div>
-            <div class="col-md-2">
-                <ul>
-                    <li>ABOUT</li>
-                    <li>EDUCATION</li>
-                    <li>GALLERY</li>
-                    <li>NOTICE</li>
-                    <li>POLICY</li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <ul>
-                    <li>YoGa.LAB campus</li>
-                    <li>new yoga town, main states</li>
-                    <li>st.eldif 7,</li>
-                    <li>TT buliding 4th</li>
-                    <li>(main) 092 - 123 - 4567</li>
-                    <li>(sub/main) 092-4234-4234</li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <ul>
-                    <li>YoGa company</li>
-                    <li>represent: yoga fire</li>
-                    <li>CTO: yoga toga</li>
-                    <li>SN: 847-81-00387</li>
-                </ul>
-            </div>
-            <div class="col-md-2"></div>
-        </footer>
+        
+        <% include ./base_footer %>
         <script src="../js/index.js"></script>
     </body>
 </html>
