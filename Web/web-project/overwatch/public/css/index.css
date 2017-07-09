@@ -1,0 +1,51 @@
+.content-container{
+    padding: 0 20%;
+    margin-top: -20px;
+}
+
+.intro-text{
+    text-align: center;
+    margin: 7% 0;
+}
+
+.orange-bracket{
+    font-size: 4rem;
+    color: orange;
+    padding: 0 10%;
+    font-family: 'Lobster', cursive;
+}
+
+.be-beautiful{
+    font-size:3rem;
+    font-family: 'Lobster', cursive;
+}
+
+.yogaImg{
+    position: relative;
+    background-image: url("../images/yoga1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 70vh;
+    width: 100%;
+    border-radius: 2rem;
+}
+
+.image-selector{
+    position: absolute;
+    bottom:5%;
+    left:50%;
+}
+
+.selector{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    display: inline-block;
+    border-radius: 1rem;
+    margin: 0 3px;
+}
+
+.selector:hover{
+    background-color: orange;
+    cursor: pointer;
+}
