@@ -4,19 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var sassMiddleware = require('node-sass-middleware');
-
-var index = require('./server/routes/index');
+// Import Routes
+var routes = require('./server/routes/index');
 var users = require('./server/routes/users');
+// Import comments controller
+var comments = require('./server/controllers/comments');
 
-// 몽구스 ODM
+// ODM With Mongoose
 var mongoose = require('mongoose');
-// 세션 저장용 모듈
-var session = require('express-session');
+// Modules to store session
+var session    = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-// 패스포트와 경고 플래시 메시지 모듈 가져오기
+// Import Passport and Warning flash modules
 var passport = require('passport');
-var flash = require('connect-falsh');
+var flash = require('connect-flash');
 
 var app = express();
 
@@ -24,15 +25,16 @@ var app = express();
 app.set('views', path.join(__dirname, 'server/views/pages'));
 app.set('view engine', 'ejs');
 
-// 데이터베이스 설정
+// Database configuration
 var config = require('./server/config/config.js');
-// 데이터베이스 연결
+// connect to our database
 mongoose.connect(config.url);
-// 몽고 DB가 실행 중 인지 체크
-mongoose.connection.on('error', function(){
-  console.error('MongoDB Connection Error. Make sure MongoDB is running.');
-})
-// 패스포트 설정
+// Check if MongoDB is running
+mongoose.connection.on('error', function() {
+	console.error('MongoDB Connection Error. Make sure MongoDB is running.');
+});
+
+// Passport configuration
 require('./server/config/passport')(passport);
 
 // uncomment after placing your favicon in /public
@@ -41,57 +43,77 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(sassMiddleware({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public'),
-  indentedSyntax: true, // true = .sass and false = .scss
-  sourceMap: true
+app.use(require('node-sass-middleware')({
+    src: path.join(__dirname, 'public'),
+    dest: path.join(__dirname, 'public'),
+    indentedSyntax: true,
+    sourceMap: true
 }));
+// Setup public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 패스포트 용
-// 세션용 비밀 키
+// required for passport
+// secret for session
 app.use(session({
-  secret:'sometextgohere',
-  saveUninitialized:true,
-  resave:true,
-  // express-session과 connect-mongo를 이용해 몽고 DB에 세션 저장
-  store: new MongoStore({
-    url :config.url,
-    collection: 'sessions'
-  })
+    secret: 'sometextgohere',
+    saveUninitialized: true,
+    resave: true,
+    //store session on MongoDB using express-session + connect mongo
+    store: new MongoStore({
+        url: config.url,
+        collection : 'sessions'
+    })
 }));
-// 패스포트 인증 초기화
+
+// Init passport authentication
 app.use(passport.initialize());
-// 영구적인 로그인 세션
+// persistent login sessions
 app.use(passport.session());
-// 플래시 메세지
+// flash messages
 app.use(flash());
 
-app.use('/', index);
+app.use('/', routes);
 app.use('/users', users);
+// Setup routes for comments
+app.get('/comments', comments.hasAuthorization, comments.list);
+app.post('/comments', comments.hasAuthorization, comments.create);
+
+// error handlers
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
-// error handler
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
+
 
 module.exports = app;
 
-app.set('port', process.env.PORT||3000);
-var server = app.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + server.address().port);
-})
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+    console.log('Express server listening on port ' + server.address().port);
+});

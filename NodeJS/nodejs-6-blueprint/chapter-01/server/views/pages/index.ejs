@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= title %></title>
     <% include ../partials/stylesheet %>
-  </head>
-  <body>
+</head>
+<body>
     <% include ../partials/header %>
-    <div clss=container>
-      <div class="page-haeder m-t-1">
+
+    <div class="container">
+      <div class="page-header m-t-1">
         <h1><%= title %></h1>
       </div>
-      <p>Welcome to <%= title %></p>
+      <p class="lead">Welcome to <%= title %></p>
     </div>
+
     <% include ../partials/footer %>
     <% include ../partials/javascript %>
-  </body>
+</body>
 </html>
