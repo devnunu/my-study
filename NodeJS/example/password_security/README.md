@@ -65,8 +65,11 @@
 - npm install pbkdf2-password --save
 
 ```
+    var bkfd2Password = require("pbkdf2-password");
+    var hasher = bkfd2Password();
+
     var users = [{
-        username : 'nunu1',
+        username : 'nunu',
         password : '111',
         salt : 'aisjdfli!@#ilsjd',
         disPlayName : 'supernunu'
