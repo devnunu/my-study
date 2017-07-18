@@ -24,7 +24,9 @@ app.use(bodyParser.urlencoded({extended:false}));
 /* 로그 아웃 */
 app.get('/auth/logout', function(req, res){
     delete req.session.displayName;
-    res.redirect('/welcome');
+    req.session.save(function(){
+        res.redirect('/welcome');
+    })
 });
 
 /* 로그인 성공시 리다이렉션 페이지 */
@@ -57,7 +59,9 @@ app.post('/auth/login',function(req, res){
     // 해당 유저가 존재할 경우 메인페이지로 리다이렉션
     if(uname===user.username&&pwd===user.password){
         req.session.displayName = user.displayName;
-        res.redirect('/welcome');
+        req.session.save(function(){
+            res.redirect('/welcome');
+        })
     }
     // 해당 유저가 존재하지 않을 경우 login 페이지로 안내
     else{
