@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+
+// 쿠키 기능을 위한 미들 웨어, npm  install로 설치 해야함.
 var cookieParser = require('cookie-parser')
 
 app.use(cookieParser());

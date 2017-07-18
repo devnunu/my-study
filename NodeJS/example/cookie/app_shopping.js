@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser')
 
-// 임의의 쿠키값 부여
+// 임의의 쿠키 값 부여
 app.use(cookieParser('asdffasdfasdf'));
 
 // 데이터베이스 대신 배열을 생성
