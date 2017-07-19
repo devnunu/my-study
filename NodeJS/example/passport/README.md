@@ -86,6 +86,9 @@ app.use(passport.session());    // 세션 사용 선언, 반드시 세션 사용
             var uname = username;
             var pwd = password;
 
+            // 해당 사용자가 파일이나 데이터 베이스에 있는지 확인해야한다.
+            // 코드는 달라질 수 있고 중요한 것은 자신이 사용하는 요소에 
+            // '사용자가 있는지 없는지' 체크하는 코드를 짜야한다. 이에 따라 조건문이 분기한다. 
             for(var i = 0; i<users.length; i++){
                 var user = users[i];
                 if(uname === user.username){
@@ -128,10 +131,12 @@ app.use(passport.session());    // 세션 사용 선언, 반드시 세션 사용
     *  사용자를 검색해서 찾았을경우 done 함수를 다시 호출하고 두번째 인자로 user 정보가 들어있는 객체를 넘긴다.
     */
  
+    // 사용자의 세션을 생성해준다. 세션을 생성하는 처음 딱 한번만 실행
     passport.serializeUser(function(user, done) {
         return done(null, user.username);
     });
 
+    // 사용자가 세션을 가지고 페이지에 접근할 때 마다 실행된다.
     passport.deserializeUser(function(id, done) {
         for(var i =0; i<users.length; i++){
             var user = users[i];
