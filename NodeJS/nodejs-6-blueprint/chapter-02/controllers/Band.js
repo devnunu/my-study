@@ -11,7 +11,7 @@ exports.create = function(req, res){
 };
 
 // Band 목록
-exports.list = function(reqm res){
+exports.list = function(req, res){
     // Band 전체 목록을 날짜별로 정렬하기
     models.Band.findAll({
         // 정렬: 최근 생성된 순으로

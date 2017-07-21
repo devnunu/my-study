@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var swig = require('swig');
 
 var index = require('./controllers/index');
-var users = require('./routes/users');
+var bands = require('./controllers/band');
+var users = require('./controllers/user');
 
 var app = express();
 
@@ -27,6 +28,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', index.show);
+app.get('/bands', bands.list);
+app.get('/bands/:id', bands.byId);
+app.post('/bands', bands.create);
+app.put('/bands/:id', bands.update);
+app.delete('/bands/:id', bands.delete);
+app.get('/users', users.list);
+app.post('users', users.create);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
