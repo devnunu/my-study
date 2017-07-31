@@ -66,3 +66,28 @@ npm i typescript tslint
 tslint --init
 
 ```
+
+### tsconfig의 프로퍼티
+
+- json.schemastore.org/tsconfig 참조
+
+### 최상위 프로퍼티
+
+- compileOnSave, extends, complieOptions, files, include, exclude
+
+- compileOnSave : 파일을 저장하면 자동으로 저장하는 옵션(true/false)
+
+- extends : 설정을 확장함
+
+- complieOptions : 제일 많은 옵션 설정 프로퍼티
+
+- file : 상대 혹은 절대 경로의 리스트 배열, exclude 보다 강력함
+
+- include : exclude 보다 약함, *를 사용하면 .ts/.tsx/.d.ts만 include(allowJS)
+
+- exclude : 설정안하면 4가지(node modlues, bower componets, jspm pacages, <outDir>)를 default를 제외한다.
+
+
+### 컴파일 옵션
+
+- type : 

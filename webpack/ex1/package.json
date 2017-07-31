@@ -1,0 +1,17 @@
+{
+  "name": "web_pack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bulid": "webpack-dev-server --entry ./src/js/app.js --output-filename dist/bundle.js",
+    "bulid:prod": "webpack src/js/app.js dist/bundle.js -p"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "^2.6.1"
+  }
+}
