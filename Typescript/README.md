@@ -87,7 +87,228 @@ tslint --init
 
 - exclude : 설정안하면 4가지(node modlues, bower componets, jspm pacages, <outDir>)를 default를 제외한다.
 
+## 문법
 
-### 컴파일 옵션
+### 변수(variable)
 
-- type : 
+- 타입스크립트는 자바스크립트에서 형을 명시적으로 작성해 주어야하기 때문에 아래와 같이 변수선언을 하게된다.
+ 
+```
+var isDone : boolean = false; 
+var age : number = 42;
+var myName : string = "Anders";
+
+var notSure : any = true;
+notSure = 23;
+notSure = "may be a string";
+```
+
+- null과 undefined의 차이는 다음과 같다. null은 비어있는 값을 표시하는 것이며, undefined는 명시되어있지 않은 것이라고 할수 있다.
+
+```
+// print null
+var emptyVariable = null;
+console.log(emptyVariable);
+
+// print undefined
+var newVariable;
+console.log(newVariable);
+```
+
+### 콜렉션(collection)
+
+- 여러개의 값을 하나의 변수에 저장할 때 사용한다. 즉 배열을 생성할떄 아래와 같이 사용하게 된다.
+
+```
+// list
+var list : number[] = [1,2,3];
+var list : Array<number> = [1,2,3];
+``` 
+
+
+### 함수(function)
+
+- 어떤일들을 해야할지 명세해놓고 가져다 사용한다.
+
+```
+// 인자가 없을 때 
+function sayHello(){
+  alert('Hello');
+}
+sayHello();
+
+
+// 인자가 있을 때 1
+function sayMyName(name:string){
+  alert('name :' + name);
+  console.log('function sayMyName is called');
+}
+sayMyName('a student studying typescript');
+
+// 인자가 있을 때 2
+function addTwoNumber(a:number, b: number){
+  return a+b;
+}
+addTwoNumber(2,3);
+alert(addTwoNumber(2,3));
+```
+
+### 조건문(condition)
+
+- if에 해당하는 키워드이다.
+
+```
+// example1
+var homeworkDone : boolean = true;
+if(homeworkDone===true){
+  alert('then you can play from now');
+}
+
+// example2
+var age: number = 15
+
+if(age>20){
+  console.log('You are an adult')
+}else{
+  console.log('You are not an adult');
+}
+
+```
+
+### 반복문(loop)
+
+- 여러번의 코드가 반복될떄 반복문을 통해 단순하고 직관적인 코드를 사용할 수 있음.
+
+1. for
+```
+// example1
+for(var i = 0; i<10; i++){
+  console.log(i);
+}
+
+// example2(collection)
+var myArray : string[] = ["A","B","C"];
+
+for(var i =0; i<myArray.length; i++){
+  console.log("index:"+i+"->"+myArray[i]);
+}
+```
+
+2. while
+```
+// example1
+var i = 10;
+
+while(i>0){
+  console.log(i);
+  i--;
+}
+```
+
+### 오브젝트(Object)
+
+- OOP에서의 개념과는 조금 다르다. 오히려 자바스크립트의 map이나 파이썬의 dict와 비슷하다.
+
+- 조금 더 자세하게 말하자면 구조화된 변수라고 할수 있다.
+
+```
+var emptyObject = {}
+var personObject = {
+  firstName : "John",
+  lastName : "Smith"
+}
+personObject["salary"] = 14000;
+```
+
+- 오브젝트의 값을 체크하기 위해서는 for-in 문을 사용한다.
+
+```
+var emptyObject = {}
+var personObject = {
+  firstName : "John",
+  lastName : "Smith"
+}
+personObject["salary"] = 14000;
+
+for(var member in personObject){
+  if(personObject.hasOwnProperty(member)){
+    console.log("the member" + member + "of personObject is" + personObject[member]);
+  }
+}
+```
+
+### 인터페이스(interface)
+
+- 인터페이스란 오브젝트에 대한 타입이다. 여러개의 함수와 여러개의 변수가 구조적으로 어떻게 결합해야하는지, 함수가 구조적으로 어떻게 만들어져야하는지를 설정한다.
+
+1. 첫번째로, 오브젝트에 대한 구조를 명세할때 인터페이스를 사용한다. 예는 다음과 같다.
+
+```
+// 인터페이스
+interface Person{
+  name: string;
+  age?:number  // optional
+
+  move():void;
+}
+
+// 인터페이스 implements
+var person1 :Person= {
+  name:"john",
+  move:() => {}
+}
+
+var person2 :Person= {
+  name:"john",
+  age:42,
+  move:() => {}
+}
+
+// 에러! 사용할수 없음, move 함수가 없고, age가 잘못된 변수형임
+var person3 :Person= {
+  name:"john",
+  age:true
+}
+```
+
+
+2. 함수에 구조에 대한 명세를 하는 예제이다
+
+```
+interface SearchFunc{
+  (source:string, substring:string) : boolean;
+}
+
+var mySearch : SearchFunc{
+  mySearch =  function(src:string, sub:string){
+    return src.search(sub) != -1;
+  }
+}
+
+```
+
+### 클래스(class)
+
+- 실제 세계의 물체를 표현함, 객체라고 말할 수 있음. 따라서 정보(변수)와 행동(함수)으로 이루어진다.
+
+- 인터페이스와 혼동할 수 있지만 차이점은 constructor와 함수 내부의 내용을 꼭 써야한다는 점이다.
+
+
+```
+class Point{
+  x: number;
+
+  constructor(x: number, public y :number = 0){
+    this.x = x;
+  }
+
+  dist() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+
+  static origin = new Point(0, 0);
+}
+
+var point1 = new Point(10, 20);
+var point2 = new Point(25);
+```

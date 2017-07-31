@@ -4,9 +4,9 @@ module.exports = {
     app: '',
   },
   output: {
-    path: '',
-    filename: '',
-    publicPath: '',
+    path: '/dist',
+    filename: '[name].js',
+    publicPath: '/',
   },
   module: {
 
