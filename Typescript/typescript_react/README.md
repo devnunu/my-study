@@ -105,3 +105,87 @@ create-react-app [프로젝트명] --scripts-version=react-scripts-ts
 
 6. registerServiceWorker.ts
 - pwa 서비스 워커 사용 등록
+
+## Component
+
+- 컴포넌트는 크게 2가지이다. stateless 컴포넌트, React.Component를 상속받는 컴포넌트, React.PureComponent를 상속받는 컴포넌트
+
+- state는 컴포넌트 안에서 사용하는 데이터이며, props는 외부에서 주입해 주는 데이터이다. stateless 컴포넌트는 function이다.
+
+1. props
+- 컴포넌트 외부에서 컴포넌트로 넣어주는 데이터
+- 컴포넌트 내부에서는 자신의 props를 변경할 수 없다.
+- 컴포넌트 외부에서 props가 변경되면 render가 호출된다.
+
+2. state
+- 컴포넌트 내부의 데이터
+- 클래스의 프로퍼티와는 다르다
+- 생성자 혹은 프로퍼티 초기 할당으로 state를 초기 할당해 줘야한다.
+- 내부에서 변경을 하더라도 setState 함수를 이용해야 render가 호출된다.
+- state를 처리하는 방법은 생성자에서 할당 해주거나 클래스 내부에 명시한다.
+
+### 제네릭
+
+```
+React.Component<P,S>
+```
+
+- 위와 같이 Reac.Component를 상속 받을 때 제네릭으로 2개의 형을 선언한다면, props와 state의 자료형이 강제된다. 빈 props나 state는 {}를 사용한다.
+
+### setState
+
+```
+class App extends React.Component < AppProps , AppState > {
+
+  constructor(props:AppProps) {
+    super();
+    this.state = {
+      age : 35
+    };
+    setInterval(() => {
+      this.setState({
+        age : this.state.age + 1
+      });
+    }, 2000);
+  }
+
+    ...
+}
+```
+
+- 일반적으로 setState로 state 값을 변경해야지 render가 virtual dom에 의해 다시 호출된다.
+
+### 인터페이스를 이용한 props와 state의 형 분리
+
+```
+interface AppProps {
+  name:string
+}
+
+interface AppState {
+  age:number
+}
+
+class App extends React.Component < AppProps , AppState > {
+    ...
+}
+```
+
+- 제네릭 안에 모든 형태를 넣을수 없으므로 위와 같이 인터페이스로 분리하여 작성이 가능하다.
+
+
+### Stateless Component
+
+```
+const StatelessComponent:React.SFC<AppProps> = (props) => {
+  return (
+    <h2>{props.name}</h2>
+  )
+}
+```
+
+- 내부에 render가 없고 state가 없는 stateless component는 앞에서도 언급했듯이 function이다. 따라서 이와 같이 함수 형식으로 선언을 해주는데, 이때 React.StatelessComponent를 상속 받거나 축약형으로 React.SFC를 상속받아 구현한다.
+
+## Lifecycle
+
+- componentWillMount, componentDidMount
