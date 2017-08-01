@@ -3,8 +3,9 @@ import './App.css';
 
 const logo = require('./logo.svg');
 
-interface AppProps {
-  name:string
+export interface AppProps {
+  name : string;
+  company? : string;
 }
 
 interface AppState {
@@ -12,18 +13,16 @@ interface AppState {
 }
 
 class App extends React.Component < AppProps , AppState > {
-  private _interval: number;
+  static defaultProps ={
+    company : 'studio'
+  };
 
   constructor(props:AppProps) {
     super();
     this.state = {
       age : 35
     };
-    setInterval(() => {
-      this.setState({
-        age : this.state.age + 1
-      });
-    }, 2000);
+    this._rollback = this._rollback.bind(this);
   }
 
   componentWillMount() {
@@ -32,19 +31,16 @@ class App extends React.Component < AppProps , AppState > {
 
   componentDidMount() {
     console.log('App componentDidMount');
-    this._interval = window.setInterval(
-      () => {
-        this.setState({
-          age: this.state.age + 1
-        });
-      },
-      1000
-    );
+    setInterval(() => {
+      this.setState({
+        age : this.state.age + 1
+      });
+    }, 2000);
+    
   }
 
   componentWillUnmount() {
     console.log('App componentWillUnmount');
-    clearInterval(this._interval);
   }
 
 
@@ -53,22 +49,35 @@ class App extends React.Component < AppProps , AppState > {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>{this.props.name}, {this.state.age}</h2>
+          <h2>{this.props.name},{this.props.company}, {this.state.age}</h2>
         </div>
         <p className="App-intro">
           <StatelessComponent name = {this.props.name} />
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <button onClick={this._rollback}>회춘</button>
       </div>
     );
+  }
+
+  private _rollback() : void{
+    this.setState({
+      age:20
+    });
   }
 }
 
 
 const StatelessComponent:React.SFC<AppProps> = (props) => {
   return (
-    <h2>{props.name}</h2>
+    <h2>{props.name} {props.company}</h2>
   )
 }
+
+StatelessComponent.defaultProps = {
+  company : "Home"
+};
+
+
 
 export default App;

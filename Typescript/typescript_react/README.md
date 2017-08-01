@@ -188,4 +188,111 @@ const StatelessComponent:React.SFC<AppProps> = (props) => {
 
 ## Lifecycle
 
-- componentWillMount, componentDidMount
+### 컴포넌트 랜더 Lifecycle
+
+- 컴포넌트도 생애 주기가 있으며, 해당 주기에 대응되는 함수들이 있다. 
+
+- 실행 순서는 다음과 같다. constructor -> componentWillMount -> render -> componentDidMount -> (제거시)componentWillUnmount
+
+1. componentWillMount : 컴포넌트가 render 되기 직전 동작하는 함수
+2. componentDidMount : 컴포넌트가 render 된 후 동작하는 함수
+3. componentWillUnmount : 컴포넌트를 제거할 때 동작하는 함수
+
+- 보통 컴포넌트 랜더 후 동작하는 함수는 conponentDidMount 안에 넣는다. 컴포넌트가 랜더링 된 후 돌아가야하기 때문이다. 
+
+### state, props 변경 Lifecycle
+
+- 컴포넌트 내부에서 state가 변경되거나 컴포넌트 외부에서 props가 변경될 때, 이에 따라 내부 라이프 사이클 함수가 호출된다. 컴포넌트가 랜더 되는 순서와는 다르다.
+
+- 실행 순서는 다음과 같다. componentWillReceiveProps -> shouldComponentUpdate -> componentWillUpdate -> render -> componentDidUpdate
+
+1. componentWillReceiveProps : 새롭게 props가 들어오면 실행되는 함수, 인자로 props의 자료형을 받는다. state가 변경될때는 반응하지 않는다. setState로 변경시 이 이벤트 없이 한번에 변경된다.
+
+2. shouldComponentUpdate : props나 state가 바뀌거나 둘다 동시에 바뀔 때, 일반 컴포넌트에서는 무조건 불린다. 이 함수의 return 값은 boolean이며 false면 아무 render가 일어나지 않는다. true면 render 함수와 다음 lifecycle 함수로 넘어간다. 이 함수의 인자는 props와 state이며 default return 값은 true이다.
+
+3. componentWillUpdate : 컴포넌트가 재 랜더링 되기 전에 불리며 여기서 setState 같은 함수를 사용하면 안된다.
+
+4. componentDidUpdate : 컴포넌트가 랜더링을 마치면 불린다.
+
+
+```
+  componentWillReceiveProps(nextProps: AppProps) {
+    console.log(`App componentWillReceiveProps : ${JSON.stringify(nextProps)}`);
+  }
+
+  shouldComponentUpdate(nextProps: AppProps, nextState: AppState): boolean {
+    console.log(`App shouldComponentUpdate : ${JSON.stringify(nextProps)}, ${JSON.stringify(nextState)}`);
+    return true;
+  }
+
+  componentWillUpdate(nextProps: AppProps, nextState: AppState) {
+    console.log(`App componentWillUpdate : ${JSON.stringify(nextProps)}, ${JSON.stringify(nextState)}`);
+  }
+
+  componentDidUpdate(prevProps: AppProps, prevState: AppState) {
+    console.log(`App componentDidUpdate : ${JSON.stringify(prevProps)}, ${JSON.stringify(prevState)}`);
+  }
+```
+
+## 이벤트(Event)
+
+### DOM onclick => JSX onclick
+
+- 이벤트를 넘기려면 JSX에서는 camelCase를 사용해야 한다. 이것이 JSX의 문법이다.
+
+```
+constructor(props: AppProps) {
+    console.log('App constructor');
+    super(props);
+    this.state = {
+      age: 35
+    };
+    this._reset = this._reset.bind(this);
+  }
+
+  render() {
+    console.log('App render');
+    return (
+      <div>
+        <h2>Hello {this.props.name} - {this.state.age}</h2>
+        <button onClick={this._reset}>리셋</button>
+      </div>
+    );
+  }
+
+  private _reset(): void {
+    this.setState({
+      age: 35
+    });
+  }
+```
+
+### defaultProps
+
+- 컴포넌트 내부에 다음과 같이 defaultProps를 선언해 주고 props의 기본 값을 지정해 줄 수 있다. 만약 props가 지정 되지 않았다면 default 값이 사용되며, props가 상위 컴포넌트에서 주입되었을때, 해당 값이 된다.
+
+```
+static defaultProps ={
+    company : 'studio'
+};
+```
+
+- stateless 컴포넌트는 다음과 같이 설정해준다
+
+```
+
+// 방법 1
+StatelessComponent.defaultProps = {
+  company : "Home"
+};
+
+// 방법 2
+const StatelessComponent:React.SFC<AppProps> = ({name, company ="Home2"}) => {
+  return (
+    <h2>{name} {company}</h2>
+  )
+}
+
+```
+
+## 하위 컴포넌트를 변경하기
