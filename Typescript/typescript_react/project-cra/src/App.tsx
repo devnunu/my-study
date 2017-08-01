@@ -5,11 +5,11 @@ const logo = require('./logo.svg');
 
 export interface AppProps {
   name : string;
-  company? : string;
 }
 
 interface AppState {
   age:number
+  todo: string[];
 }
 
 class App extends React.Component < AppProps , AppState > {
@@ -20,7 +20,8 @@ class App extends React.Component < AppProps , AppState > {
   constructor(props:AppProps) {
     super();
     this.state = {
-      age : 35
+      age : 35,
+      todo: ['first']
     };
     this._rollback = this._rollback.bind(this);
   }
@@ -49,10 +50,10 @@ class App extends React.Component < AppProps , AppState > {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>{this.props.name},{this.props.company}, {this.state.age}</h2>
+          <h2>{this.props.name}, {this.state.todo.join(', ')}</h2>
         </div>
         <p className="App-intro">
-          <StatelessComponent name = {this.props.name} />
+          <StatelessComponent name={this.props.name} />
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
         <button onClick={this._rollback}>회춘</button>
@@ -61,8 +62,11 @@ class App extends React.Component < AppProps , AppState > {
   }
 
   private _rollback() : void{
+    const todo :string[] = this.state.todo;
+    todo.push('second');
+
     this.setState({
-      age:20
+      todo:todo
     });
   }
 }
@@ -70,13 +74,9 @@ class App extends React.Component < AppProps , AppState > {
 
 const StatelessComponent:React.SFC<AppProps> = (props) => {
   return (
-    <h2>{props.name} {props.company}</h2>
+    <h2>{props.name}</h2>
   )
 }
-
-StatelessComponent.defaultProps = {
-  company : "Home"
-};
 
 
 

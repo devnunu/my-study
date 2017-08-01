@@ -295,4 +295,56 @@ const StatelessComponent:React.SFC<AppProps> = ({name, company ="Home2"}) => {
 
 ```
 
-## 하위 컴포넌트를 변경하기
+## 컴포넌트 변경
+
+### 하위 컴포넌트를 변경하기
+
+- 하위 컴포넌트를 변경할때 redux 등을 사용하지 않으면 상당히 복잡한 구조를 가지게 된다. 예를 들어 Grand parent -> parent -> Me -> Child -> Grand Child의 컴포넌트 구조를 가질 때, Grand parent와 같은 레벨에 있는 Button을 클릭하면 Grand Child의 state가 변경된다고 하자. 이 때 props의 전달은 다시 Grand parent -> parent -> Me -> Child -> Grand Child의 순서로 전달 되어져야한다.
+
+### 상위 컴포넌트를 변경하기
+
+- 똑같이 상위 컴포넌트도 Grand parent -> parent -> Me -> Child -> Grand Child의 컴포넌트 구조를 가질 때, Grand parent안에 state를 변경하는 함수를 만든다. 이 함수는 결과적으로 Grand parent와 같은 레벨에 있는 p태그를 변경하는 함수이다. 해당 함수를 props로 내려줘서 Grand child에 전달될 경우, onClick을 통해 Grand child의 컴포넌트를 클릭하면 Grand parent의 p태그가 변경 될수 있다.
+
+- 만약 수만개의 컴포넌트가 이와같이 동작한다고 하면 상당히 복잡한 구조를 가지게 된다. 이것이 리액트의 큰 단점이며, 따라서 redux와 modx가 필요한것이다.
+
+### Refs
+
+- props를 다루지 않고 자식의 어떤 요소를 건드리고 싶을때 사용한다. ref를 사용해서 랜더를 하지 않고 자식 요소를 다룰 수 있다.
+
+### 컴포지션
+
+- "Facebook은 수천개의 컴포넌트에서 React를 사용하며 컴포넌트 상속계층을 사용하는 것이 권장되는 use case를 찾지 못했습니다. 컴포넌트에서 UI이외의 기능을 재사용하고 싶으면, 상속을 이용하지 말고 자바스크립트 모듈로 분리하는 것이 좋다"
+
+- 컴포지션의 기본은 props를 재사용하는 것이다. 즉 아래의 코드와 마찬가지로, props를 사용하여 위치를 잡아주는 것이다. 다시 말해 props로 컴포넌트를 내려준다.
+
+- props는 단일값 이외에도 함수, 컴포넌트까지 전달이 가능하다. 
+
+```
+function SplitPane(props) {
+  return (
+    <div className="SplitPane">
+      <div className="SplitPane-left">
+        {props.left}
+      </div>
+      <div className="SplitPane-right">
+        {props.right}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <SplitPane
+      left={
+        <Contacts />
+      }
+      right={
+        <Chat />
+      } />
+  );
+}
+```
+
+
+
