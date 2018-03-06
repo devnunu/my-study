@@ -196,3 +196,13 @@ print("요청 url", url)
 reqData = req.urlopen(url).read().decode('utf-8')
 print("출력", reqData)
 ```
+
+## 파이썬으로 youtube 동영상 다운받고 mp3로 변환 자동화하기
+
+### 컨버터
+동영상을 mp3로 변환하기 위해서는 컨버터가 필요
+ffmpeg를 사용하기 위해 아래의 주소에서 다운로드를 받자
+https://www.ffmpeg.org/download.html#build-mac
+
+### pytube
+https://github.com/nficano/pytube
