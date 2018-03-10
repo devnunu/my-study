@@ -76,6 +76,13 @@ ex) 알파고 CPU 1202대, GPU 176대, 서버급 300대
 따라서 가상 환경을 통해서 이를 관리한다.
 가상환경을 사용하면 관리, 배포가 쉬워지고 충돌 문제도 사라진다.
 
+### export path
+- bash_profile 이나  zprofile에 추가해준다
+```
+# added by Anaconda3 5.1.0 installer
+export PATH="/anaconda3/bin:$PATH"
+```
+
 ### 터미널 명령어
 conda --version : 아나콘다 버전 확인
 conda update conda : 아나콘다 업데이트
