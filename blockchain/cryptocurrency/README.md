@@ -33,3 +33,31 @@ class Block {
     }
 }
 ```
+
+## 제네시스 블록
+- 최초의 블록
+- 블록체인 코드안에 하드 코딩 되어야함
+- blockchain 코드의 첫번째 인덱스에 할당 됨
+
+```
+const genesisBlock = new Block(
+    0,
+    '70815c2538e5ac5b38e84523bb0d9f3643807f2bcb5f445a10d0b07f60a606a1',
+    null,
+    new Date().getTime() / 1000,
+    'This is the genesis!!'
+)
+
+let blockchain = [genesisBlock]
+
+console.log(blockchain)
+
+/* Result
+[ Block {
+    index: 0,
+    hash: '70815c2538e5ac5b38e84523bb0d9f3643807f2bcb5f445a10d0b07f60a606a1',
+    previoushash: null,
+    timestamp: 1520658650.326,
+    data: 'This is the genesis!!' } ]
+*/
+```
