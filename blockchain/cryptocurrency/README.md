@@ -63,3 +63,62 @@ console.log(blockchain)
 ```
 
 ## 새로운 블록을 만드는 함수
+- 해쉬 생성에 crypto js를 사용함
+- 함수형으로 모든 인자에 대한 값을 리턴받음
+
+```
+const getLastBlock = () => blockchain[blockchain.length - 1];
+
+const getTimestamp = () => new Date().getTime() / 1000;
+
+// 모든 인자값을 포함하여 hash 값을 생성
+const createHash = (index, previoustHash, timestamp, data) => {
+    return CryptoJS.SHA256(index + previoustHash + timestamp, data).toString();
+}
+
+const createNewBlock = data => {
+    const previousBlock = getLastBlock();
+    const newBlockIndex = previousBlock.index + 1;
+    const newTimestamp = getTimestamp();
+    const newHash = createHash(
+        newBlockIndex, 
+        previousBlock.hash, 
+        newTimestamp,
+        data
+    );
+    const newBlock = new Block(
+        newBlockIndex, 
+        newHash, 
+        previousBlock.hash,
+        newTimestamp,
+        data
+    );
+    return newBlock;
+}
+```
+
+## 블록 검증
+- 블록은 한사람이 아니라 여러사람이 추가할수 있으므로 검증을 통해 올바른 블록인지 확인하는 과정이 필요함
+- 여러가지 조건을 추가하여 해당 조건을 통과하지 못한경우 false를 리턴함
+```
+const getBlockHash = (block) => createHash(block.index, block.previoushash,block.timestamp,block.data)
+
+const isNewBlockValid = (candidateBlcok, latestBlock) => {
+    // 블록 체인의 인덱스 검증
+    if(latestBlock.index + 1 !== candidateBlcok.index){
+        console.log('The candidate block doesnt have a valid index')
+        return false;
+    }
+    // 이전 블록의 해쉬가 동일한지 검증 
+    else if(latestBlock.hash !== candidateBlcok.previoushash){
+        console.log('thie previousHash of this candidate block is not the hash of this latest block')
+        return false;
+    }
+    // 현재 블록의 해쉬가 적절한 값인지 검증
+    else if(getBlockHash(candidateBlcok)!==candidateBlcok.hash){
+        console.log('The hash of this block is invalid');
+        return false
+    }
+    return true;
+}
+```
