@@ -61,3 +61,5 @@ console.log(blockchain)
     data: 'This is the genesis!!' } ]
 */
 ```
+
+## 새로운 블록을 만드는 함수

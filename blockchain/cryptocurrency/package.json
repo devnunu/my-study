@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "main": "src/server.js",
   "author": "eunwoo <aufcl4858@naver.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  }
 }
