@@ -26,7 +26,9 @@ const getTimestamp = () => new Date().getTime() / 1000;
 
 // 모든 인자값을 포함하여 hash 값을 생성
 const createHash = (index, previoustHash, timestamp, data) => {
-    return CryptoJS.SHA256(index + previoustHash + timestamp, data).toString();
+    return CryptoJS.SHA256(
+        index + previoustHash + timestamp, JSON.stringify(data)
+    ).toString();
 }
 
 const createNewBlock = data => {
@@ -68,4 +70,14 @@ const isNewBlockValid = (candidateBlcok, latestBlock) => {
         return false
     }
     return true;
+}
+
+const isNewStructureValid = (block) => {
+    return (
+        typeof block.index ==='number' 
+        && typeof block.hash ==='string' 
+        && typeof block.previoustHash === 'string'
+        && typeof block.timestamp === 'number' 
+        && typeof block.data === 'string'
+    )
 }
