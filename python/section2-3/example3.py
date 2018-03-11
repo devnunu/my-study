@@ -4,6 +4,7 @@ import urllib.request as req
 import urllib.parse as rep
 
 base = "https://www.inflearn.com/"
+# 한글을 유니코드로 만들어줌
 quite = rep.quote_plus("추천-강좌")
 
 url = base + quite
