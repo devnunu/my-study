@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+    <div id="app">
+        <todo-item v-bind:todo="todo" v-for="todo in Todos" :key="todo.id"></todo-item>
+        <todo-list v-bind:passed-data="language" v-for="language in Languages" :key="language.id"></todo-list>
+    </div>
+    <script src='https://unpkg.com/vue@2.3.3'></script>
+    <script>
+        Vue.component('todo-list', {
+            props: ['passedData'],
+            template: '<p>{{passedData.text}}</p>'
+        })
+
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<p>{{todo.text}}</p>'
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                Todos: [
+                    { id: 0, text: 'Learn Vue.js' },
+                    { id: 1, text: 'Learn Components' },
+                    { id: 2, text: 'Learn Props' },
+                    { id: 3, text: 'Learn For Loop' }
+                ],
+                Languages: [
+                    { id:0, text: 'python' },
+                    { id:1, text: 'c++' },
+                    { id:2, text: 'java' },
+                    { id:3, text: 'objective-c' }
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>
