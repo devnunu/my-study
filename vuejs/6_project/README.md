@@ -25,6 +25,8 @@ vue cli로 간단한 webpack 설정이 되어있는 프로젝트 생성이 가�
 
 ```
 npm install -global vue-cli
+
+// webpack-simple 대신 webpack도 가능 (상용 서비스 가동 시 webpack 권장)
 vue init webpack-simple
 npm install
 npm run dev
