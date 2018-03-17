@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Hello vue router!</h1>
+        <p>
+            <router-link to="/foo">Go to foo</router-link>
+            <router-link to="/bar">Go to bar</router-link>
+        </p>
+        <router-view></router-view>
+    </div>
+    <script src="js/vendor/vue.js"></script>
+    <script src="js/vendor/vue-router.js"></script>
+    <script>
+        var Foo = { template: '<div>foo</div>' }
+        var Bar = { template: '<div>bar</div>' }
+
+        var routes = [
+            { path: '/foo', component: Foo },
+            { path: '/bar', component: Bar },
+        ]
+        var router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            router
+        }).$mount('#app')
+    </script>
+</body>
+
+</html>
