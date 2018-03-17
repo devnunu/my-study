@@ -160,13 +160,14 @@ var vm = new Vue({
                 message: 'Hello Vue.js!'
             },
             beforeCreate: function() {
-                console.log("beforCreate")
+                console.log("beforeCreate")
             },
             created: function() {
                 console.log("created")
             },
             mounted: function() {
                 console.log("mounted")
+                this.message = "1"
             },
             updated: function() {
                 console.log("updated")

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+    <div id="app">
+        <button>Parent Component</button>
+        <my-component></my-component>
+        <my-local-component></my-local-component>
+    </div>
+    <script src='https://unpkg.com/vue@2.3.3'></script>
+    <script>
+        // Global Component
+        Vue.component('my-component', {
+            template: `<div>A global component!</div>`
+        })
+
+        new Vue({
+            el: '#app'
+        })
+
+        // Local Component
+        var cmp = {
+            template: '<div>A local component!</div>'
+        };
+
+        new Vue({
+            el: '#app',
+            components:{
+                // 태그명: 컴포넌트의 내용
+                'my-local-component': cmp
+            }
+        })
+    </script>
+</body>
+
+</html>
