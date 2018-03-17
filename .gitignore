@@ -93,3 +93,7 @@ hs_err_pid*
 
 # database information
 config.json
+
+# dist file
+dist
+dist/*
