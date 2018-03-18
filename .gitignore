@@ -95,5 +95,4 @@ hs_err_pid*
 config.json
 
 # dist file
-dist
-dist/*
+dist/
