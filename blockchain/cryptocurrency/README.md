@@ -139,3 +139,34 @@ const isNewStructureValid = (block) => {
     )
 }
 ```
+
+
+## 블록 체인 교체
+- 블록체인이 유효하다면 이를 교체하기 위한 함수가 필요하다
+
+
+```
+const replaceChain = candidateChain => {
+    // 블록 체인 검증 후, 체인의 길이 비교(길어야 함)
+    if (isChainValid(candidateChain) && candidateChain.length > blockchain.length) {
+        blockchain = candidateChain;
+        return true;
+    } else {
+        return false;
+    }
+}
+```
+
+## 블록 추가
+
+```
+// 블록 추가
+const addBlockToChain = candidateBlock => {
+    if (isNewBlockValid(candidateBlock, getLastBlock())) {
+        blockchain.push(candidateBlock);
+        return true;
+    } else {
+        return false;
+    }
+}
+```

@@ -24,6 +24,8 @@ const getLastBlock = () => blockchain[blockchain.length - 1];
 
 const getTimestamp = () => new Date().getTime() / 1000;
 
+const getBlockchain = () => blockchain;
+
 // 모든 인자값을 포함하여 hash 값을 생성
 const createHash = (index, previoustHash, timestamp, data) => {
     return CryptoJS.SHA256(
@@ -36,14 +38,14 @@ const createNewBlock = data => {
     const newBlockIndex = previousBlock.index + 1;
     const newTimestamp = getTimestamp();
     const newHash = createHash(
-        newBlockIndex, 
-        previousBlock.hash, 
+        newBlockIndex,
+        previousBlock.hash,
         newTimestamp,
         data
     );
     const newBlock = new Block(
-        newBlockIndex, 
-        newHash, 
+        newBlockIndex,
+        newHash,
         previousBlock.hash,
         newTimestamp,
         data
@@ -51,21 +53,21 @@ const createNewBlock = data => {
     return newBlock;
 }
 
-const getBlockHash = (block) => createHash(block.index, block.previoushash,block.timestamp,block.data)
+const getBlockHash = (block) => createHash(block.index, block.previoushash, block.timestamp, block.data)
 
 const isNewBlockValid = (candidateBlcok, latestBlock) => {
     // 블록 체인의 인덱스 검증
-    if(latestBlock.index + 1 !== candidateBlcok.index){
+    if (latestBlock.index + 1 !== candidateBlcok.index) {
         console.log('The candidate block doesnt have a valid index')
         return false;
     }
     // 이전 블록의 해쉬가 동일한지 검증 
-    else if(latestBlock.hash !== candidateBlcok.previoushash){
+    else if (latestBlock.hash !== candidateBlcok.previoushash) {
         console.log('thie previousHash of this candidate block is not the hash of this latest block')
         return false;
     }
     // 현재 블록의 해쉬가 적절한 값인지 검증
-    else if(getBlockHash(candidateBlcok)!==candidateBlcok.hash){
+    else if (getBlockHash(candidateBlcok) !== candidateBlcok.hash) {
         console.log('The hash of this block is invalid');
         return false
     }
@@ -74,10 +76,32 @@ const isNewBlockValid = (candidateBlcok, latestBlock) => {
 
 const isNewStructureValid = (block) => {
     return (
-        typeof block.index ==='number' 
-        && typeof block.hash ==='string' 
+        typeof block.index === 'number'
+        && typeof block.hash === 'string'
         && typeof block.previoustHash === 'string'
-        && typeof block.timestamp === 'number' 
+        && typeof block.timestamp === 'number'
         && typeof block.data === 'string'
     )
+}
+
+// 블록의 체인을 교체
+const replaceChain = candidateChain => {
+    // 블록 체인 검증 후, 체인의 길이 비교(길어야 함)
+    if (isChainValid(candidateChain) &&
+        candidateChain.length > getBlockchain().length) {
+        blockchain = candidateChain;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// 블록 추가
+const addBlockToChain = candidateBlock => {
+    if (isNewBlockValid(candidateBlock, getLastBlock())) {
+        blockchain.push(candidateBlock);
+        return true;
+    } else {
+        return false;
+    }
 }
