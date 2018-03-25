@@ -180,3 +180,59 @@ const addBlockToChain = candidateBlock => {
 - yarn add express morgan body-parser
 - yarn global add nodemon
 - morgan은 로그인 용 미들웨어
+
+- 아래와 같이 서버 세팅을 구현한다.
+```
+const express = require('express'),
+    bodyParser = require('body-parser'),
+    morgan = require('morgan'),
+    Blockchain = require('./blockchain');
+
+const { getBlockchain, createNewBlcok } = Blockchain;
+
+const PORT = 3000;
+
+const app = express();
+app.use(bodyParser.json());
+app.use(morgan('combine'));
+app.listen(PORT, () => {
+    console.log(`this server port is open! at ${PORT}`, )
+});
+```
+
+## 라우트 생성
+
+```
+// 블록 보기를 요청 했을 때
+app.get('/blocks', (req, res) => {
+    res.send(getBlockchain());
+})
+
+// 새 블록을 추가할때
+app.post('/blocks', (req, res) => {
+    const { body: { data } } = req;
+    const newBlock = createNewBlcok();
+    res.send(newBlock);
+})
+```
+
+## get, post 요청 익스텐션
+- vs code에서 rest client를 설치한다.
+- request.http 라는 http 파일을 생성하고, 아래와 같은 코드를 입력한다
+- 위에 자동으로 뜨는 send request 텍스트를 클릭하면된다.
+
+```
+
+GET http://localhost:3000/blocks
+
+###
+
+POST http://localhost:3000/blocks
+Content-Type: application/json
+
+{
+    "data": "Second block baby!!"
+}
+
+```
+
