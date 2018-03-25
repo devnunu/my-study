@@ -236,3 +236,98 @@ Content-Type: application/json
 
 ```
 
+## 분산화
+- 서버를 재시작 하면 모든 블록이 사라진다.
+- 따라서 다른 서버를 시작하고, 다른 서버에서 받아올수있도록 분산화가 가능해야한다.
+- 이를 위해서 서버끼리 연결이 가능할수 있도록 프로토콜이 필요하다.
+- p2p.js 파일을 만들고 websockets를 설치한다
+- websockets은 리얼타임이며 http 대신에 ws를 가지고 있다.
+- websockets는 커넥션이 계속 유지된다(상태 저장형)
+- yarn add ws
+- http와 ws는 같은 포트에서 동작가능(다른 프로토콜 이므로)
+
+
+```
+const WebSockets = require('ws');
+
+const socket = [];
+
+const startP2PServer = server => {
+    const wsServer = new WebSockets.Server({ server });
+    wsServer.on('connection', ws => {
+        console.log(`Hello ${ws}`);
+    });
+    console.log('nomadcoin p2p server running!');
+};
+
+module.exports = {
+    startP2PServer
+}
+```
+
+
+- 기존의 서버에도 ws로 접속할 수 있도록 수정해준다
+
+```
+const express = require('express'),
+    bodyParser = require('body-parser'),
+    morgan = require('morgan'),
+    Blockchain = require('./blockchain'),
+    P2P = require('./p2p');
+
+const { getBlockchain, createNewBlock } = Blockchain;
+const { startP2PServer } = P2P;
+
+const PORT = process.env.HTTP_PORT || 3000;
+
+const app = express();
+app.use(bodyParser.json());
+app.use(morgan('combine'));
+
+//...
+
+const server = app.listen(PORT, () => { console.log(`this server port is open! at ${PORT}`) });
+
+startP2PServer(server);
+```
+
+## 소켓 연결
+- p2p.js에 다음과 같이 소켓을 연결하는 로직을 구현한다.
+
+```
+
+const getSockets = () => sockets;
+
+const initSocketConnection = socket => {
+    sockets.push(socket);
+}
+
+const connectToPeers = newPeer => {
+    const ws = new WebSockets(newPeer);
+    ws.on('open', () => {
+        initSocketConnection(ws);
+    })
+};
+
+```
+
+- server.js에는 아래와 같은 api 를 추가한다.
+```
+// 다른 피어를 연결할 떄
+app.post('/peers', (req, res) => {
+    const { body: { peer } } = req;
+    connectToPeers(peer);
+    res.send();
+})
+```
+
+
+- REST api로 다음과 같이 확인할 수 있다
+```
+POST http://localhost:3000/peers
+Content-Type: application/json
+
+{
+    "peer": "ws://localhost:4000"
+}
+```
