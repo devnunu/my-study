@@ -50,6 +50,7 @@ const createNewBlock = data => {
         newTimestamp,
         data
     );
+    addBlockToChain(newBlock);
     return newBlock;
 }
 
@@ -99,9 +100,14 @@ const replaceChain = candidateChain => {
 // 블록 추가
 const addBlockToChain = candidateBlock => {
     if (isNewBlockValid(candidateBlock, getLastBlock())) {
-        blockchain.push(candidateBlock);
+        getBlockchain().push(candidateBlock);
         return true;
     } else {
         return false;
     }
+}
+
+module.exports = {
+    getBlockchain,
+    createNewBlock
 }

@@ -9,6 +9,8 @@
 - 익스플로러
 - 지갑
 
+# 블록 체인 코드
+
 ## project setup
 - src 내부에서 모든 작업은 진행함
 - 패키지 관리자는 yarn 사용
@@ -170,3 +172,11 @@ const addBlockToChain = candidateBlock => {
     }
 }
 ```
+
+# 서버 코드
+
+## server 구현
+- server.js 파일 생성
+- yarn add express morgan body-parser
+- yarn global add nodemon
+- morgan은 로그인 용 미들웨어
