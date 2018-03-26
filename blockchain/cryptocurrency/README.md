@@ -380,3 +380,67 @@ const handleSocketError = ws => {
     ws.on('error', () => closeSocketConnection(ws));
 }
 ```
+
+## 블록체인 업데이트
+- 두 peer의 블록체인을 비교하여 업데이트가 낮은 블록을 갱신하기 위해 다음과 같은 스텝을 따른다
+    1. 첫번쨰로 가장 최근의 블록을 요청하고, 
+    2. 두번째로 모든 블록을 요청할수 있다.
+    3. 세번째로 블록을 가져와야한다.
+
+- 요청을 하면 응답이있는데, 이러한 응답을 관리하기위해 message creator라는 것을 만든다.
+- 리덕스와 비슷한 개념으로 동작한다.
+
+- 기본적인 구조는 다음과 같다.
+```
+// Message Types
+const GET_LATEST = 'GET_LATEST';
+const GET_ALL = 'GET_ALL';
+const BLOCKGHAIN_RESPONSE = 'BLOCKGHAIN_RESPONSE';
+
+// Message Creators
+const getLatest = () => {
+    return {
+        type: GET_LATEST,
+        data: null
+    }
+}
+
+const getAll = () => {
+    return {
+        type: GET_ALL,
+        data: null,
+    }
+}
+
+const getAll = () => {
+    return {
+        type: GET_ALL,
+        data: null,
+    }
+}
+
+const blockchainResponse = data => {
+    return {
+        type: BLOCKGHAIN_RESPONSE,
+        data: data,
+    }
+}
+```
+
+- 만들어진 Message Creator를 사용하기위해 핸들러를 작성하고 시작과 동시에 등록한다.
+
+```
+// 초기 소켓 연결 설정
+const initSocketConnection = ws => {
+    sockets.push(ws);
+    handleSocketMessages(ws);
+    handleSocketError(ws);
+}
+
+// Handlers
+const handleSocketMessages = ws => {
+    ws.on('message', data => {
+
+    })
+}
+```

@@ -1,6 +1,43 @@
-const WebSockets = require('ws');
+const WebSockets = require('ws'),
+    Blockchain = require('./blockchain');
+
+const { getLastBlock } = Blockchain;
 
 const sockets = [];
+
+// Message Types
+const GET_LATEST = 'GET_LATEST';
+const GET_ALL = 'GET_ALL';
+const BLOCKGHAIN_RESPONSE = 'BLOCKGHAIN_RESPONSE';
+
+// Message Creators
+const getLatest = () => {
+    return {
+        type: GET_LATEST,
+        data: null
+    }
+}
+
+const getAll = () => {
+    return {
+        type: GET_ALL,
+        data: null,
+    }
+}
+
+const getAll = () => {
+    return {
+        type: GET_ALL,
+        data: null,
+    }
+}
+
+const blockchainResponse = data => {
+    return {
+        type: BLOCKGHAIN_RESPONSE,
+        data: data,
+    }
+}
 
 const getSockets = () => sockets;
 
@@ -13,16 +50,17 @@ const startP2PServer = server => {
 };
 
 // 초기 소켓 연결 설정
-const initSocketConnection = socket => {
-    sockets.push(socket);
-    handleSocketError(socket);
-    // 메세지를 받으면 호출
-    socket.on('message', (data) => {
-        console.log(data)
-    });
-    setTimeout(() => {
-        socket.send('welcome');
-    }, 5000)
+const initSocketConnection = ws => {
+    sockets.push(ws);
+    handleSocketMessages(ws);
+    handleSocketError(ws);
+}
+
+// Handlers
+const handleSocketMessages = ws => {
+    ws.on('message', data => {
+
+    })
 }
 
 // 에러 핸들러
