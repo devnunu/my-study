@@ -445,22 +445,36 @@ const parseData = data => {
 const sendMessage = (ws, message) => ws.send(JSON.stringify(message));
 ```
 
-- 만들어진 Message Creator를 사용하기위해 핸들러를 작성하고 시작과 동시에 등록한다.
+- 다음은 소켓에 메세지가 도착했을 때 type에 따라 분기시켜 처리하는 핸들러이다.
 
 ```
-// 초기 소켓 연결 설정
+
+// Handlers
+const handleSocketMessages = ws => {
+    ws.on('message', data => {
+        const message = parseData(data);
+        if (message === null) {
+            return;
+        }
+        console.log(message);
+        switch (message.type) {
+            case GET_LATEST:
+                sendMessage(ws, getLastBlock());
+                break;
+
+        }
+    })
+}
+```
+
+- 만들어진 Message Creator를 사용하기위해 핸들러를 시작과 동시에 등록한다.
+
+```
 // 초기 소켓 연결 설정
 const initSocketConnection = ws => {
     sockets.push(ws);
     handleSocketMessages(ws);
     handleSocketError(ws);
     sendMessage(ws, getLastBlock());
-}
-
-// Handlers
-const handleSocketMessages = ws => {
-    ws.on('message', data => {
-
-    })
 }
 ```
