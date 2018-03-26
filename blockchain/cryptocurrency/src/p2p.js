@@ -25,13 +25,6 @@ const getAll = () => {
     }
 }
 
-const getAll = () => {
-    return {
-        type: GET_ALL,
-        data: null,
-    }
-}
-
 const blockchainResponse = data => {
     return {
         type: BLOCKGHAIN_RESPONSE,
@@ -54,14 +47,38 @@ const initSocketConnection = ws => {
     sockets.push(ws);
     handleSocketMessages(ws);
     handleSocketError(ws);
+    sendMessage(ws, getLastBlock());
+}
+
+const parseData = data => {
+    try {
+        return JSON.parse(data);
+    } catch (e) {    //  JSON parse 할 수 없는 데이터의 경우
+        console.log(e)
+        return null;
+    }
 }
 
 // Handlers
+
+// 메세지 핸들러
 const handleSocketMessages = ws => {
     ws.on('message', data => {
+        const message = parseData(data);
+        if (message === null) {
+            return;
+        }
+        console.log(message);
+        switch (message.type) {
+            case GET_LATEST:
+                sendMessage(ws, getLastBlock());
+                break;
 
+        }
     })
 }
+
+const sendMessage = (ws, message) => ws.send(JSON.stringify(message));
 
 // 에러 핸들러
 const handleSocketError = ws => {

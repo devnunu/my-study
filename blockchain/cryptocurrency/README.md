@@ -427,14 +427,34 @@ const blockchainResponse = data => {
 }
 ```
 
+- 이렇게 만들어진 creator 들은 데이터를 들고 있는데, 데이터를 파싱하기 위해서 아래와 같은 함수를 사용한다.
+
+```
+const parseData = data => {
+    try {
+        return JSON.parse(data)
+    } catch(e) {
+        console.log(e)
+        return null;
+    }
+}
+```
+
+- 또한 메세지를 보낼수 있는 sendMessage 함수도 구현한다.
+```
+const sendMessage = (ws, message) => ws.send(JSON.stringify(message));
+```
+
 - 만들어진 Message Creator를 사용하기위해 핸들러를 작성하고 시작과 동시에 등록한다.
 
 ```
+// 초기 소켓 연결 설정
 // 초기 소켓 연결 설정
 const initSocketConnection = ws => {
     sockets.push(ws);
     handleSocketMessages(ws);
     handleSocketError(ws);
+    sendMessage(ws, getLastBlock());
 }
 
 // Handlers
