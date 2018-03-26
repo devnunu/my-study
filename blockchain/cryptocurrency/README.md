@@ -362,3 +362,21 @@ const initSocketConnection = socket => {
     }, 5000)
 }
 ```
+
+## 에러 핸들러
+- 다음과 같은 에러 핸들러를 추가해 준다.
+- 이는 웹소켓이 닫힐때, 또는 에러가 발생했을떄를 처리해준다.
+- handleSocketError를 initSoketConnection 안에 넣어서 실행시킨다.
+
+```
+// 에러 핸들러
+const handleSocketError = ws => {
+    const closeSocketConnection = ws => {
+        ws.close();
+        // 죽은 소켓이 있으면 에러가 발생 할 수 있으므로 제거
+        sockets.splice(sockets.indexOf(ws), 1);
+    }
+    ws.on('close', () => closeSocketConnection(ws));
+    ws.on('error', () => closeSocketConnection(ws));
+}
+```
