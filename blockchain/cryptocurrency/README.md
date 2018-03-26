@@ -332,5 +332,33 @@ Content-Type: application/json
 }
 ```
 
-## peer 사이에 메세지 전달
+## peer 사이의 메세지 전달
 
+- peer 사이의 메세지 전달을 위해서 p2p 서버의 시작시 연결되도록 코드를 변경해준다
+
+```
+const startP2PServer = server => {
+    const wsServer = new WebSockets.Server({ server });
+    // 이 부분이 콘솔이었는데, 초기화로 변경
+    wsServer.on('connection', ws => {
+        initSocketConnection(ws)
+    });
+    console.log('nomadcoin p2p server running!');
+};
+```
+
+- 또한 메세지를 받으면 확인을 위해 다음과 같은 setTimeout 코드를 추가한다
+
+```
+// 초기 소켓 연결 설정
+const initSocketConnection = socket => {
+    sockets.push(socket);
+    // 메세지를 받으면 호출
+    socket.on('message', (data) => {
+        console.log(data)
+    });
+    setTimeout(() => {
+        socket.send('welcome');
+    }, 5000)
+}
+```
