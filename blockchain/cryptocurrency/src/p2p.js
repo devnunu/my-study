@@ -5,7 +5,8 @@ const {
   getNewestBlock,
   isBlockStructureValid,
   replaceChain,
-  getBlockchain
+  getBlockchain,
+  addBlockToChain
 } = Blockchain;
 
 const sockets = [];
