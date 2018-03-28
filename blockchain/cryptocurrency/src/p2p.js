@@ -1,7 +1,10 @@
 const WebSockets = require('ws'),
     Blockchain = require('./blockchain');
 
-const { getLastBlock } = Blockchain;
+const {
+    getLastBlock,
+    isBlockStructureValid
+} = Blockchain;
 
 const sockets = [];
 
@@ -35,7 +38,9 @@ const blockchainResponse = data => {
 const getSockets = () => sockets;
 
 const startP2PServer = server => {
-    const wsServer = new WebSockets.Server({ server });
+    const wsServer = new WebSockets.Server({
+        server
+    });
     wsServer.on('connection', ws => {
         initSocketConnection(ws)
     });
@@ -53,7 +58,7 @@ const initSocketConnection = ws => {
 const parseData = data => {
     try {
         return JSON.parse(data);
-    } catch (e) {    //  JSON parse 할 수 없는 데이터의 경우
+    } catch (e) { //  JSON parse 할 수 없는 데이터의 경우
         console.log(e)
         return null;
     }
@@ -71,14 +76,35 @@ const handleSocketMessages = ws => {
         console.log(message);
         switch (message.type) {
             case GET_LATEST:
-                sendMessage(ws, getLastBlock());
+                sendMessage(ws, responseLatest());
+                break;
+            case BLOCKGHAIN_RESPONSE:
+                const receivedBlocks = message.data;
+                if (receivedBlocks === null) {
+                    break;
+                }
+                handleBlockchainResponse(receivedBlocks);
                 break;
 
         }
     })
 }
 
+const handleBlockchainResponse = receiveBlocks => {
+    if (receivedBlocks.length === 0) {
+        console.log('Reveived block have a length of 0');
+        return;
+    }
+    const latestBlockReceived = receiveBlocks[receiveBlocks.length - 1];
+    if (!isBlockStructureValid(latestBlockReceived)) {
+        console.log('The block structure of the block received is not valid');
+        return;
+    }
+}
+
 const sendMessage = (ws, message) => ws.send(JSON.stringify(message));
+
+const responseLatest = () => blockchainResponse(getLastBlock())
 
 // 에러 핸들러
 const handleSocketError = ws => {

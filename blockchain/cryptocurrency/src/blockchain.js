@@ -56,7 +56,10 @@ const createNewBlock = data => {
 
 const getBlockHash = (block) => createHash(block.index, block.previoushash, block.timestamp, block.data)
 
-const isNewBlockValid = (candidateBlcok, latestBlock) => {
+const isBlockValid = (candidateBlcok, latestBlock) => {
+    if(!isBlockStructureValid(candidateBlcok)){
+        console.log('The candidate block structure is no valid');
+    }
     // 블록 체인의 인덱스 검증
     if (latestBlock.index + 1 !== candidateBlcok.index) {
         console.log('The candidate block doesnt have a valid index')
@@ -75,7 +78,7 @@ const isNewBlockValid = (candidateBlcok, latestBlock) => {
     return true;
 }
 
-const isNewStructureValid = (block) => {
+const isBlockStructureValid = (block) => {
     return (
         typeof block.index === 'number'
         && typeof block.hash === 'string'
@@ -99,7 +102,7 @@ const replaceChain = candidateChain => {
 
 // 블록 추가
 const addBlockToChain = candidateBlock => {
-    if (isNewBlockValid(candidateBlock, getLastBlock())) {
+    if (isBlockValid(candidateBlock, getLastBlock())) {
         getBlockchain().push(candidateBlock);
         return true;
     } else {
@@ -111,4 +114,5 @@ module.exports = {
     getLastBlock,
     getBlockchain,
     createNewBlock,
+    isBlockStructureValid
 }
