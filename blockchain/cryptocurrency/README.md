@@ -497,28 +497,28 @@ const initSocketConnection = ws => {
 - 또한 블록의 구조를 판별하여 적절하지 않으면 리턴한다.
 - 길이에 따라 블록체인에 더할것인지 전체 체인을 교체할 것인지 결정한다.
 ```
-const handleBlockchainResponse = receiveBlocks => {
-    if (receivedBlocks.length === 0) {
-        console.log('Reveived block have a length of 0');
-        return;
+const handleBlockchainResponse = receivedBlocks => {
+  if (receivedBlocks.length === 0) {
+    console.log("Received blocks have a length of 0");
+    return;
+  }
+  const latestBlockReceived = receivedBlocks[receivedBlocks.length - 1];
+  if (!isBlockStructureValid(latestBlockReceived)) {
+    console.log("The block structure of the block received is not valid");
+    return;
+  }
+  const newestBlock = getNewestBlock();
+  if (latestBlockReceived.index > newestBlock.index) {
+    if (newestBlock.hash === latestBlockReceived.previousHash) {
+      addBlockToChain(latestBlockReceived);
+    } else if (receivedBlocks.length === 1) {
+      sendMessageToAll(getAll());
+    } else {
+      replaceChain(receivedBlocks);
     }
-    const latestBlockReceived = receiveBlocks[receiveBlocks.length - 1];
-    if (!isBlockStructureValid(latestBlockReceived)) {
-        console.log('The block structure of the block received is not valid');
-        return;
-    }
-    const newestBlock = getNewsetBlock();
-    if (latestBlockReceived.index > newestBlock.index) {
-        if (newestBlock.hash === latestBlockReceived.previousHash) {
-            addBlockToChain(latestBlockReceived);
-        } else if (receivedBlocks.length === 1) {
-            //TODO: get all the block. we are way behind
-        } else {
-            replaceChain(receivedBlocks);
-        }
-    }
-}
+  }
+};
 
 ```
 
-## 체인 싱크
+## 블록 업데이트 브로드 캐스트
