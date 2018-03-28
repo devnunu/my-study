@@ -495,6 +495,7 @@ const initSocketConnection = ws => {
 - 전달 받은 chain을 검증하는 함수를 작성한다
 - 우선 길이가 0이면 리턴한다.
 - 또한 블록의 구조를 판별하여 적절하지 않으면 리턴한다.
+- 길이에 따라 블록체인에 더할것인지 전체 체인을 교체할 것인지 결정한다.
 ```
 const handleBlockchainResponse = receiveBlocks => {
     if (receivedBlocks.length === 0) {
@@ -506,5 +507,16 @@ const handleBlockchainResponse = receiveBlocks => {
         console.log('The block structure of the block received is not valid');
         return;
     }
+    const newestBlock = getNewsetBlock();
+    if (latestBlockReceived.index > newestBlock.index) {
+        if (newestBlock.hash === latestBlockReceived.previousHash) {
+            addBlockToChain(latestBlockReceived);
+        } else if (receivedBlocks.length === 1) {
+            //TODO: get all the block. we are way behind
+        } else {
+            replaceChain(receivedBlocks);
+        }
+    }
 }
+
 ```

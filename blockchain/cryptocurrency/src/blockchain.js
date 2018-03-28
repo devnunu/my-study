@@ -20,7 +20,7 @@ const genesisBlock = new Block(
 
 let blockchain = [genesisBlock]
 
-const getLastBlock = () => blockchain[blockchain.length - 1];
+const getNewestBlock = () => blockchain[blockchain.length - 1];
 
 const getTimestamp = () => new Date().getTime() / 1000;
 
@@ -111,8 +111,10 @@ const addBlockToChain = candidateBlock => {
 }
 
 module.exports = {
-    getLastBlock,
+    getNewestBlock,
     getBlockchain,
     createNewBlock,
-    isBlockStructureValid
+    isBlockStructureValid,
+    addBlockToChain,
+    replaceChain
 }
