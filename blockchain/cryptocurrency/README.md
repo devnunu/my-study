@@ -520,3 +520,5 @@ const handleBlockchainResponse = receiveBlocks => {
 }
 
 ```
+
+## 체인 싱크
