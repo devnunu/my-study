@@ -138,14 +138,14 @@ background-color:
 - 불러올떄는 _를 제외해도 된다.
 
 ```
-// [partial.scss]
+// [_mixin.scss]
 @mixin fontSizeBgColor($fontSize:20px, $bgColor:#0f0) {
     font-size: $fontSize;
     background-color: $bgColor;
 }
 
 // [main.scss]
-@import "partial";
+@import "mixin";
 ```
 
 ## if문
