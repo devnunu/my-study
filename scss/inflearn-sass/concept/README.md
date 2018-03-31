@@ -180,3 +180,47 @@ background-color:
     @inclue theme('haha')
 }
 ```
+
+# 미디어 쿼리와 믹스인
+
+- 다음과 같이 @content를 사용해서 미디어쿼리 작성이 가능
+```
+
+@mixin mq(){
+    @media screen and (min-width:1200px){
+        @content
+    }
+}
+
+
+@include mq() {
+  // css 관련 코드  
+};
+
+```
+
+- 또한 if 문을 사용하면 여러개의 미디어 쿼리를 사용할 수 있다.
+```
+@mixin mq($screen-width){
+    @if $screen-width == 'desktop-big' {
+        @media screen and (min-width:1200px){
+            @content
+        }
+    }
+    @else if $screen-width == 'tablet' {
+        @media screen and (min-width:601px) and (max-width:899px){
+            @content
+        }
+    }
+    @else if $screen-width == 'phone' {
+        @media screen and (max-width:600px){
+            @content
+        }
+    }
+}
+
+
+@include mq('tablet') {
+  // css 관련 코드  
+};
+```
