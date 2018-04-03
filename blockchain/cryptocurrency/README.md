@@ -478,3 +478,47 @@ const initSocketConnection = ws => {
     sendMessage(ws, getLastBlock());
 }
 ```
+
+## 전달 받은 블록에 대한 처리
+- 메세지 핸들러에 다음과 같은 조건을 추가해준다
+
+```
+    case BLOCKGHAIN_RESPONSE:
+        const receivedBlocks = message.data;
+        if (receivedBlocks === null) {
+            break;
+        }
+        handleBlockchainResponse(receivedBlocks);
+        break;
+```
+
+- 전달 받은 chain을 검증하는 함수를 작성한다
+- 우선 길이가 0이면 리턴한다.
+- 또한 블록의 구조를 판별하여 적절하지 않으면 리턴한다.
+- 길이에 따라 블록체인에 더할것인지 전체 체인을 교체할 것인지 결정한다.
+```
+const handleBlockchainResponse = receivedBlocks => {
+  if (receivedBlocks.length === 0) {
+    console.log("Received blocks have a length of 0");
+    return;
+  }
+  const latestBlockReceived = receivedBlocks[receivedBlocks.length - 1];
+  if (!isBlockStructureValid(latestBlockReceived)) {
+    console.log("The block structure of the block received is not valid");
+    return;
+  }
+  const newestBlock = getNewestBlock();
+  if (latestBlockReceived.index > newestBlock.index) {
+    if (newestBlock.hash === latestBlockReceived.previousHash) {
+      addBlockToChain(latestBlockReceived);
+    } else if (receivedBlocks.length === 1) {
+      sendMessageToAll(getAll());
+    } else {
+      replaceChain(receivedBlocks);
+    }
+  }
+};
+
+```
+
+## 블록 업데이트 브로드 캐스트
