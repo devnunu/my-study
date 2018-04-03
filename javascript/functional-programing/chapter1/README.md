@@ -90,5 +90,60 @@ function add5(obj, b) {
 add5는 add4와 다르게 참조만 할 뿐 값을 변경하지 않는다.
 또한 동일한 결과값을 리턴하므로 순수함수 라고 할 수 있다.
 
-
 ## 일급 함수
+
+일급 함수란 함수를 값으로 다룰수 있는지를 말한다. 자바스크립트에서는 변수에 함수를 담을수 있다.
+아래의 코드는 변수에 값으로 담아진 함수의 예제이다.
+
+```javascript
+var f1 = function (a) { return a * a; };
+console.log(f1);
+```
+
+또한 함수가 함수를 인자로 받을수 있다는 것도 일급함수의 특징중 하나이다.
+아래의 코드는 f3에 함수를 인자로 받아 실행시키는 예제이다.
+
+```javascript
+function f3(f) {
+    return 10;
+}
+
+f3(function() {return 10;});
+```
+
+### 함수 예제
+
+그럼 일급 함수와 함수형 프로그래밍의 특징을 이용해 add maker 함수를 만들어 보도록 하겠다
+
+```javascript
+function add_maker(a) {
+    return function (b) { // 클로저
+        return a + b;
+    }
+}
+
+var add10 = add_maker(10);
+
+console.log(add10(20));
+```
+
+위에서 부터 함수를 보도록하자
+먼저 add_maker는 함수를 리턴한다.
+add10이라는 변수는 add_maker에 a값을 10으로 넣은 함수를 리턴하게 된다.
+결과적으로 add10은 a를 기억하는 클로저가 된다.
+따라서 마지막줄에서 add10에 20을 넣으면 기존에 세팅된 10값과 20이 더해져 30이 출력된다.
+
+```javascript
+function f4(f1, f2, f3) {
+    return f3(f1() + f2());
+}
+
+console.log(f4(
+    function () { return 2; },
+    function () { return 1; },
+    function (a) { return a * a; },
+));
+```
+
+위의 코드는 f1과 f2 값을 받아 f3의 인자로 넘겨준후 결과를 출력하는 코드이다.
+바람직한 예제는 아니지만 이 코드도 순수 함수의 예제라고 할 수 있다.
