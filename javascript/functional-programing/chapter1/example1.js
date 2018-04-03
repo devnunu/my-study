@@ -15,3 +15,13 @@ function add3(a, b) {
     c = b;
     return a + b;
 }
+
+var obj1 = { val: 10 };
+function add4(obj, b) {
+    obj.val += b;
+}
+
+var obj1 = { val: 10 }
+function add5(obj, b) {
+    return { val: obj.val + b }
+}
