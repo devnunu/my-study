@@ -235,3 +235,58 @@ function _every(data, predi) {
     return _find_index(data, _negate(predi || _identity)) == -1;
 }
 ```
+
+## 접기 - reduce, min_by, max_by
+
+### reduce - min, max
+
+reduce와 find의 차이점은, reduce는 모든 데이터를 다 확인한다는 점이다. reduce를 이용해서 min이나 max라는 함수를 작성할 수 있다.
+
+```javascript
+function _min(data) {
+    return _reduce(data, function (a, b) {
+        return a < b ? a : b;
+    });
+}
+
+function _max(data) {
+    return _reduce(data, function (a, b) {
+        return a > b ? a : b;
+    });
+}
+
+console.log(_min([1, 2, 4, 10, 5, -4]));
+
+console.log(_max([1, 2, 4, 10, 5, -4]));
+```
+
+### min_by, max_by
+
+min_by와 max_by는 어떤 조건에 따라 비교할 것인지를 추가적으로 인자로 받게 된다. 이 떄문에 min과 max보다 다형성이 높아진다.
+예를 들어, 모든 데이터에게 절대값을 적용하여 비교 하고 싶거나 복잡한 로직을 적용한 후에 값을 비교 하고 싶을 때 해당 함수를 사용한다.
+
+```javascript
+
+function _min_by(data, iter) {
+    return _reduce(data, function (a, b) {
+        return iter(a) < iter(b) ? a : b;
+    });
+}
+
+function _max_by(data, iter) {
+    return _reduce(data, function (a, b) {
+        return iter(a) > iter(b) ? a : b;
+    });
+}
+
+console.log(
+    _min_by([1, 2, 4, 10, 5, -4]), Math.abs
+);
+
+console.log(
+    _max_by([1, 2, 4, 10, 5, -4]), Math.abs
+);
+
+```
+
+간단하게 iterator를 인자로 받고, 이 함수를 데이터들에게 적용하여 구현이 가능하다.

@@ -103,3 +103,45 @@ console.log(_some([1, 2, 5, 10, 20], function (val) {
 function _every(data, predi) {
     return _find_index(data, _negate(predi)) == -1;
 }
+
+
+// 접기 - reduce
+
+function _min(data) {
+    return _reduce(data, function (a, b) {
+        return a < b ? a : b;
+    });
+}
+
+function _max(data) {
+    return _reduce(data, function (a, b) {
+        return a > b ? a : b;
+    });
+}
+
+console.log(_min([1, 2, 4, 10, 5, -4]));
+
+console.log(_max([1, 2, 4, 10, 5, -4]));
+
+
+
+
+function _min_by(data, iter) {
+    return _reduce(data, function (a, b) {
+        return iter(a) < iter(b) ? a : b;
+    });
+}
+
+function _max_by(data, iter) {
+    return _reduce(data, function (a, b) {
+        return iter(a) > iter(b) ? a : b;
+    });
+}
+
+console.log(
+    _min_by([1, 2, 4, 10, 5, -4]), Math.abs
+);
+
+console.log(
+    _max_by([1, 2, 4, 10, 5, -4]), Math.abs
+);
