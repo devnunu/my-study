@@ -4,7 +4,6 @@
 
 ## 회원 목록, map filter
 
-
 ### 명령형 코드
 
 다음은 조건에 따른 일반적 코드 서술 방법이다
@@ -497,4 +496,61 @@ _go(1,
     function (a) { return a * a },
     console.log
 )
+```
+
+## 다형성 높이기, _keys, 에러
+
+### _each의 다형성 높이기
+
+기존에 만들어진 _each 함수에 null을 넣으면 list.length가 동작하지 않아 오류가 발생한다.
+우리는 이전에 만들었던 _get이라는 함수를 통해 이러한 에러를 처리할 것이다.
+
+```javascript
+
+// 이와 같은 상황에서는 에러가 발생
+_each(null, console.log);
+
+// get을 통해 null값을 처리해줌
+var _length = _get('length');
+
+function _each(list, iter) {
+    for (var i = 0, len = _length(list); i < len; i++) {
+        iter(list[i]);
+    }
+    return list;
+}
+
+```
+
+함수형 프로그래밍에서는 어떠한 값이 인자로 들어오더라도 잘 처리할수 있는 것을 중요하게 여긴다. 따라서 이와 같은 정의는 중요하다.
+
+### _keys
+
+Object.keys를 조금더 안전하게 만들기 위해 우리는 _keys 함수를 만든다. Object.keys의 특징은 인자로 들어온 값들의 키 들을 뽑아준다. 다만 null 값이 들어오면 에러가 발생한다. 이 부분을 안전하게 만드는 keys를 만들어보자
+
+```javascript
+// object인지 확인
+function _is_object(obj){
+    return typeof obj == 'object' && !!obj;
+}
+
+function _keys(obj) {
+    return Object.keys(obj) ? Object.keys(obj) : [];
+}
+```
+
+_keys를 사용한다면 each의 다형성을 높일 수 있다.
+예를 들어 each의 첫번째 인자값이 객체가 들어올 경우는 처리하지 못하게 되므로 순환 가능한 인자로 변환이 필요하다.
+
+```javascript
+var _length = _get('length');
+
+function _each(list, iter) {
+    // Array거나 key/value 쌍이거나 모두 처리가 가능해짐
+    var keys = _keys(list);
+    for (var i = 0, len = keys.length; i < len; i++) {
+        iter(list[keys[i]]);
+    }
+    return list;
+}
 ```

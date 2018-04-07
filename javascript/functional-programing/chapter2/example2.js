@@ -269,7 +269,7 @@ f1(1);
 
 
 // go
-function _go(arg) { 
+function _go(arg) {
     var fns = _rest(arguments);
     return _pipe.apply(null, fns)(arg);
 }
@@ -280,3 +280,20 @@ _go(1,
     function (a) { return a * a },
     console.log
 )
+
+// 다형성 높이기
+
+// 이와 같은 상황에서는 에러가 발생
+_each(null, console.log);
+
+// get을 통해 null값을 처리해줌
+var _length = _get('length');
+
+function _each(list, iter) {
+    for (var i = 0, len = _length(list); i < len; i++) {
+        iter(list[i]);
+    }
+    return list;
+}
+
+// keys 만들기
