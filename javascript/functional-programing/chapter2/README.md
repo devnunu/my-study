@@ -452,3 +452,49 @@ function _reduece(list, iter, memo) {
 }
 
 ```
+
+## _go, _pipe
+
+### pipe
+
+파이프는 함수들을 인자로 받아서 이 함수들을 연속적으로 실행해주는 함수이다. 이를 위해서 fns로 인자들을 받는다.
+
+```javascript
+// pipe
+// pipe
+function _pipe() {
+    var fns = arguments;
+    return function (arg) {
+        return _reduece(fns, function (arg, fn) {
+            return fn(arg);
+        }, arg);
+    }
+}
+
+var f1 = _pipe(
+    function (a) { return a + 1 },
+    function (a) { return a * 2 },
+    function (a) { return a * a },
+)
+
+f1(1);
+```
+
+### _go
+
+go는 즉시 실행되는 pipe 함수라고 할 수 있다. 이를 위해 첫번째 인자는 계산할 값, 두번째는 함수들을 받는다.
+
+```javascript
+// go
+function _go(arg) { 
+    var fns = _rest(arguments);
+    return _pipe.apply(null, fns)(arg);
+}
+
+_go(1,
+    function (a) { return a + 1 },
+    function (a) { return a * 2 },
+    function (a) { return a * a },
+    console.log
+)
+```

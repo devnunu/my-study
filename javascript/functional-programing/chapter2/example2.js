@@ -247,3 +247,36 @@ function _reduece(list, iter, memo) {
     })
     return memo;
 }
+
+
+// pipe
+function _pipe() {
+    var fns = arguments;
+    return function (arg) {
+        return _reduece(fns, function (arg, fn) {
+            return fn(arg);
+        }, arg);
+    }
+}
+
+var f1 = _pipe(
+    function (a) { return a + 1 },
+    function (a) { return a * 2 },
+    function (a) { return a * a },
+)
+
+f1(1);
+
+
+// go
+function _go(arg) { 
+    var fns = _rest(arguments);
+    return _pipe.apply(null, fns)(arg);
+}
+
+_go(1,
+    function (a) { return a + 1 },
+    function (a) { return a * 2 },
+    function (a) { return a * a },
+    console.log
+)
