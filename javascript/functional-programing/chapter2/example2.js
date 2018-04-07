@@ -98,3 +98,152 @@ _map(
     _filter(users, function (user) { return user.age >= 30; }),
     function (user) { return user.name; }
 )
+
+function _each(list, iter) {
+    for (var i = 0; i < list.length; i++) {
+        iter(list[i]);
+    }
+    return list;
+}
+
+// 개선된 버전
+
+function _filter(users, predi) {
+    var new_list = [];
+    _each(list, function (val) {
+        new_list.push(predi(val));
+    })
+    return new_list;
+}
+
+function _map(list, mapper) {
+    var new_list = [];
+    _each(list, function (val) {
+        new_list.push(mapper(val));
+    })
+    return new_list;
+}
+
+[1, 2, 3].map(function (vale) {
+    return val * 2;
+})
+
+[1, 2, 3, 4].filter(function (vale) {
+    return val % 2;
+})
+
+// 커링
+function _curry(fn) {
+    return function (a) {
+        return function (b) {
+            return fn(a, b);
+        }
+    }
+}
+
+// 일반적인 함수
+var add = function (a, b) {
+    return a + b;
+}
+
+console.log(add(10, 5));
+
+// _curry함수
+var add = _curry(function (a, b) {
+    return a + b;
+})
+
+var add10 = add(10);
+console.log(add10(5));
+
+
+// 인자가 2개일 떄 _curry
+function _curry(fn) {
+    return function (a, b) {
+        if (arguments.length == 2) return fn(a, b);
+        return function (b) {
+            return fn(a, b);
+        }
+    }
+}
+
+// 3항 연산자로 한단계 더 개선
+function _curry(fn) {
+    return function (a, b) {
+        return arguments.length == 2 ?
+            fn(a, b) : function (b) { return fn(a, b); };
+    }
+}
+
+// 빼기
+var sub = _curry(function (a, b) {
+    return a - b;
+})
+
+console.log(sub(10, 5));
+
+var sub10 = sub(10);
+console.log(sub10(5))
+
+// curryr
+function _curryr() {
+    return function (a, b) {
+        return arguments.length == 2 ? fn(a, b) : function (b) { return fn(b, a); };
+    }
+}
+
+function _get(obj, key) {
+    return obj == null ? undefined : obj[key];
+}
+
+var user1 = users[0];
+console.log(user1.name);
+console.log(_get(user1, 'name'));
+
+var _get = _curryr(function (obj, key) {
+    return obj == null ? undefined : obj[key];
+});
+
+console.log(_get('name', user1));
+
+// reduce
+function _reduece(list, iter, memo) {
+    _each(list, function (val) {
+        memo = iter(memo, val);
+    })
+    return memo;
+}
+
+_reduece([1, 2, 3], function (a, b) {
+    return a + b;
+}, 0)
+
+// 3번째 인자를 생략
+function _reduece(list, iter, memo) {
+    if (arguments.length == 2) {
+        memo = list[0];
+        list = list.slice(1);
+    }
+    _each(list, function (val) {
+        memo = iter(memo, val);
+    })
+    return memo;
+}
+
+
+//
+var slice = Array.prototype.slice;
+function _rest(list, num) {
+    return slice.call(list, num || 1);
+}
+
+function _reduece(list, iter, memo) {
+    if (arguments.length == 2) {
+        memo = list[0];
+        list = _rest(list);
+    }
+    _each(list, function (val) {
+        memo = iter(memo, val);
+    })
+    return memo;
+}
