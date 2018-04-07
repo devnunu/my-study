@@ -44,3 +44,33 @@ function _pluck(data, key) {
 
 // [36, 32, 32, 27, 25...]
 console.log(_pluck(users, 'age'));
+
+
+// 거르기 - filter
+
+console.log(
+    _filter(users, function (user) {
+        return user.age > 30;
+    })
+)
+
+// reject
+function _reject(data, predi) {
+    return _filter(data, function (val) {
+        return !predi(val);
+    });
+}
+
+function _negate(func) {
+    return function () {
+        return !func(val);
+    }
+}
+
+// compact
+
+var _compact = _filter(_identity);
+
+console.log(
+    _compact([1, 2, 0, false, null, {}])
+)

@@ -19,6 +19,9 @@ var users = [
     { id: 90, name: 'FP', age: 13 },
 ];
 ```
+
+---
+
 ## 수집하기 - map, value, pluck
 
 ### map
@@ -104,3 +107,48 @@ function _pluck(data, key) {
 ```
 
 결론적으로 수집하기 유형의 함수들은 _map을 기반으로 생성이 가능하다는 것이다.
+
+---
+
+## 거르기 - reject, compact
+
+### reject
+
+reject는 filter와 다르게 true로 평가되는 항목들을 제외시킨다.
+reject 내부에서 filter 함수를 사용하는데 이에 해당하는 결과값을 반대로 돌려주기만 하면 된다.
+filter에 전달되는 보조 함수를 변경해도 되지만 reject를 사용함으로써 보다 선언적인 사용이 가능하다.
+
+```javascript
+// reject
+function _reject(data, predi) {
+    return _filter(data, function(val) {
+        return !predi(val);
+    });
+}
+```
+
+우리가 values에서 identity를 사용했듯이 reject에서도 nagate라는 함수를 사용하여 최적화를 할 수 있다. negate란 함수를 인자로 받아 반대의 bool 값을 리턴한다.
+
+```javascript
+function _negate(func) {
+    return function() {
+        return !func(val);
+    }
+}
+
+function _reject(data, predi) {
+    return _filter(data, _negate(predi);
+}
+```
+
+### compact
+
+compact는 인자로 들어온 값 중에서 긍정적인 값만 남기는 함수이다.
+
+```javascript
+var _compact = _filter(_identity);
+
+console.log(
+    _compact([1, 2, 0, false, null, {}])
+)
+```
