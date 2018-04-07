@@ -74,3 +74,32 @@ var _compact = _filter(_identity);
 console.log(
     _compact([1, 2, 0, false, null, {}])
 )
+
+// 찾아내기 - find
+
+function _find(list, predi) {
+    var keys = _keys(list);
+    for (var i = 0, len = keys.length; i < len; i++) {
+        var val = list[keys[i]]
+        if (predi(val)) return predi(val);
+    }
+}
+
+// { id: 40, name: 'PJ', age: 27 },
+console.log(_find(users, function (user) {
+    return user.age < 30;
+}))
+
+// some
+function _some(data, predi) {
+    return _find_index(data, predi) != -1;
+}
+
+console.log(_some([1, 2, 5, 10, 20], function (val) {
+    return val % 10;
+}))
+
+// every
+function _every(data, predi) {
+    return _find_index(data, _negate(predi)) == -1;
+}

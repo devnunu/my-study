@@ -152,3 +152,86 @@ console.log(
     _compact([1, 2, 0, false, null, {}])
 )
 ```
+
+---
+
+## 찾아내기 - find, find_index, some, every
+
+### find
+
+find 함수는 데이터를 순환하면서 만나는 가장 처음 target을 리턴하는 함수이다. 예제는 다음과 같다.
+
+```javascript
+function _find(list, predi) {
+    var keys = _keys(list);
+    for (var i = 0, len = keys.length; i < len; i++) {
+        var val = list[keys[i]]
+        if (predi(val)) return predi(val);
+    }
+}
+
+// { id: 40, name: 'PJ', age: 27 },
+console.log(_find(users, function (user) {
+    return user.age < 30;
+}))
+```
+
+### find_index
+
+find_index는 이름 그대로 index를 리턴한다. 위에서 작성한 find 함수를 인덱스로 바꾸어 간단하게 리턴 하면 된다.
+즉, find는 value를, find_index는 index를 리턴하게 된다.
+
+```javascript
+function _find(list, predi) {
+    var keys = _keys(list);
+    for (var i = 0, len = keys.length; i < len; i++) {
+        if (predi(list[keys[i]])) return i;
+    }
+}
+
+// { id: 40, name: 'PJ', age: 27 },
+console.log(_find(users, function (user) {
+    return user.age < 30;
+}))
+```
+
+### some
+
+some은 인자로 전달된 보조 함수의 조건을 1개라도 만족하면 true가 출력된다. 이를 위해 find_index를 사용하여 해당 조건을 만족하는 인자를 찾는다.
+
+```javascript
+// some
+function _some(data, predi){
+    return _find_index(data, predi) != -1;
+}
+
+console.log(_some([1, 2, 5, 10, 20], function (val) {
+    return val % 10;
+}))
+```
+
+이를 더욱 발전시켜, predicate 보조 함수가 없더라도 indentity 함수가 자동으로 동작하도록 만들어야한다.
+
+```javascript
+function _some(data, predi){
+    return _find_index(data, predi || _identity) != -1;
+}
+```
+
+### every
+
+some과 반대로 every는 인자로 전달된 보조 함수의 조건을 모두 만족해야만 true가 출력된다. every도 간단하게 negate 함수를 사용해 값을 반대로 바꾸어주고 find index 함수를 거쳐 결과값을 받는다.
+
+```javascript
+function _every(data, predi) {
+    return _find_index(data, _negate(predi)) == -1;
+}
+```
+
+every도 predi가 없을떄 기본 함수를 설정할 수 있다.
+
+```javascript
+function _every(data, predi) {
+    return _find_index(data, _negate(predi || _identity)) == -1;
+}
+```
