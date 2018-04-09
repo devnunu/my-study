@@ -236,6 +236,8 @@ function _every(data, predi) {
 }
 ```
 
+---
+
 ## 접기 - reduce, min_by, max_by
 
 ### reduce - min, max
@@ -290,3 +292,89 @@ console.log(
 ```
 
 간단하게 iterator를 인자로 받고, 이 함수를 데이터들에게 적용하여 구현이 가능하다.
+
+---
+
+## 접기 - group_by, count_by, 조합
+
+### group_by
+
+group_by는 특정 조건을 만족하는 요소로 그룹을 짓게 만드는 함수이다. 이에 대한 조건은 iterator 함수에게 위임한다.
+
+```javascript
+var _group_by = _curryr(function (data, iter) {
+    return _reduce(data, function (grouped, val) {
+        var key = iter(val);
+        (grouped[key] = grouped[key] || []).push[val];
+        return grouped;
+    }, {});
+});
+
+
+// var users2 = {
+//     36:{ id: 10, name: 'ID', age: 36 },
+//     32:[{ id: 20, name: 'BJ', age: 32 },
+//     { id: 30, name: 'JM', age: 32 },]
+// }
+_group_by(users, function (user) {
+    return user.age;
+});
+```
+
+여기서 함수의 안정성을 높이는 (grouped[key] = grouped[key] || []).push[val] 부분을 따로 빼어내 더욱 간단하게 만들수 있다.
+
+```javascript
+function _push(obj, key, val) {
+    (obj[key] = obj[key] || []).push[val];
+    return obj;
+}
+
+var _group_by = _curryr(function (data, iter) {
+    return _reduce(data, function (grouped, val) {
+        _push(grouped, iter(val), val)
+        return grouped;
+    }, {});
+});
+```
+
+이렇게 함수를 추가함으로써 필요 없는 변수를 없애는 장점이 있다.
+
+### count_by
+
+count_by는 group_by와 비슷한 함수이다. iterator로 만들어낸 key가 몇개가 있는지 확인하는 함수가 되겠다. push 등의 행위를 할 필요가 없으므로 group_by 보다 더 간결하게 된다.
+
+```javascript
+var _count_by = _curryr(function (data, iter) {
+    return _reduce(data, function (count, val) {
+        count[key] ? count[key]++ : count[key] = 1;
+        return count;
+    }, {});
+})
+
+// 13:1
+// 23:1
+// 25:1
+// 26:1
+// 27:1
+// 31:1
+// 32:2
+// 36:1
+_count_by(users, function (user) {
+    return user.age;
+});
+```
+
+추가로 count를 증가 시키는 함수도 다음과 같이 함수를 생성함으로써 더욱 간결하게 표현할 수 있다.
+
+```javascript
+var _inc = function (count, key) {
+    count[key] ? count[key]++ : count[key] = 1;
+    return count;
+}
+
+var _count_by = _curryr(function (data, iter) {
+    return _reduce(data, function (count, val) {
+        return _inc(count, iter(val));
+    }, {});
+})
+```

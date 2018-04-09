@@ -145,3 +145,54 @@ console.log(
 console.log(
     _max_by([1, 2, 4, 10, 5, -4]), Math.abs
 );
+
+
+// group_by
+
+function _push(obj, key, val) {
+    (obj[key] = obj[key] || []).push[val];
+    return obj;
+}
+
+var _group_by = _curryr(function (data, iter) {
+    return _reduce(data, function (grouped, val) {
+        _push(grouped, iter(val), val)
+        return grouped;
+    }, {});
+});
+
+
+// var users2 = {
+//     36:{ id: 10, name: 'ID', age: 36 },
+//     32:[{ id: 20, name: 'BJ', age: 32 },
+//     { id: 30, name: 'JM', age: 32 },]
+// }
+
+_group_by(users, function (user) {
+    return user.age;
+});
+
+// count_by
+
+var _inc = function (count, key) {
+    count[key] ? count[key]++ : count[key] = 1;
+    return count;
+}
+
+var _count_by = _curryr(function (data, iter) {
+    return _reduce(data, function (count, val) {
+        return _inc(count, iter(val));
+    }, {});
+})
+
+// 13:1
+// 23:1
+// 25:1
+// 26:1
+// 27:1
+// 31:1
+// 32:2
+// 36:1
+_count_by(users, function (user) {
+    return user.age;
+});
