@@ -1,10 +1,10 @@
 
-var contract_obj = proofContract.at("0xde4df0e33c18831463140bef60f961c69fa105ff");
-contract_obj.set.sendTransaction("Owner Name", "e3e9d9e9d9", { 
+var contract_obj = proofContract.at("0xa3af2406c7ab1f412249eefa10fbf0a972ac72f1");
+contract_obj.set.sendTransaction("nunu", "0x784da8ff1a3cc793bbadb2e29a715bf272374018b65ca5fd13e7479cb26182c2", { 
     from: web3.eth.accounts[0],
 }, function (error, transactionHash) {
     if (!error)
         console.log(transactionHash);
 })
 
-contract_obj.get.call("e3e9d9e9d9");
+contract_obj.get.call("0x784da8ff1a3cc793bbadb2e29a715bf272374018b65ca5fd13e7479cb26182c2");

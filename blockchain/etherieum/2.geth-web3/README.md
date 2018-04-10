@@ -385,6 +385,7 @@ setTimeout(function(){
 ```
 
 동작 순서는 다음과 같다
+
 1. 컨트랙트 인스턴스에서 이벤트와 이름이 같은 메소드를 호출하여 이벤트 객체획득, 이 메소드는 이벤트를 필터링 하는데 2가지 객체를 인자로 받는다
   - 이벤트 필터링을 위한 인덱스화 된 리턴값(ex) {'valueA':1, 'valueB':[myFirstAddress, mySecondAddress]} )이다
   - 다음 객체는 세가지 속성 fromBlock(가장 빠른 블록), toBlock(최신블록), address(로그를 가져올 주소 목록)를 포함 할 수 있다.
@@ -405,3 +406,12 @@ setTimeout(function(){
   - address: 이 로그가 속해 있는 주소를 표현하는 문자열
   - blockHash: 이 로그가 속해 있는 블록의 해시를 표현하는 문자열
   - blockNumber: 이 로그가 속해있는 블록 번호
+
+
+## 중요 문법
+
+- eth.accounts : 계정 정보
+- personal.newAccount("이름") : 새로운 계정 생성
+- eth.blockNumber : 현재 생성된 블록의 개수
+- eth.getBlock(index) : 해당 인덱스의 블록 정보를 가져옴
+- eth.getBalance(account) : 해당 account의 잔고를 가져옴
