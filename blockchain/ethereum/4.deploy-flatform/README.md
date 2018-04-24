@@ -9,7 +9,7 @@
 - 이를 위해 getTransactionCount 메소드를 사용할 수 가 있다.
 - 첫번째 인자는 트랜잭션 카운트가 필요한 주소, 두번째는 트랜잭션 카운트가 필요할 때까지의 블록.
 
-## solcjs 
+## solcjs
 
 solcjs는 node.js 라이브러리며 솔리디티 파일을 컴파일 하는데 사용되는 명령행 툴이다.
 설치 방법은 다음과같다
@@ -164,3 +164,5 @@ contract sample {
     }
 }
 ```
+
+eth.sendTransaction({from: eth.accounts[0], to:"0x0C8475EA2ae489167397C17D893E53Aa9a38F59F", value:web3.toWei(3, "ether")})
