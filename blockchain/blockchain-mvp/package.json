@@ -77,6 +77,11 @@
     "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/react-router-dom": "^4.2.6",
+    "classnames": "^2.2.5",
+    "react-router-config": "^1.0.0-beta.4",
+    "react-router-dom": "^4.2.2"
+  },
   "postcss": {}
 }

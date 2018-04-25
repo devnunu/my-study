@@ -12,7 +12,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 console.log(process.env.BUILD_ENV, 'isDev', isDev, JSON.stringify(isDev ? 'development' : 'production'))
 module.exports = {
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss'],
   },
   context: resolve(__dirname, '../../src'),
   module: {

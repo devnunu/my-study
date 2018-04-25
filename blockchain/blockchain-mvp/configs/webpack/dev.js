@@ -16,6 +16,7 @@ module.exports = merge(commonConfig, {
   devServer: {
     hot: true, // enable HMR on the server
     contentBase: resolve(__dirname, '../../static'),
+    historyApiFallback: true,
   },
   devtool: 'cheap-module-eval-source-map',
   plugins: [

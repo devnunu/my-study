@@ -1,31 +1,21 @@
-
-import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-import './assets/style.scss';
+import { renderRoutes } from 'react-router-config';
 
 // view
 import Nav from './common/nav/Nav';
 import HomeVC from './home/vc/HomeVC';
 import UserHomeVC from './user/vc/UserHomeVC';
 
-class App extends Component<{}, {}> {
+class Routes extends Component<{}, {}> {
   render() {
-    return (<div className='app'>
-      <Nav />
+    return (
       <Switch>
         <Route exact path='/' component={HomeVC} />
         <Route path='/user' component={UserHomeVC} />
       </Switch>
-    </div>
     );
   }
 }
 
-ReactDom.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById('root'),
-);
+export default Routes;

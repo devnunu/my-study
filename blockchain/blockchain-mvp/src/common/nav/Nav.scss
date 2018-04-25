@@ -1,0 +1,23 @@
+@import '../../assets/partial';
+.navigation {
+  background-color: $march-blue;
+  .contentsContainer {
+    margin-bottom: 50px;
+    @include clearfix();
+    .marchLogo {
+      display: inline-block;
+      padding: 15px 0px;
+      img {
+        width: 90px;
+        cursor: pointer;
+      }
+    }
+    .navBtnList {
+      float: right;
+      padding: 22px 20px;
+      a {
+        @include set-font(18px, white);
+      }
+    }
+  }
+}
