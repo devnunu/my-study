@@ -60,6 +60,7 @@
     "raf": "^3.4.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
+    "react-router-dom": "^4.2.2",
     "truffle-contract": "^3.0.1",
     "web3": "^0.20.2"
   },
