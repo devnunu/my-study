@@ -1,21 +1,21 @@
 {
-  "extends": [
-    "tslint:latest",
-    "tslint-react"
-  ],
+  "extends": "tslint:recommended",
   "rules": {
-    "indent": [
-      true,
-      "spaces",
-      2
-    ],
-    "jsx-no-lambda": false,
-    "jsx-no-multiline-js": false,
-    "no-object-literal-type-assertion": false,
-    "no-console": [
-      false
-    ],
+    "quotemark": [true, "single", "avoid-escape"],
+    "curly": false,
+    "interface-name": [false],
+    "member-access": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
     "no-var-requires": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "ordered-imports": [false],
+    "arrow-parens": false,
+    "no-string-literal": false,
+    "no-bitwise": false,
+    "only-arrow-functions": [false],
+    "max-classes-per-file": [false],
+    "member-ordering": [false],
+    "no-unused-variable": true,
+    "max-line-length": false
   }
 }
