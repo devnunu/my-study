@@ -12,7 +12,7 @@ class Nav extends Component<{}, {}> {
         <Container className={styles.contentsContainer}>
           <div className={styles.marchLogo}>
             <Link to={'/'}>
-              <img src={require('../../assets/img/march-white-logo.png')} />
+              <img src={require('../../../assets/img/march-white-logo.png')} />
             </Link>
           </div>
           <ul className={styles.navBtnList}>

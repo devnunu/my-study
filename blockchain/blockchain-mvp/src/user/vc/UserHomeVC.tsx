@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // view
-import Container from '../../common/container/Container';
+import Container from '../../common/view/container/Container';
 
 // styels
 import styles from './UserHomeVC.scss'

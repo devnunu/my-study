@@ -5,12 +5,16 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './assets/style.scss';
 
+// dc
+import Web3DC from './common/dc/Web3DC';
+
 // view
-import Nav from './common/nav/Nav';
+import Nav from './common/view/nav/Nav';
 import HomeVC from './home/vc/HomeVC';
 import UserHomeVC from './user/vc/UserHomeVC';
 
 class App extends Component<{}, {}> {
+
   render() {
     return (<div className='app'>
       <Nav />

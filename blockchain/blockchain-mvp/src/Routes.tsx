@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 
 // view
-import Nav from './common/nav/Nav';
 import HomeVC from './home/vc/HomeVC';
 import UserHomeVC from './user/vc/UserHomeVC';
 
