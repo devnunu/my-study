@@ -1,0 +1,11 @@
+@import '../../../assets/partial';
+.container {
+  max-width: 1100px;
+  margin: 0px auto 120px auto;
+  @include padding-horizontal(25px);
+  @include media($mobile) {
+    width: 100%;
+    padding: 0px 20px;
+    margin-bottom: 72px;
+  }
+}
