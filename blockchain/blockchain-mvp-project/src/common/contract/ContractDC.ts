@@ -7,6 +7,10 @@ class ContractDC {
 
   accountListener: (account: string) => void;
 
+  constructor() {
+    this.web3 = this.getWeb3();
+  }
+
   getWeb3() {
     let web3: Web3 = (window as any).web3 as Web3;
 
@@ -20,33 +24,23 @@ class ContractDC {
       const provider = new Web3.providers.HttpProvider('http://localhost:7545');
       web3 = new Web3(provider);
     }
-    this.web3 = web3;
     return web3;
   }
 
-  fetchAccount(accountId: number = 0) {
-    this.web3.eth.getAccounts(function (err, accounts) {
-      if (err != null) {
-        console.error("There was an error fetching your accounts.");
-        return;
-      }
-      if (accounts.length == 0) {
-        console.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
-        return;
-      }
-      if (this.account === undefined) {
-        this.account = accounts[accountId];
-      }
-      this._callAccountFetched();
+  getAccount(accountId: number = 0) {
+    return this.web3.eth.getAccounts((err, accounts) => {
+      return new Promise<string[]>((resolve, reject) => {
+        if (err != null) {
+          console.error("There was an error fetching your accounts.");
+          return reject();
+        }
+        if (accounts.length == 0) {
+          console.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+          return reject();
+        }
+        resolve(accounts);
+      })
     })
-  }
-
-  public setAccountListener(listener: (account: string) => void) {
-    this.accountListener = listener;
-  }
-  _callAccountFetched() {
-    if (this.account === undefined) return;
-    if (this.accountListener) this.accountListener(this.account);
   }
 }
 

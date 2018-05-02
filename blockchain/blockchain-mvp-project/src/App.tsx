@@ -2,23 +2,33 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import getWeb3 from './util/getWeb3';
 
+// contract
+import ContractDC from './common/contract/ContractDC';
+
 // view
 import UserVC from './user/vc/UserVC';
 
 interface AppState {
     web3: Web3;
+    account: string;
 }
 
-class App extends Component<{}, {}> {
+class App extends Component<{}, AppState> {
 
     state = {
         web3: null,
+        account: undefined,
     }
 
     public async componentWillMount() {
-        const web3 = await getWeb3();
+        const web3 = ContractDC.getWeb3();
+        const accounts = await ContractDC.getAccount();
+
         this.setState({
             web3,
+            account: accounts[0],
+        }, () => {
+            console.log(this.state.account)
         });
     }
 
@@ -39,7 +49,7 @@ class App extends Component<{}, {}> {
                     </div>
                 ) :
                     <p>Web3 is loading</p>}
-                {web3 ? <UserVC web3={web3} /> : null}
+                {/* {web3 ? <UserVC web3={web3} /> : null} */}
             </div>
         );
     }
