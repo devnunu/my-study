@@ -16,7 +16,7 @@ class App extends Component<{}, {}> {
     }
 
     public async componentWillMount() {
-        const web3 = await getWeb3();=
+        const web3 = await getWeb3();
         this.setState({
             web3,
         });

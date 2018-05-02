@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import TruffleContract from 'truffle-contract';
-import Web3 from 'web3'
+import Web3 from 'web3';
+
+// contract
+import ContractDC from '../../common/contract/ContractDC';
 
 // model
 const UserInitContract = TruffleContract(require('../../../build/contracts/UserInit.json'));
@@ -21,24 +24,34 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     instance: undefined,
   }
 
-  public async componentWillMount() {
+  componentWillMount() {
     UserInitContract.setProvider(this.props.web3.currentProvider);
-    console.log('this.props.web3.currentProvider', this.props.web3.currentProvider)
-    console.log('UserInitContract', UserInitContract)
-    await UserInitContract.deployed().then(instance => {
-      console.log('instance', instance)
-      instance.setValue(15, { from: '0x4f00D184C23b031f122b7D73d71aE1F8e9535227' })
-      return instance
-    }).then((instance => {
-      return instance.getValue();
-      // console.log("Value was set to", result.logs[0].args.val);
-    })).then(result => {
-      console.log(result.toNumber());
-    });
+  }
+
+  setValue() {
+    this.props.web3.eth.getAccounts(function (err, accounts) {
+      if (err != null) {
+        console.error("There was an error fetching your accounts.");
+        return;
+      }
+      if (accounts.length == 0) {
+        console.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+        return;
+      }
+
+      const account = accounts[0];
+      UserInitContract.deployed().then(instance => {
+        return instance.setValue(15, { from: account })
+      }).then((result => {
+        console.log(result);
+      }));
+    })
+
   }
 
   onClickSubmit() {
     const { instance } = this.state;
+    this.setValue();
   }
 
   render() {
