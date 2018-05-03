@@ -1,7 +1,15 @@
-.setValueButton {
+.setValueButton,
+.getValueButton {
   display: inline-block;
   padding: 5px 15px;
   border-radius: 5px;
-  background-color: #0084dd;
   color: white;
+}
+
+.setValueButton {
+  background-color: #0084dd;
+}
+
+.getValueButton {
+  background-color: #FFB700;
 }

@@ -22,14 +22,8 @@ class App extends Component<{}, AppState> {
 
     public async componentWillMount() {
         const web3 = ContractDC.getWeb3();
-        const accounts = await ContractDC.getAccount();
-
-        this.setState({
-            web3,
-            account: accounts[0],
-        }, () => {
-            console.log(this.state.account)
-        });
+        const accounts = await ContractDC.getAccounts();
+        this.setState({ web3, account: accounts[0] });
     }
 
     render() {
