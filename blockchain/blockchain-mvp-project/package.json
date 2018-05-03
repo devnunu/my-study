@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "autoprefixer": "^8.4.1",
     "node-sass": "^4.9.0",
+    "postcss": "^6.0.22",
+    "postcss-modules": "^1.1.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "truffle-contract": "^3.0.5",

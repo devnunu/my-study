@@ -27,19 +27,17 @@ class ContractDC {
     return web3;
   }
 
-  getAccount(accountId: number = 0) {
+  async getAccount(accountId: number = 0) {
     return this.web3.eth.getAccounts((err, accounts) => {
-      return new Promise<string[]>((resolve, reject) => {
-        if (err != null) {
-          console.error("There was an error fetching your accounts.");
-          return reject();
-        }
-        if (accounts.length == 0) {
-          console.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
-          return reject();
-        }
-        resolve(accounts);
-      })
+      if (err != null) {
+        console.error("There was an error fetching your accounts.");
+        return;
+      }
+      if (accounts.length == 0) {
+        console.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+        return;
+      }
+      return accounts;
     })
   }
 }

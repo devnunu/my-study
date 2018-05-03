@@ -9,6 +9,9 @@ import ContractDC from '../../common/contract/ContractDC';
 const UserInitContract = TruffleContract(require('../../../build/contracts/UserInit.json'));
 import UserInit, { User } from '../model/UserInit';
 
+// styles
+import styles from './UserVC.scss';
+
 
 interface UserVCProps {
   web3: Web3;
@@ -45,7 +48,6 @@ class UserVC extends Component<UserVCProps, UserVCState>{
   }
 
   onClickSubmit() {
-
     this.setValue();
   }
 
@@ -53,7 +55,7 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     return (
       <div>
         hello world!
-        <button onClick={this.onClickSubmit.bind(this)}>submit</button>
+        <div className={styles.setValueButton} onClick={this.onClickSubmit.bind(this)}>submit</div>
       </div>
     )
   }
