@@ -1,0 +1,20 @@
+@import '../assets/partial';
+.topNav {
+  background-color: $march-nav-gray;
+  padding: 20px 50px;
+  border-bottom: 1px solid white;
+  @include clearfix();
+  .logo {
+    display: inline-block;
+    img {
+      width: 80px;
+    }
+  }
+  .rightSection {
+    float: right;
+    margin-top: 10px;
+    a {
+      @include set-font(16px, #0084dd, $fontweight-bold);
+    }
+  }
+}

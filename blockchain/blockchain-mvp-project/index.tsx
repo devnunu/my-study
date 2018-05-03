@@ -4,9 +4,6 @@ import ReactDOM from 'react-dom';
 // view
 import App from './src/App';
 
-// style
-import './assets/style.scss';
-
 ReactDOM.render(
     <App />, document.getElementById('root')
 )

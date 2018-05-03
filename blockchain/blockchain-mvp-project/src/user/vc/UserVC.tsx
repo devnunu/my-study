@@ -38,11 +38,11 @@ class UserVC extends Component<UserVCProps, UserVCState>{
   }
 
   componentWillMount() {
-    UserContractDC.setContractEventListener(this.addUserToUserList.bind(this));
+    UserContractDC.setContractEventListener(this.userContractEvent.bind(this));
     UserContractDC.deployUserInitContract();
   }
 
-  addUserToUserList(event) {
+  userContractEvent(event) {
     console.log(event);
     if (event.event === UserContractDC.EVENT_USERINSERT) {
       const args: UserInfo = event['args'];
@@ -61,14 +61,6 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     }
   }
 
-  onClickSubmit() {
-    UserContractDC.setValue();
-  }
-
-  onClickGetValue() {
-    UserContractDC.getValue();
-  }
-
   onClickUserRegister(userInfo: UserInfo) {
     console.log('client user data', userInfo);
     const { userAddress, name, age, email } = userInfo;
@@ -80,8 +72,6 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     return (
       <div>
         <div>hello world!</div>
-        <div className={styles.getValueButton} onClick={this.onClickGetValue.bind(this)}>getValue</div>
-        <div className={styles.setValueButton} onClick={this.onClickSubmit.bind(this)}>submit</div>
         {userList.length !== 0 ? <UserListView userList={userList} /> : null}
         <UserRegisterView onClickUserRegister={this.onClickUserRegister.bind(this)} />
       </div>

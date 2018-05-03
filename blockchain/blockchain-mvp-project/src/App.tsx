@@ -7,30 +7,36 @@ import ContractDC from './common/contract/ContractDC';
 
 // view
 import UserVC from './user/vc/UserVC';
+import TopNav from './nav/TopNav';
+
+// styles
+import styles from './App.scss';
+import './assets/style.scss';
 
 interface AppState {
-    web3: Web3;
-    account: string;
+  web3: Web3;
+  account: string;
 }
 
 class App extends Component<{}, AppState> {
 
-    state = {
-        web3: null,
-        account: undefined,
-    }
+  state = {
+    web3: null,
+    account: undefined,
+  }
 
-    public async componentWillMount() {
-        const web3 = ContractDC.getWeb3();
-        const accounts = await ContractDC.getAccounts();
-        this.setState({ web3, account: accounts[0] });
-    }
+  public async componentWillMount() {
+    const web3 = ContractDC.getWeb3();
+    const accounts = await ContractDC.getAccounts();
+    this.setState({ web3, account: accounts[0] });
+  }
 
-    render() {
-        const { web3, account } = this.state;
-        return (
-            <div>
-                {web3 ? (
+  render() {
+    const { web3, account } = this.state;
+    return (
+      <div>
+        <TopNav />
+        {/* {web3 ? (
                     <div>
                         <p>
                             Provider is MetaMask: {(web3.currentProvider as any).isMetaMask ? 'yes' : 'no'}
@@ -42,11 +48,11 @@ class App extends Component<{}, AppState> {
                             <p>Provider is {(web3.currentProvider as any).host}</p> : null}
                     </div>
                 ) :
-                    <p>Web3 is loading</p>}
-                {web3 ? <UserVC web3={web3} account={account} /> : null}
-            </div>
-        );
-    }
+                    <p>Web3 is loading</p>} */}
+        {web3 ? <UserVC web3={web3} account={account} /> : null}
+      </div>
+    );
+  }
 }
 
 export default App;
