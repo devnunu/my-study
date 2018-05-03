@@ -12,6 +12,7 @@ import UserInit, { User } from '../model/UserInit';
 
 interface UserVCProps {
   web3: Web3;
+  account: string;
 }
 
 interface UserVCState {
@@ -25,32 +26,26 @@ class UserVC extends Component<UserVCProps, UserVCState>{
   }
 
   componentWillMount() {
+    this.deployUserInitContract();
+  }
+
+  deployUserInitContract() {
     UserInitContract.setProvider(this.props.web3.currentProvider);
+    UserInitContract.deployed().then(instance => {
+      this.setState({ ...this.state, instance });
+    });
   }
 
   setValue() {
-    this.props.web3.eth.getAccounts(function (err, accounts) {
-      if (err != null) {
-        console.error("There was an error fetching your accounts.");
-        return;
-      }
-      if (accounts.length == 0) {
-        console.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
-        return;
-      }
-
-      const account = accounts[0];
-      UserInitContract.deployed().then(instance => {
-        return instance.setValue(15, { from: account })
-      }).then((result => {
-        console.log(result);
-      }));
-    })
-
+    const { account } = this.props;
+    const { instance } = this.state;
+    instance.setValue(15, { from: account }).then((result => {
+      console.log(result);
+    }));
   }
 
   onClickSubmit() {
-    const { instance } = this.state;
+
     this.setValue();
   }
 

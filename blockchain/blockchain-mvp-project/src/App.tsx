@@ -33,7 +33,7 @@ class App extends Component<{}, AppState> {
     }
 
     render() {
-        const { web3 } = this.state;
+        const { web3, account } = this.state;
         return (
             <div>
                 {web3 ? (
@@ -49,7 +49,7 @@ class App extends Component<{}, AppState> {
                     </div>
                 ) :
                     <p>Web3 is loading</p>}
-                {/* {web3 ? <UserVC web3={web3} /> : null} */}
+                {web3 ? <UserVC web3={web3} account={account} /> : null}
             </div>
         );
     }
