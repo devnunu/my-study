@@ -71,7 +71,6 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     const { userList } = this.state;
     return (
       <div>
-        <div>hello world!</div>
         {userList.length !== 0 ? <UserListView userList={userList} /> : null}
         <UserRegisterView onClickUserRegister={this.onClickUserRegister.bind(this)} />
       </div>

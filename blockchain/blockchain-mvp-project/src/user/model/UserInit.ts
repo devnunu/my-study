@@ -6,7 +6,7 @@ export class UserInfo {
   age: BigNumber;
   email: string;
 
-  constructor(userAddress: string, name: string, age: BigNumber, email: string) {
+  constructor(userAddress: string = '', name: string = '', age: BigNumber = undefined, email: string = '') {
     this.userAddress = userAddress;
     this.name = name;
     this.age = age;

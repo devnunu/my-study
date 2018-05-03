@@ -20,7 +20,7 @@ class HomeVC extends Component<HomeVCProps, {}>{
           </p>
           <p>
             지금 동작중인 provider는
-        {(web3.currentProvider as any).isMetaMask && (
+            {(web3.currentProvider as any).isMetaMask && (
               ' 메타마스크'
             )}
             {(window as any).mist && (

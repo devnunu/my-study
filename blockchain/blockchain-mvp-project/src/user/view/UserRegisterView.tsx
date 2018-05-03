@@ -40,6 +40,7 @@ class UserRegisterView extends Component<UserRegisterViewProps, UserRegisterView
   render() {
     return (
       <div>
+        <div>Register User</div>
         <div className={styles.inputWarpper}>
           <span>주소</span>
           <input onChange={this.onChangeUserAddress.bind(this)} type="text" />
