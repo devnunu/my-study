@@ -8,7 +8,11 @@ import UserContractDC from '../dc/UserContractDC';
 
 // model
 const UserInitContract = TruffleContract(require('../../../build/contracts/UserInit.json'));
-import UserInit, { User } from '../model/UserInit';
+import UserInit, { UserInfo } from '../model/UserInit';
+
+// view
+import UserRegisterView from '../view/UserRegisterView';
+import UserListView from '../view/UserListView';
 
 // styles
 import styles from './UserVC.scss';
@@ -21,7 +25,7 @@ interface UserVCProps {
 
 interface UserVCState {
   instance: UserInit;
-  userList: number[];
+  userList: UserInfo[];
 }
 
 class UserVC extends Component<UserVCProps, UserVCState>{
@@ -30,60 +34,56 @@ class UserVC extends Component<UserVCProps, UserVCState>{
   state = {
     ...this.state,
     instance: undefined,
+    userList: [],
   }
 
   componentWillMount() {
+    UserContractDC.setContractEventListener(this.addUserToUserList.bind(this));
     UserContractDC.deployUserInitContract();
   }
 
-  // deployUserInitContract() {
-  //   UserInitContract.setProvider(this.props.web3.currentProvider);
-  //   UserInitContract.deployed().then(instance => {
-  //     const allEvents = instance.allEvents({
-  //       fromBlock: 0,
-  //       toBlock: 'latest'
-  //     })
-  //     allEvents.watch((err, res) => {
-  //       this.addUserToUserList(res);
-  //       // console.log(err, res);
-  //     });
-  //     this.setState({ ...this.state, instance });
-  //   });
-  // }
+  addUserToUserList(event) {
+    console.log(event);
+    if (event.event === UserContractDC.EVENT_USERINSERT) {
+      const args: UserInfo = event['args'];
+      const user = new UserInfo(
+        args.userAddress,
+        args.name,
+        args.age,
+        args.email,
+      )
+      const { userList } = this.state;
+      userList.push(user);
+      console.log(userList);
+      this.setState({ ...this.state, userList })
+    } else {
+      console.error('unregistered event detected');
+    }
+  }
 
-  // addUserToUserList(event) {
-  //   if (ContractDC.validationEvent(event, this.EVENT_VALUESET)) {
-  //     const val = event['args'].val
-  //     console.log(val.toNumber());
-  //   }
-  // }
-
-  // setValue() {
-  //   const { account } = this.props;
-  //   const { instance } = this.state;
-  //   return instance.setValue(15, { from: account });
-  // }
-
-  // getValue() {
-  //   const { account } = this.props;
-  //   const { instance } = this.state;
-  //   return instance.getValue();
-  // }
-
-  async onClickSubmit() {
+  onClickSubmit() {
     UserContractDC.setValue();
   }
 
-  async onClickGetValue() {
+  onClickGetValue() {
     UserContractDC.getValue();
   }
 
+  onClickUserRegister(userInfo: UserInfo) {
+    console.log('client user data', userInfo);
+    const { userAddress, name, age, email } = userInfo;
+    UserContractDC.insertUser(userAddress, name, age, email)
+  }
+
   render() {
+    const { userList } = this.state;
     return (
       <div>
         <div>hello world!</div>
         <div className={styles.getValueButton} onClick={this.onClickGetValue.bind(this)}>getValue</div>
         <div className={styles.setValueButton} onClick={this.onClickSubmit.bind(this)}>submit</div>
+        {userList.length !== 0 ? <UserListView userList={userList} /> : null}
+        <UserRegisterView onClickUserRegister={this.onClickUserRegister.bind(this)} />
       </div>
     )
   }

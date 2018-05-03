@@ -1,13 +1,19 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
-export interface User {
+export class UserInfo {
+  userAddress: string;
   name: string;
-  age: BigNumber.BigNumber;
+  age: BigNumber;
   email: string;
+
+  constructor(userAddress: string, name: string, age: BigNumber, email: string) {
+    this.userAddress = userAddress;
+    this.name = name;
+    this.age = age;
+    this.email = email;
+  }
 }
 
 export default interface UserInit {
   address: string;
-  addUser(_name: string, _age: BigNumber.BigNumber, _email: string, obj: Object);
-  OnAddUser(obj: Object);
 }
