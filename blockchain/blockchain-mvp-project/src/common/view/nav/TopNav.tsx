@@ -8,7 +8,7 @@ class TopNav extends Component<{}, {}>{
     return (
       <div className={styles.topNav}>
         <div className={styles.logo}>
-          <img src={require('../assets/img/march-white-logo.png')} />
+          <img src={require('../../../assets/img/march-white-logo.png')} />
         </div>
         <div className={styles.rightSection}>
           <a href='https://www.march.eco/'>march home</a>

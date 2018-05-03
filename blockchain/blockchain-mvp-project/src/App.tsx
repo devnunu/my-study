@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-import getWeb3 from './util/getWeb3';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 // contract
 import ContractDC from './common/contract/ContractDC';
 
 // view
 import UserVC from './user/vc/UserVC';
-import TopNav from './nav/TopNav';
+import TopNav from './common/view/nav/TopNav';
+import SideNav from './common/view/nav/SideNav';
 
 // styles
 import styles from './App.scss';
@@ -35,8 +36,10 @@ class App extends Component<{}, AppState> {
     const { web3, account } = this.state;
     return (
       <div>
-        <TopNav />
-        {/* {web3 ? (
+        <BrowserRouter>
+          <div>
+          <TopNav />
+          {/* {web3 ? (
                     <div>
                         <p>
                             Provider is MetaMask: {(web3.currentProvider as any).isMetaMask ? 'yes' : 'no'}
@@ -49,7 +52,13 @@ class App extends Component<{}, AppState> {
                     </div>
                 ) :
                     <p>Web3 is loading</p>} */}
-        {web3 ? <UserVC web3={web3} account={account} /> : null}
+          <SideNav>
+            <Switch>
+              {web3 && (<Route path='/' render={() => <UserVC web3={web3} account={account} />} />)}
+            </Switch>
+          </SideNav>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }

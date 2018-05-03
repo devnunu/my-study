@@ -1,0 +1,18 @@
+@import '../assets/partial';
+.sideNav {
+  height: 100vh;
+  .navSection,
+  .contentSection {
+    display: inline-block;
+    height: 100%;
+    padding: 20px;
+  }
+  .navSection {
+    width: 30%;
+    background-color: $march-nav-gray;
+  }
+  .contentSection {
+    width: 70%;
+    background-color: $march-bg-gray;
+  }
+}
