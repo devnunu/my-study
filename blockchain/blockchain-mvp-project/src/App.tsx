@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Web3 from 'web3';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 // contract
 import ContractDC from './common/contract/ContractDC';
 
 // view
-import UserVC from './user/vc/UserVC';
 import TopNav from './common/view/nav/TopNav';
 import SideNav from './common/view/nav/SideNav';
+import NotFound from './common/view/notfound/NotFound';
+import UserVC from './user/vc/UserVC';
+import HomeVC from './home/vc/HomeVC';
+
 
 // styles
 import styles from './App.scss';
@@ -35,31 +38,21 @@ class App extends Component<{}, AppState> {
   render() {
     const { web3, account } = this.state;
     return (
-      <div>
-        <BrowserRouter>
-          <div>
+      <BrowserRouter>
+        <Fragment>
           <TopNav />
-          {/* {web3 ? (
-                    <div>
-                        <p>
-                            Provider is MetaMask: {(web3.currentProvider as any).isMetaMask ? 'yes' : 'no'}
-                        </p>
-                        <p>
-                            Provider is Mist: {(window as any).mist ? 'yes' : 'no'}
-                        </p>
-                        {(web3.currentProvider as any).host ?
-                            <p>Provider is {(web3.currentProvider as any).host}</p> : null}
-                    </div>
-                ) :
-                    <p>Web3 is loading</p>} */}
           <SideNav>
             <Switch>
-              {web3 && (<Route path='/' render={() => <UserVC web3={web3} account={account} />} />)}
+              {web3 && (
+                <Fragment>
+                  <Route path='/home' render={() => <HomeVC web3={web3} account={account} />} />
+                  <Route path='/user' render={() => <UserVC web3={web3} account={account} />} />
+                </Fragment>
+              )}
             </Switch>
           </SideNav>
-          </div>
-        </BrowserRouter>
-      </div>
+        </Fragment>
+      </BrowserRouter>
     );
   }
 }

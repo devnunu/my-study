@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 // styles
 import styles from './SideNav.scss';
@@ -26,12 +27,14 @@ class SideNav extends Component<{}, {}>{
         <section className={styles.navSection}>
           {this.navMenu.map((item, index) => {
             return (
-              <div className={styles.title}>{item.title}</div>
+              <div key={index} className={styles.title}>
+                <Link to={item.path}>{item.title}</Link>
+              </div>
             );
           })}
         </section>
         <section className={styles.contentSection}>
-          {this.props.children};
+          {this.props.children}
         </section>
       </div>
     );

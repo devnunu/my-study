@@ -5,14 +5,21 @@
   .contentSection {
     display: inline-block;
     height: 100%;
-    padding: 20px;
   }
   .navSection {
     width: 30%;
+    padding: 20px 50px ;
     background-color: $march-nav-gray;
+    .title {
+      a {
+        @include set-font(24px, white, $fontweight-bold);
+      }
+      margin-bottom:15px;
+    }
   }
   .contentSection {
     width: 70%;
+    padding: 20px;
     background-color: $march-bg-gray;
   }
 }
