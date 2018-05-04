@@ -42,23 +42,24 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     UserContractDC.deployUserInitContract();
   }
 
-  userContractEvent(event) {
+  async userContractEvent(event) {
     console.log(event);
     if (event.event === UserContractDC.EVENT_LOGNEWUSER) {
-      const { web3 } = this.props;
-      const args = event['args'];
-      const user = new UserInfo(
-        args.index.toNumber(),
-        args.userAge.toNumber(),
-        web3.utils.hexToAscii(args.userName),
-        web3.utils.hexToAscii(args.userEmail),
-        web3.utils.hexToAscii(args.userAddress),
-      );
+      // const { web3 } = this.props;
+      // const args = event['args'];
+      // const user = new UserInfo(
+      //   args.index.toNumber(),
+      //   args.userAge.toNumber(),
+      //   web3.utils.hexToAscii(args.userName),
+      //   web3.utils.hexToAscii(args.userEmail),
+      //   web3.utils.hexToAscii(args.userAddress),
+      // );
 
-      const { userList } = this.state;
-      userList.push(user);
+      let { userList } = this.state;
+      userList = await UserContractDC.getAllUsers();
+      // userList.push(user);
 
-      console.log(userList);
+      console.log('userLiuserList',userList);
 
       this.setState({ ...this.state, userList })
     } else {
@@ -73,7 +74,8 @@ class UserVC extends Component<UserVCProps, UserVCState>{
   }
 
   onClickGetUser() {
-    UserContractDC.getUser('0x6596D4C7208b96bf0def56B9f847614277912121');
+    UserContractDC.getAllUsers();
+    // UserContractDC.getUser('0x6596D4C7208b96bf0def56B9f847614277912121');
   }
 
   render() {

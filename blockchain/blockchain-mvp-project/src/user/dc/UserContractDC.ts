@@ -26,21 +26,21 @@ class UserContractDC {
 
   async deployUserInitContract() {
     this.web3 = await ContractDC.getWeb3();
-    this.account = this.web3.eth.accounts[0];
+    this.account = (await ContractDC.getAccounts())[0];
     UserInitContract.setProvider(this.web3.currentProvider);
     UserInitContract.deployed().then(this.attachEvent.bind(this));
   }
 
   attachEvent(instance) {
+    this.instance = instance;
     this.allEvents = instance.allEvents({
-      fromBlock: 0,
+      fromBlock: 'latest',
       toBlock: 'latest'
     })
     this.allEvents.watch((err, event) => {
       if (this.userContractEventListener) this.userContractEventListener(event);
       else console.error('contract event listner is undefined');
     });
-    this.instance = instance;
   }
 
   public stopWatch() {
@@ -62,6 +62,20 @@ class UserContractDC {
     const newUser = new UserInfo(index, userAge, userName, userEmail);
     console.log('getUser result:', newUser);
     return newUser;
+  }
+
+  public async getAllUsers() {
+    const [userNames, userEmails, userAges, indexes] = await this.instance.getAllUsers();
+    const userList: UserInfo[] = [];
+    for (let i = 0; i < userNames.length; i++) {
+      const newUser = new UserInfo();
+      newUser.index = indexes[i].toNumber();
+      newUser.age = userAges[i].toNumber();
+      newUser.name = this.web3.utils.hexToAscii(userNames[i]);
+      newUser.email = this.web3.utils.hexToAscii(userEmails[i]);
+      userList.push(newUser);
+    }
+    return userList;
   }
 }
 

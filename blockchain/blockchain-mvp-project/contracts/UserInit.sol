@@ -104,4 +104,26 @@ contract UserInit {
     {
         return userIndex[index];
     }
+
+    function getAllUsers() public view returns(
+        bytes32[] userNames,
+        bytes32[] userEmails,
+        uint[] userAges,
+        uint[] userIndexes)
+    {
+        bytes32[] memory names = new bytes32[](userIndex.length);
+        bytes32[] memory emails = new bytes32[](userIndex.length);
+        uint[] memory ages = new uint[](userIndex.length);
+        uint[] memory indexes = new uint[](userIndex.length);
+
+        for (var index = 0; index < userIndex.length; index++) {
+            var userAddress = userIndex[index];
+            names[index] = userStructs[userAddress].userName;
+            emails[index] = userStructs[userAddress].userEmail;
+            ages[index] = userStructs[userAddress].userAge;
+            indexes[index] = userStructs[userAddress].index;
+        }
+
+        return (names, emails, ages, indexes);
+    }
 }
