@@ -27,7 +27,7 @@ class UserListView extends Component<UserListViewProps, {}> {
             return (
               <tr key={index}>
                 <td>{item.userAddress}</td>
-                <td>{item.age.toNumber()}</td>
+                <td>{item.age}</td>
                 <td>{item.name}</td>
                 <td>{item.email}</td>
               </tr>);

@@ -11,7 +11,7 @@ import UserInit, { UserInfo } from '../model/UserInit';
 
 class UserContractDC {
   public EVENT_VALUESET = 'ValueSet';
-  public EVENT_USERINSERT = 'UserInsert';
+  public EVENT_LOGNEWUSER = 'LogNewUser';
 
   web3: Web3;
   account: string;
@@ -48,9 +48,8 @@ class UserContractDC {
     else console.error('event is undefined');
   }
 
-  public async insertUser(userAddress: string, name: string, age: BigNumber, email: string) {
-    const account = (await ContractDC.getAccounts())[0];
-    this.instance.insertUser(userAddress, name, age, email, { from: account });
+  public async insertUser(userAddress: string, name: string, age: number, email: string) {
+    this.instance.insertUser(userAddress, name, age, email, { from: this.account });
   }
 
   public async getUser(userAddress: string) {
