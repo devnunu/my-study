@@ -1,16 +1,16 @@
 import { BigNumber } from 'bignumber.js';
 
 export class UserInfo {
-  userAddress: string;
-  name: string;
+  index: number;
   age: BigNumber;
+  name: string;
   email: string;
 
-  constructor(userAddress: string = '', name: string = '', age: BigNumber = undefined, email: string = '') {
-    this.userAddress = userAddress;
+  constructor(index, name, age, email) {
+    this.index = index;
     this.name = name;
-    this.age = age;
     this.email = email;
+    this.age = age;
   }
 }
 

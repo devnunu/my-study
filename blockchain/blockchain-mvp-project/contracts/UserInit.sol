@@ -2,40 +2,106 @@ pragma solidity ^0.4.17;
 
 
 contract UserInit {
-    uint public value;
-    event ValueSet(uint val);
-    event UserInsert(address userAddress, string name, uint age, string email);
+    event LogNewUser   (address indexed userAddress, uint index, bytes32 userName, bytes32 userEmail, uint userAge);
+    event LogUpdateUser(address indexed userAddress, uint index, bytes32 userName, bytes32 userEmail, uint userAge);
 
-    struct User {
-        string name;
-        uint age;
-        string email;
-        bool isUser;
+    struct UserStruct {
+        bytes32 userEmail;
+        bytes32 userName;
+        uint userAge;
+        uint index;
     }
 
-    mapping (address => User) users;
+    mapping(address => UserStruct) private userStructs;
+    address[] private userIndex;
+
+    function isUser(address userAddress)
+        public
+        constant
+        returns(bool isIndeed)
+    {
+        if(userIndex.length == 0) return false;
+        return (userIndex[userStructs[userAddress].index] == userAddress);
+    }
 
     function insertUser(
-        address _userAddress,
-        string _name,
-        uint _age,
-        string _email ) public
+        address userAddress,
+        bytes32 userName,
+        uint    userAge,
+        bytes32 userEmail)
+        public
+        returns(uint index)
     {
-        require(!isUser(_userAddress));
-        users[_userAddress] = User(_name, _age, _email, true);
-        UserInsert(_userAddress, _name, _age, _email);
+        if(isUser(userAddress)) throw;
+        userStructs[userAddress].userEmail = userEmail;
+        userStructs[userAddress].userAge   = userAge;
+        userStructs[userAddress].userName  = userName;
+        userStructs[userAddress].index     = userIndex.push(userAddress)-1;
+        LogNewUser(
+            userAddress,
+            userStructs[userAddress].index,
+            userName,
+            userEmail,
+            userAge);
+        return userIndex.length-1;
     }
 
-    function isUser(address userAddress) public view returns (bool) {
-        return users[userAddress].isUser;
+    function getUser(address userAddress)
+        public
+        constant
+        returns(bytes32 userName, bytes32 userEmail, uint userAge, uint index)
+    {
+        if(!isUser(userAddress)) throw;
+        return(
+        userStructs[userAddress].userName,
+        userStructs[userAddress].userEmail,
+        userStructs[userAddress].userAge,
+        userStructs[userAddress].index);
     }
 
-    function setValue(uint val) public {
-        value = val;
-        ValueSet(value);
+    function updateUserEmail(address userAddress, bytes32 userEmail)
+        public
+        returns(bool success)
+    {
+        if(!isUser(userAddress)) throw;
+        userStructs[userAddress].userEmail = userEmail;
+        LogUpdateUser(
+        userAddress,
+        userStructs[userAddress].index,
+        userStructs[userAddress].userName,
+        userEmail,
+        userStructs[userAddress].userAge);
+        return true;
     }
 
-    function getValue() public constant returns (uint) {
-        return value;
+    function updateUserAge(address userAddress, uint userAge)
+        public
+        returns(bool success)
+    {
+        if(!isUser(userAddress)) throw;
+        userStructs[userAddress].userAge = userAge;
+        LogUpdateUser(
+        userAddress,
+        userStructs[userAddress].index,
+        userStructs[userAddress].userName,
+        userStructs[userAddress].userEmail,
+        userAge);
+        return true;
+    }
+
+    function getUserCount()
+        public
+        constant
+        returns(uint count)
+    {
+        return userIndex.length;
+    }
+
+    function getUserAtIndex(uint index)
+        public
+        constant
+        returns(address userAddress)
+    {
+        return userIndex[index];
     }
 }

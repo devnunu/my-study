@@ -44,21 +44,21 @@ class UserVC extends Component<UserVCProps, UserVCState>{
 
   userContractEvent(event) {
     console.log(event);
-    if (event.event === UserContractDC.EVENT_USERINSERT) {
-      const args: UserInfo = event['args'];
-      const user = new UserInfo(
-        args.userAddress,
-        args.name,
-        args.age,
-        args.email,
-      )
-      const { userList } = this.state;
-      userList.push(user);
-      console.log(userList);
-      this.setState({ ...this.state, userList })
-    } else {
-      console.error('unregistered event detected');
-    }
+    // if (event.event === UserContractDC.EVENT_USERINSERT) {
+    //   const args: UserInfo = event['args'];
+    //   const user = new UserInfo(
+    //     args.userAddress,
+    //     args.name,
+    //     args.age,
+    //     args.email,
+    //   )
+    //   const { userList } = this.state;
+    //   userList.push(user);
+    //   console.log(userList);
+    //   this.setState({ ...this.state, userList })
+    // } else {
+    //   console.error('unregistered event detected');
+    // }
   }
 
   onClickUserRegister(userInfo: UserInfo) {
@@ -67,10 +67,15 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     UserContractDC.insertUser(userAddress, name, age, email)
   }
 
+  onClickGetUser(){
+    UserContractDC.getUser('0x6596D4C7208b96bf0def56B9f847614277912121');
+  }
+
   render() {
     const { userList } = this.state;
     return (
       <div>
+        <div onClick={this.onClickGetUser}>getuser getuser getuser</div>
         <UserRegisterView onClickUserRegister={this.onClickUserRegister.bind(this)} />
         {userList.length !== 0 ? <UserListView userList={userList} /> : null}
       </div>
