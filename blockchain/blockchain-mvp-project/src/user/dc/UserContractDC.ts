@@ -24,11 +24,11 @@ class UserContractDC {
     this.userContractEventListener = listener;
   }
 
-  async deployUserInitContract() {
+  async deployUserInitContract(callback) {
     this.web3 = await ContractDC.getWeb3();
     this.account = (await ContractDC.getAccounts())[0];
     UserInitContract.setProvider(this.web3.currentProvider);
-    UserInitContract.deployed().then(this.attachEvent.bind(this));
+    UserInitContract.deployed().then(this.attachEvent.bind(this)).then(callback);
   }
 
   attachEvent(instance) {
@@ -49,7 +49,8 @@ class UserContractDC {
   }
 
   public async insertUser(userAddress: string, name: string, age: number, email: string) {
-    this.instance.insertUser(userAddress, name, age, email, { from: this.account });
+    const result = await this.instance.insertUser(userAddress, name, age, email, { from: this.account });
+    return result;
   }
 
   public async getUser(userAddress: string) {
@@ -65,7 +66,9 @@ class UserContractDC {
   }
 
   public async getAllUsers() {
-    const [userNames, userEmails, userAges, indexes] = await this.instance.getAllUsers();
+    const result = await this.instance.getAllUsers();
+    console.log(result, 'result');
+    const [userNames, userEmails, userAges, indexes, resultAddress] = result;
     const userList: UserInfo[] = [];
     for (let i = 0; i < userNames.length; i++) {
       const newUser = new UserInfo();
@@ -73,6 +76,7 @@ class UserContractDC {
       newUser.age = userAges[i].toNumber();
       newUser.name = this.web3.utils.hexToAscii(userNames[i]);
       newUser.email = this.web3.utils.hexToAscii(userEmails[i]);
+      newUser.userAddress = resultAddress[i];
       userList.push(newUser);
     }
     return userList;

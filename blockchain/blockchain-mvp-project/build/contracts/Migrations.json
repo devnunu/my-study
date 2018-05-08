@@ -182,7 +182,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 469,
+                        "referencedDeclaration": 551,
                         "src": "147:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -286,7 +286,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 469,
+                        "referencedDeclaration": 551,
                         "src": "221:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -832,7 +832,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 469,
+                        "referencedDeclaration": 551,
                         "src": "147:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -936,7 +936,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 469,
+                        "referencedDeclaration": 551,
                         "src": "221:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -1378,10 +1378,10 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x9d843e91aa968d252e34ac2fa1912951c661fd0a",
+      "address": "0xd2f6191831709709c129cfa8b0e70d5e38ace723",
       "transactionHash": "0xe70fa681328e267de84746f804d2155498b7f2b68cc63fe0cfb522d083d1b324"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-04T05:08:19.021Z"
+  "updatedAt": "2018-05-08T03:13:44.383Z"
 }

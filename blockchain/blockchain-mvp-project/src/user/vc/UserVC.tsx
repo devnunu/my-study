@@ -39,27 +39,26 @@ class UserVC extends Component<UserVCProps, UserVCState>{
 
   componentWillMount() {
     UserContractDC.setContractEventListener(this.userContractEvent.bind(this));
-    UserContractDC.deployUserInitContract();
+    UserContractDC.deployUserInitContract(this.onDeployContract.bind(this));
+  }
+
+  async onDeployContract() {
+    let { userList } = this.state;
+    userList = await UserContractDC.getAllUsers();
+
+    console.log('userLiuserList', userList);
+
+    this.setState({ ...this.state, userList })
   }
 
   async userContractEvent(event) {
     console.log(event);
     if (event.event === UserContractDC.EVENT_LOGNEWUSER) {
-      // const { web3 } = this.props;
-      // const args = event['args'];
-      // const user = new UserInfo(
-      //   args.index.toNumber(),
-      //   args.userAge.toNumber(),
-      //   web3.utils.hexToAscii(args.userName),
-      //   web3.utils.hexToAscii(args.userEmail),
-      //   web3.utils.hexToAscii(args.userAddress),
-      // );
 
       let { userList } = this.state;
       userList = await UserContractDC.getAllUsers();
-      // userList.push(user);
 
-      console.log('userLiuserList',userList);
+      console.log('userLiuserList', userList);
 
       this.setState({ ...this.state, userList })
     } else {
@@ -67,15 +66,14 @@ class UserVC extends Component<UserVCProps, UserVCState>{
     }
   }
 
-  onClickUserRegister(userInfo: UserInfo) {
-    console.log('client user data', userInfo);
+  async onClickUserRegister(userInfo: UserInfo) {
     const { userAddress, name, age, email } = userInfo;
-    UserContractDC.insertUser(userAddress, name, age, email)
+    await UserContractDC.insertUser(userAddress, name, age, email);
   }
 
-  onClickGetUser() {
-    UserContractDC.getAllUsers();
-    // UserContractDC.getUser('0x6596D4C7208b96bf0def56B9f847614277912121');
+  async onClickGetUser() {
+    const allUsers = await UserContractDC.getAllUsers();
+    console.log('allUsers', allUsers);
   }
 
   render() {
