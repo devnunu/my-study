@@ -65,6 +65,11 @@ class UserContractDC {
     return newUser;
   }
 
+  public async deleteUser(userAddress: string) {
+    const reuslt = await this.instance.deleteUser(userAddress, { from: this.account })
+    console.log('delete result', reuslt);
+  }
+
   public async getAllUsers() {
     const result = await this.instance.getAllUsers();
     console.log(result, 'result');
