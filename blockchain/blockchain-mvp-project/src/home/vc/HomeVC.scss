@@ -1,0 +1,9 @@
+@import 'assets/partial';
+.homeVC {
+  .contents {
+    p {
+      margin-bottom: 10px;
+      @include set-font(20px, white, $fontweight-bold);
+    }
+  }
+}
