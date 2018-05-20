@@ -232,3 +232,4 @@ class Controlled extends Component {
 ```
 
 코드에서 볼수 있듯이 null을 리턴하면 리액트는 update를 하지 않는다. 이를 통해 조건문으로 state하는 시점을 정할 수 있다.
+
