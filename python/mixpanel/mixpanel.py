@@ -68,7 +68,6 @@ class Mixpanel(object):
                 'from_date': from_date,
                 'to_date': to_date
             })
-            # keys = ['', *data[0]['data']['series']]
             row = [event, *list(data[0]['data']['values'][event].values())]
             event_result_values.append(row)
         return event_result_values
