@@ -40,45 +40,45 @@ for segmentation in segmentation_list:
 
 # Funnel List
 funnel_list = [
-    {
-        'name': '신규소비관리',
-        'id': 3917509,
-        'row': 15,
-        'step': 3
-    },
-    {
-        'name': '신규카드추천',
-        'id': 3917525,
-        'row': 20,
-        'step': 2
-    },
-    {
-        'name': '신규대출추천',
-        'id': 3917589,
-        'row': 24,
-        'step': 2
-    },
     # {
-    #     'name': 'Spending',
-    #     'id': 4175609,
-    #     'row': 40,
+    #     'name': '신규소비관리',
+    #     'id': 3917509,
+    #     'row': 15,
     #     'step': 3
-    # }, {
-    #     'name': 'Coin',
-    #     'id': 4175625,
-    #     'row': 45,
-    #     'step': 3
-    # }, {
-    #     'name': 'Recommend-Card',
-    #     'id': 4175629,
-    #     'row': 50,
+    # },
+    # {
+    #     'name': '신규카드추천',
+    #     'id': 3917525,
+    #     'row': 20,
     #     'step': 2
-    # }, {
-    #     'name': 'Recommend-Loan',
-    #     'id': 4226293,
-    #     'row': 54,
+    # },
+    # {
+    #     'name': '신규대출추천',
+    #     'id': 3917589,
+    #     'row': 24,
     #     'step': 2
-    # }
+    # },
+    {
+        'name': 'Spending',
+        'id': 4175609,
+        'row': 40,
+        'step': 3
+    }, {
+        'name': 'Coin',
+        'id': 4175625,
+        'row': 45,
+        'step': 3
+    }, {
+        'name': 'Recommend-Card',
+        'id': 4175629,
+        'row': 50,
+        'step': 2
+    }, {
+        'name': 'Recommend-Loan',
+        'id': 4226293,
+        'row': 54,
+        'step': 2
+    }
 ]
 
 # update cell
