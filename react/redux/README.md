@@ -1,172 +1,25 @@
 # redux
 
-redux ducks 방식으로 리덕스를 만들어보자. 타이머 제작 예제의 일부분이다.
+## 개요
 
-## 구성요소
+나는 리덕스가 싫다. 여러가지 세팅과 복잡한 제약, 보일러플레이트. 그래도 알고 까야되지 않을까. 리덕스의 사용 이유와 기본 세팅방법, 동작원리, 장단점에 대해 알아보고 최종적으로 mobx와 비교 분석을 해보자.
 
-- Import
-- Auction
-- Action Createors
-- Reducer
-- Reducer Functions
-- Export Action Creators
-- Export Reducer
+## 당신은 리덕스가 필요 없을 지도 모른다
 
-## 코드
+근래 리액트가 메이저 라이브러리로써 폭발적으로 성장했다. 여러가지 장점들 덕분에 스타트업은 물론 기존 웹 서비스도 리액트로 전환 하는 케이스가 많아졌다. 이 때문에 새로운 기술을 배우려는 사람들의 관심이 늘어나면서 리액트 강좌가 인기를 끌게 되었다. 그러나 요즘 거의 숙어처럼 들리는 말은, 리액트는 러닝커브가 높다이다. 엄밀히 말하면 "리액트"보다 "리덕스"가 들어가는게 맞을것이다.
 
-```javascript
-// reducer.js
+리덕스는 리액트의 단점을 보완하고 장점을 극대화 시키기 위해 만들어진 라이브러리로써, 상태(State)값을 보존하고, 뷰에 들어가는 비즈니스 로직을 분리하기 위해 만들어졌다. 물론 다른 장점을 더 나열하자면 끝이 없겠지만, 중요한 것은 "조금 더 나은 방식으로" 서비스를 만들기 위해 사용된다는 점이다.
 
-// Import
+그러나 장점이 있으면 단점도 있는법, 간단한 기능 하나를 위해 여러개의 파일을 수정해야하거나, 기본 세팅하는 과정이 복잡하다거나.. Redux의 장점을 취하기 위해서는 여러가지의 제약을 감수해야한다.
 
-// Auctions
+다시 돌아가서, 리액트 강좌가 많아진 요즘, 리액트 뿐만아니라 리덕스까지 필수적으로 배워야하는것 처럼 이야기한다. 리액트의 이야기를 하더라도 꼭 리덕스 이야기가 따라온다. 그러나 기술을 깊게 이해하고 사용하는 사람은 별로 없는 것 같다. 강좌에 나온대로 기계적으로 리덕스 구조를 만들어 사용하는게 과연 의미가 있을까?
 
-const START_TIMER = 'START_TIMER';
-const RESTART_TIMER = 'RESTART_TIMER';
-const ADD_SECOND = 'ADD_SECOND';
+리덕스가 왜 쓰여야하는지, 무엇을 극복하기위해 등장하게 되었는지, 어떤 장단점이 있는지 이해하는게 선행되어야한다고 생각한다. 그 전까지는 로컬 상태값으로 프로젝트를 진행해도 상관이 없을것이다(튜토리얼의 경우). 그리고 무엇이 불편한지 자세히 생각해 본 다음 리덕스로 넘어가도 좋을 것이다.
 
-// Action Creators
+> Redux 라이브러리 자체는 리듀서를 하나의 전역 스토어 객체에 “장착하는” 도우미들 모음일 뿐입니다. Redux를 거의 쓰지 않거나, 많이 쓰거나, 여러분이 원하는 대로 하세요. 하지만 만약 무언가를 포기한다면, 무언가를 꼭 얻어가세요. - Dan Abramov
 
-function startTimer() {
-  return {
-    type: START_TIMER,
-  };
-}
+참고: [당신에게 Redux는 필요 없을지도 모릅니다.](https://medium.com/lunit-engineering/%EB%8B%B9%EC%8B%A0%EC%97%90%EA%B2%8C-redux%EB%8A%94-%ED%95%84%EC%9A%94-%EC%97%86%EC%9D%84%EC%A7%80%EB%8F%84-%EB%AA%A8%EB%A6%85%EB%8B%88%EB%8B%A4-b88dcd175754)
 
-function restartTimer() {
-  return {
-    type: RESTART_TIMER,
-  };
-}
+## 리덕스의 사용 이유
 
-function addSecond() {
-  return {
-    type: ADD_SECOND,
-  };
-}
-
-// Reducer
-
-const TIME_DURATION = 1500;
-
-const initialState = {
-  isPlaying: false,
-  elapsedTime: 0,
-  timerDuration: TIME_DURATION,
-};
-
-function reducer(state = initialState, action) {
-  switch (action.type) {
-    case START_TIMER:
-      return applyStartTimer(state);
-    case RESTART_TIMER:
-      return restartTimer(state);
-    case ADD_SECOND:
-      return applyAddSecond(state);
-    default:
-      return state;
-  }
-}
-
-// Reducer Function
-
-function applyStartTimer(state) {
-  return {
-    ...state,
-    isPlaying: true,
-    elapsedTime: 0,
-  };
-}
-
-function applyRestartTimer(state) {
-  return {
-    ...state,
-    isPlaying: false,
-    elapsedTime: 0,
-  };
-}
-
-function applyAddSecond(state) {
-  if (state.elapsedTime < TIMER_DURATION) {
-    return {
-      ...state,
-      elapsedTime: state.elapsedTime + 1,
-    };
-  } else {
-    return {
-      ...state,
-      isPlaying: false,
-    };
-  }
-}
-
-// Export Action Crateor
-
-const actionCreators = {
-  startTimer,
-  restartTimer,
-  addSecond,
-};
-
-export { actionCreators };
-
-// Export Reducer
-
-export default reducer;
-```
-
-## 리듀서 연결
-
-```javascript
-import React from 'react';
-import reducer from './reducer';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-
-let store = createStore(reducer);
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Timer />
-      </Provider>
-    );
-  }
-}
-```
-
-## 파일 분리
-
-connect 는 컴포넌트를 스토어에 연결하는것을 도와준다.
-
-```javascript
-// index.js
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'react';
-import { actionCreators as tomatoActions } from '../../reducer';
-
-import Timer from './presenter';
-
-function mapStateToProps(state) {
-  const { isPlaying, elapsedTime, timerDuration } = statel;
-  return {
-    isPlaying,
-    elapsedTime,
-    timerDuration,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    startTimer: bindActionCreators(tomatoActions.startTimer, dispatch),
-    restartTimer: bindActionCreators(tomatoActions.restartTimer, dispatch),
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Timer);
-```
+Redux는 자바스크립트 앱을 위한 예측 가능한 상태(State) 컨테이너이다.
