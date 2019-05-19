@@ -1,4 +1,4 @@
-package com.example.sns_login;
+package com.example.firechat;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.sns_login", appContext.getPackageName());
+        assertEquals("com.example.firechat", appContext.getPackageName());
     }
 }
