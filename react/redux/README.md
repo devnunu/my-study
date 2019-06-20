@@ -1,172 +1,197 @@
-# redux
+#  리액트와 상태관리
 
-redux ducks 방식으로 리덕스를 만들어보자. 타이머 제작 예제의 일부분이다.
+리액트는 기존에 JS가 가지고 있는 DOM 조작의 복잡성을 쉽게 해결할 수 있다. 또한 View를 컴포넌트화 시켜 재사용성을 높이고, State와 Props 값을 통해 인터렉티브 UI를 쉽게 만들수 있게 되었다. 리액트에서 제공하는 Virtual DOM은 이러한 인터렉티브 UI의 성능을 높이기 위해서 제공되는 기법이며, 변경이 일어나면 전체 DOM을 다시 그리는 것이 아니라 변화가 생긴 부분만 부분 랜더링한다.
 
-## 구성요소
+이러한 리액트도 단점이 있는데, 그 중 하나는 어플리케이션에서 공통적으로 사용하는 **글로벌 상태(State) 값이 제대로 관리 되지 않는다**는 점이다.
 
-- Import
-- Auction
-- Action Createors
-- Reducer
-- Reducer Functions
-- Export Action Creators
-- Export Reducer
+어플리이케션의 규모가 작으면 상대적으로 상태값의 추적과 조작이 쉬우므로 상태관리 라이브러리를 사용할 필요가 적다. 하지만 규모가 커지면 상태값이 여러 컴포넌트에서 중구난방으로 변경이 된다던지, 컴포넌트의 자식의 자식의 자식으로 state값이 전달되어야하는 상황이 발생한다. 또한 상태 업데이트 로직, 즉 비즈니스 로직이 뷰를 담당하는 컴포넌트에 잔뜩 쌓여서 복잡성이 증가한다는것도 문제이다.
 
-## 코드
+이러한 문제를 해결하기 위해 리액트에서 자체적으로 제공하는 Context API나 Redux, MobX 등을 사용할 수 있다. 사용법과 동작, 장단점이 다르므로 라이브러리들을 잘 비교하여 사용해야한다. 그럼 기본적인 개념과 사용법을 알아보도록 하자.
 
-```javascript
-// reducer.js
+# 리덕스
 
-// Import
+## 리덕스란?
 
-// Auctions
+Redux는 자바스크립트 앱을 위한 예측 가능한 상태(State) 컨테이너이다. 단방향 플로우로 데이터를 처리하는 Flux의 컨셉을 차용하여 만들어졌다.
 
-const START_TIMER = 'START_TIMER';
-const RESTART_TIMER = 'RESTART_TIMER';
-const ADD_SECOND = 'ADD_SECOND';
+리덕스를 사용하면 앱의 상태는 전부 하나의 스토어(Store)안에 있는 객체 트리에 저장된다. 상태 트리를 변경하는 **유일한 방법**은 무엇이 일어날지 서술하는 객체인 액션(Action)을 보내는 것이다. 그리고 마지막으로 액션이 상태 트리를 어떻게 변경할지 명시하기위해 리듀서(Reducers)를 작성하면 된다.
 
-// Action Creators
+## 리덕스의 목표
 
-function startTimer() {
-  return {
-    type: START_TIMER,
-  };
+싱글 페이지 애플리케이션이 점점 복잡해지면서 상태값이 늘어나게되었다. 이에 따라 상태를 언제, 왜, 어떻게 업데이트할지 **제어할 수 없는** 지경에 이르렀다. 이러한 원인은 변화(mutation)과 비동기(asyncronicity)와 같이 흐름을 예측하기 어려운 개념을 섞어 쓰기 때문이다.
+
+React는 이 문제를 해결하기 위해 뷰에서 비동기과 DOM 조작을 없앴으나 데이터는 관여하지 않는다. 리덕스는 상태 변화가 일어나는 시점에 **제약**을 두어 변화를 예측가능하게 만들고자 한다. 즉, 데이터의 변화를 제어(Controller)한다는 것이다. 이를 위해 다음과 같은 원칙이 존재한다.
+
+1. **진실은 하나의 소스로부터** : 모든 상태는 하나의 스토어에서.
+2. **상태는 읽기 전용** : 액션 객체를 통해서만 상태를 변화시키도록 제약한다.
+3. **변화는 순수 함수로만 작성** : 액션에 의해 상태 트리가 어떻게 변화하는지 지정하기 위해 순수 리듀서를 작성한다.
+
+# 리덕스의 기초
+
+# 액션
+
+## 액션이란?
+
+액션은 애플리케이션에서 스토어로 보내는 데이터 묶음이다. store.dispatch()를 통해 액션을 보낼수 있고 아래는 그 예제이다
+
+액션은 반드시 어떤 형태의 액션이 실행될지 나타내는 문자열 type 속성이 있어야 한다. 나머지 속성은 사용자 마음대로 추가할 수 있다.
+
+```js
+// TODO를 추가하는 액션
+const ADD_TODO = 'ADD_TODO'
+
+{
+  type: ADD_TODO,
+  text: 'Build my first Redux app'
 }
 
-function restartTimer() {
-  return {
-    type: RESTART_TIMER,
-  };
+// TODO를 완료하는 액션
+const COMPLETE_TODO = 'COMPLETE_TODO'
+
+{
+  type: COMPLETE_TODO,
+  index: 5
+}
+```
+
+액션에서는 가능한 적은 데이터를 전달하는게 좋다. 예를 들어 TODO 전체 객체보다는 인덱스를 전달하는게 낫다.
+
+## 액션 생산자
+
+액션 생산자는 액션을 만드는 함수이다. Redux에서 액션 생산자는 그냥 액션을 반환한다.
+
+```js
+export function addTodo(text) {
+  return { type: ADD_TODO, text };
 }
 
-function addSecond() {
-  return {
-    type: ADD_SECOND,
-  };
+export function completeTodo(index) {
+  return { type: COMPLETE_TODO, index };
+}
+```
+
+# 리듀서
+
+## 리듀서란?
+
+액션은 무언가 일어난다고 알려주지만, 그 액션이 어떻게 일어나는지는 알려주지 않는다. 이건 리듀서가 할일이다. Redux에서 애플리케이션의 모든 상태는 하나의 객체(스토어)에 저장된다. TODO 프로젝트를 예를 들다면 다음과 같은 데이터들이 스토어에 저장될 것이다.
+
+```js
+{
+  visibilityFilter: 'SHOW_ALL',
+  todos: [{
+    text: 'Consider using Redux',
+    completed: true,
+  }, {
+    text: 'Keep all state in a single tree',
+    completed: false
+  }]
+}
+```
+
+리듀서는 **이전 상태와 액션을 받아 다음 상태를 반환하는 순수 함수**이다. 앞으로 돌아가 3가지 원칙을 살펴보면, 리덕스에서는 제약이 따른다고 했다.
+
+1. 진실은 하나의 소스로부터
+2. 상태는 읽기 전용
+3. 변화는 순수 함수로만 작성
+
+단일 객체인 스토어에 모든 상태값이 저장되고(1번), 이 값들이 읽기 전용이라면(2번), 상태값의 변경을 위해서는 변경을 처리하는 순수함수(3번), 즉 리듀서가 등장해야한다. 그 형태는? 짜잔! 아래와 같은 모양이 될것이다.
+
+```js
+(previousState, action) => newState;
+```
+
+이 형태의 함수를 `Array.prototype.reduce(reducer, ?initialValue)`(리듀스 함수)로 넘길 것이므로 리듀서라고 부른다.
+
+## 리듀서의 제약사항
+
+리듀서는 순수함이 매우 중요하다. 쉽게 말해, 인수가 주어지면 그걸 바탕으로 계산하고 다음 상태를 반환하면 된다. 중간에 인수를 변경하거나, API 호출, 라우팅전환 같은 사이드 이팩트를 발생시키거나, Date.now(), Math.random과 같은 순수하지 않은 함수를 호출하면 안된다.
+
+순수 함수 이므로 테스트의 용이성이 상당히 증가하며, 예측하지 못하는 상태 변화 에러가 줄어들게 된다.
+
+```js
+cosnt counter = (state = initialState, action) => {
+  if (action.type === 'INCREMENT') {
+    return state + 1;
+  } else if (action.type === 'DECREMENT') {
+    return state - 1;
+  }
 }
 
-// Reducer
+expect(counter(0, { type: 'INCREMENT' })).toEqual(1);
 
-const TIME_DURATION = 1500;
+expect(counter(1, { type: 'DECREMENT' })).toEqual(0);
 
-const initialState = {
-  isPlaying: false,
-  elapsedTime: 0,
-  timerDuration: TIME_DURATION,
-};
+expect(counter(1, { type: 'SOMETHING_ELSE' })).toEqual(1);
+```
 
-function reducer(state = initialState, action) {
+## 리듀서 예시
+
+```js
+function todoApp(state = initialState, action) {
   switch (action.type) {
-    case START_TIMER:
-      return applyStartTimer(state);
-    case RESTART_TIMER:
-      return restartTimer(state);
-    case ADD_SECOND:
-      return applyAddSecond(state);
+    case SET_VISIBILITY_FILTER:
+      return Object.assign({}, state, {
+        visibilityFilter: action.filter
+      });
     default:
       return state;
   }
 }
-
-// Reducer Function
-
-function applyStartTimer(state) {
-  return {
-    ...state,
-    isPlaying: true,
-    elapsedTime: 0,
-  };
-}
-
-function applyRestartTimer(state) {
-  return {
-    ...state,
-    isPlaying: false,
-    elapsedTime: 0,
-  };
-}
-
-function applyAddSecond(state) {
-  if (state.elapsedTime < TIMER_DURATION) {
-    return {
-      ...state,
-      elapsedTime: state.elapsedTime + 1,
-    };
-  } else {
-    return {
-      ...state,
-      isPlaying: false,
-    };
-  }
-}
-
-// Export Action Crateor
-
-const actionCreators = {
-  startTimer,
-  restartTimer,
-  addSecond,
-};
-
-export { actionCreators };
-
-// Export Reducer
-
-export default reducer;
 ```
 
-## 리듀서 연결
+위의 코드를 한줄씩 살펴보자. es6의 default arguments 문법으로 인해 만약 state가 초기값이 없다면 initialState가 들어갈 것이다. 그리고 action의 type에 따라 다른 로직을 통해 상태값이 변경된다. 초기에 들어온 상태값이 변경된다기 보다는, 새로운 상태값을 복사하고 이를 처리해 다음 상태값으로 넘겨준다. 종합하자면 다음 2가지 사항에 주목하자.
 
-```javascript
-import React from 'react';
-import reducer from './reducer';
+1. state가 변경된것이 아니라 복사본을 만들어서 다음 상태를 만들었다.
+2. default 케이스는 이전의 state가 반환된다. 알수 없는 액션은 이전의 state를 반환해야하기 때문이다.
+
+나중에 리듀서가 엄청나게 커진다면, 물론 코드 분할이 가능하다. 이를 위해 `combineReducers`라는 함수도 제공해준다. 하지만 별도로 `combineReducers`의 사용방법에 대해서 다루지는 않겠다.
+
+## 리덕스는 느리지 않다.
+
+만약 애플리케이션이 엄청 크다면? 그에따라 상태값도 커질 것이다. 스토어는 많은 상태값을 들고 있는 뚱뚱한 상태이다. 리듀서로 새로운 상태값을 전부 복사한다고 하면, 리덕스가 데이터를 처리하는 과정이 느리지 않을까? 답은 아니다
+
+이전 상태값을 받아오고, 변경이 되지 않는 객체의 참조값은 여전히 남아있으므로, 스토어 전체를 하나하나씩 새로 만들지는 않는것이다.
+
+# 스토어
+
+스토어는 다음과 같은 일들한다.
+
+1. 애플리케이션의 상태 저장
+2. `getState()`로 상태에 접근
+3. `dispatch(action)`으로 상태를 수정
+4. `subscribe(listner)`로 리스너를 등록
+
+또한 리덕스는 단 하나의 스토어만 가질수 있으므로, 데이터 로직을 쪼개려면 리듀서 조합을 사용해야한다. 스토어는 다음과 같이 생성된다.
+
+```js
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import todoApp from './reducers';
 
-let store = createStore(reducer);
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Timer />
-      </Provider>
-    );
-  }
-}
+let store = createStore(todoApp);
 ```
 
-## 파일 분리
+# 데이터 흐름
 
-connect 는 컴포넌트를 스토어에 연결하는것을 도와준다.
+리덕스는 단방향 데이터 흐름을 따른다. 데이터의 흐름이 단방향이면 예측하고 이해하기가 쉬워진다. 따라서 모든 리덕스 앱에서 데이터는 아래와 같은 4단계의 생명주기를 따른다.
 
-```javascript
-// index.js
+1. `store.dispatch(action)`을 호출한다.
+2. 리덕스 스토어가 미리 만들어둔 리듀서 함수들을 호출한다
+3. 루트 리듀서가 각 리듀서의 출력을 합쳐서 하나의 상태 트리로 만든다.
+4. 리덕스 스토어가 루트 리듀서에 의해 반환된 상태 트리를 저장한다.
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'react';
-import { actionCreators as tomatoActions } from '../../reducer';
+# 당신은 리덕스가 필요 없을 지도 모른다
 
-import Timer from './presenter';
+근래 리액트가 메이저 라이브러리로써 폭발적으로 성장했다. 여러가지 장점들 덕분에 스타트업은 물론 기존 웹 서비스도 리액트로 전환 하는 케이스가 많아졌다. 이 때문에 새로운 기술을 배우려는 사람들의 관심이 늘어나면서 리액트 강좌가 인기를 끌게 되었다. 그러나 요즘 거의 숙어처럼 들리는 말은, 리액트는 러닝커브가 높다이다. 엄밀히 말하면 "리액트"보다 "리덕스"가 들어가는게 맞을것이다.
 
-function mapStateToProps(state) {
-  const { isPlaying, elapsedTime, timerDuration } = statel;
-  return {
-    isPlaying,
-    elapsedTime,
-    timerDuration,
-  };
-}
+리덕스는 리액트의 단점을 보완하고 장점을 극대화 시키기 위해 만들어진 라이브러리로써, 상태(State)값을 보존하고, 뷰에 들어가는 비즈니스 로직을 분리하기 위해 만들어졌다. 물론 다른 장점을 더 나열하자면 끝이 없겠지만, 중요한 것은 "조금 더 나은 방식으로" 서비스를 만들기 위해 사용된다는 점이다.
 
-function mapDispatchToProps(dispatch) {
-  return {
-    startTimer: bindActionCreators(tomatoActions.startTimer, dispatch),
-    restartTimer: bindActionCreators(tomatoActions.restartTimer, dispatch),
-  };
-}
+그러나 장점이 있으면 단점도 있는법, 간단한 기능 하나를 위해 여러개의 파일을 수정해야하거나, 기본 세팅하는 과정이 복잡하다거나.. Redux의 장점을 취하기 위해서는 여러가지의 제약을 감수해야한다.
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Timer);
-```
+다시 돌아가서, 리액트 강좌가 많아진 요즘, 리액트 뿐만아니라 리덕스까지 필수적으로 배워야하는것 처럼 이야기한다. 리액트의 이야기를 하더라도 꼭 리덕스 이야기가 따라온다. 그러나 기술을 깊게 이해하고 사용하는 사람은 별로 없는 것 같다. 강좌에 나온대로 기계적으로 리덕스 구조를 만들어 사용하는게 과연 의미가 있을까?
+
+리덕스가 왜 쓰여야하는지, 무엇을 극복하기위해 등장하게 되었는지, 어떤 장단점이 있는지 이해하는게 선행되어야한다고 생각한다. 그 전까지는 리덕스를 배운다는 압박감을 잠시 내려놓자. 로컬 상태값으로 프로젝트를 진행해도 상관이 없을것이다(튜토리얼의 경우). 그리고 무엇이 불편한지 자세히 생각해 본 다음 리덕스로 넘어가도 좋을 것이다.
+
+> Redux 라이브러리 자체는 리듀서를 하나의 전역 스토어 객체에 “장착하는” 도우미들 모음일 뿐입니다. Redux를 거의 쓰지 않거나, 많이 쓰거나, 여러분이 원하는 대로 하세요. 하지만 만약 무언가를 포기한다면, 무언가를 꼭 얻어가세요. - Dan Abramov
+
+참고: [당신에게 Redux는 필요 없을지도 모릅니다.](https://medium.com/lunit-engineering/%EB%8B%B9%EC%8B%A0%EC%97%90%EA%B2%8C-redux%EB%8A%94-%ED%95%84%EC%9A%94-%EC%97%86%EC%9D%84%EC%A7%80%EB%8F%84-%EB%AA%A8%EB%A6%85%EB%8B%88%EB%8B%A4-b88dcd175754)
