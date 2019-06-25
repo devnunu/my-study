@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.example.test.R;
 import com.example.test.view.signup.SignupActivity;
+import com.example.test.view.test.TestActivity;
 
 public class SplashActivity extends Activity {
 
@@ -18,7 +19,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         Handler hd = new Handler();
-        hd.postDelayed(new splashhandler(), 3000); // 1초 후에 hd handler 실행  3000ms = 3초
+        hd.postDelayed(new splashhandler(), 1000);
     }
 
     private class splashhandler implements Runnable {

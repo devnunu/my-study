@@ -3,6 +3,7 @@ package com.example.test.view.signup;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
@@ -15,6 +16,7 @@ import com.example.test.databinding.ActivitySignupBinding;
 import com.example.test.domain.user.UserVM;
 import com.example.test.view.common.BaseActivity;
 import com.example.test.view.home.HomeActivity;
+import com.google.common.base.Strings;
 
 public class SignupActivity extends BaseActivity {
 
@@ -45,8 +47,8 @@ public class SignupActivity extends BaseActivity {
         return ViewModelProviders.of(activity, factory).get(UserVM.class);
     }
 
-    private void onSignUp(String signupErrorMsg) {
-        if (signupErrorMsg == null) {
+    private void onSignUp(@NonNull String signupErrorMsg) {
+        if (Strings.isNullOrEmpty(signupErrorMsg)) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         } else {

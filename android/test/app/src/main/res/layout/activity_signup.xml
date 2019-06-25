@@ -27,36 +27,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="아이디"
-            android:text='@{uservm.id}' />
+            android:text='@={uservm.user.id}' />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="패스워드"
-            android:text='@{uservm.password}' />
+            android:text='@={uservm.user.password}' />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="패스워드 재확인"
-            android:text="@{uservm.passwordIdentify}" />
+            android:text="@={passwardidentify}" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="성별"
-            android:text='@{uservm.gender}' />
+            android:text='@={uservm.user.gender}' />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="나이"
-            android:text='@{String.valueOf(uservm.age)??""}' />
+            android:text='@={uservm.user.age}' />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> uservm.onSignUp()}"
+            android:onClick="@{() -> uservm.onSignUp(passwardidentify)}"
             android:text="가입하기" />
 
     </LinearLayout>
