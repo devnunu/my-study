@@ -40,10 +40,6 @@ public class UserVM extends ViewModel {
             return "패스워드를 입력해주시기 바랍니다.";
         } else if (passwardidentify == null) {
             return "패스워드 재확인을 입력해주시기 바랍니다.";
-        } else if (user.getGender() == null) {
-            return "성별을 입력해주시기 바랍니다.";
-        } else if (user.getAge() == null) {
-            return "나이를 입력해주시기 바랍니다.";
         } else if (!(passwardidentify.equals(user.getPassword()))) {
             return "패스워드는 동일해야합니다.";
         }

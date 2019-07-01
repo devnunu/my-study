@@ -41,18 +41,6 @@
             android:hint="패스워드 재확인"
             android:text="@={passwardidentify}" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="성별"
-            android:text='@={uservm.user.gender}' />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="나이"
-            android:text='@={uservm.user.age}' />
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
